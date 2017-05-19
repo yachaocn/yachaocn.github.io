@@ -1,14 +1,13 @@
- <meta name="description" content="利用长按手势移动Table View Cells废话少说直接上步骤：  给table view添加长按手势 获取长按的位置，并找出该位置对应的cell的indexPath，从而找到table view cell。 在长按开始时，获取cell的一个snapshot并将其放大，通过改变snapshot的透明度实现渐变的效果，将cell的背景设置为黑色，以显示出cell浮动的感觉。 在长按状态改变时，移">
-<meta name="keywords" content="ios">
-<meta property="og:type" content="article">
-<meta property="og:title" content="利用长按手势移动tableviewcell">
-<meta property="og:url" content="https://devchao.com/2016/03/17/利用长按手势移动tableviewcell/index.html">
+ <meta name="description" content="google-site-verification: google2f3b8be703c11d23.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
+<meta property="og:url" content="https://devchao.com/google2f3b8be703c11d23.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="利用长按手势移动Table View Cells废话少说直接上步骤：  给table view添加长按手势 获取长按的位置，并找出该位置对应的cell的indexPath，从而找到table view cell。 在长按开始时，获取cell的一个snapshot并将其放大，通过改变snapshot的透明度实现渐变的效果，将cell的背景设置为黑色，以显示出cell浮动的感觉。 在长按状态改变时，移">
-<meta property="og:updated_time" content="2017-03-20T08:29:50.000Z">
+<meta property="og:description" content="google-site-verification: google2f3b8be703c11d23.html">
+<meta property="og:updated_time" content="2017-05-18T09:45:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用长按手势移动tableviewcell">
-<meta name="twitter:description" content="利用长按手势移动Table View Cells废话少说直接上步骤：  给table view添加长按手势 获取长按的位置，并找出该位置对应的cell的indexPath，从而找到table view cell。 在长按开始时，获取cell的一个snapshot并将其放大，通过改变snapshot的透明度实现渐变的效果，将cell的背景设置为黑色，以显示出cell浮动的感觉。 在长按状态改变时，移">     <link rel="stylesheet" type="text/css" href="/./main.b3331d.css"> 
+<meta name="twitter:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
+<meta name="twitter:description" content="google-site-verification: google2f3b8be703c11d23.html">     <link rel="stylesheet" type="text/css" href="/./main.b3331d.css"> 
  
  <meta name="google-site-verification" content="Ba-3awwjC1UFDf___EBuN56ThoIMU3SyOWwlTWYm5aI" /> 
 
@@ -137,43 +136,12 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="利用长按手势移动tableviewcell-利用长按手势移动tableviewcell" class="article article-type-利用长按手势移动tableviewcell " itemscope itemprop="blogPost">
+            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      利用长按手势移动tableviewcell
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/利用长按手势移动tableviewcell/" class="archive-article-date">
-  	<time datetime="2016-03-17T03:01:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="利用长按手势移动Table-View-Cells"><a href="#利用长按手势移动Table-View-Cells" class="headerlink" title="利用长按手势移动Table View Cells"></a>利用长按手势移动Table View Cells</h1><p>废话少说直接上步骤：</p>
-<ul>
-<li>给table view添加长按手势</li>
-<li>获取长按的位置，并找出该位置对应的cell的indexPath，从而找到table view cell。</li>
-<li>在长按开始时，获取cell的一个snapshot并将其放大，通过改变snapshot的透明度实现渐变的效果，将cell的背景设置为黑色，以显示出cell浮动的感觉。</li>
-<li>在长按状态改变时，移动cell的位置。</li>
-<li>在长按取消或者结束时，还原snapshot，和table view 的背景，为了更形象的让用户感觉到时慢慢放下。</li>
-</ul>
-<p><strong>具体的代码如下：</strong></p>
-<p><code>在viewdidload中添加长按手势：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//    添加移动手势</div><div class="line">    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressTableView:)];</div><div class="line">    [_tableView addGestureRecognizer:longPress];</div></pre></td></tr></table></figure>
-<p><code>在长按事件中添加如下代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">-(void)longPressTableView:(id)sender</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    UILongPressGestureRecognizer *longPressGes = (UILongPressGestureRecognizer *)sender;</div><div class="line">    UIGestureRecognizerState state = longPressGes.state;</div><div class="line">    </div><div class="line">    CGPoint location = [longPressGes locationInView:_tableView];</div><div class="line">    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];</div><div class="line"></div><div class="line">    static UIView *snapShot = nil;</div><div class="line">    static NSIndexPath *sourceIndexPath = nil;</div><div class="line">    switch (state) &#123;</div><div class="line">        case UIGestureRecognizerStateBegan:</div><div class="line">        &#123;</div><div class="line">            if (indexPath) &#123;</div><div class="line">                sourceIndexPath = indexPath;</div><div class="line">                UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];</div><div class="line">             </div><div class="line">                </div><div class="line">                snapShot = [self customeSnapShotFromView:cell];</div><div class="line">                </div><div class="line">               __block CGPoint center = cell.center;</div><div class="line">                snapShot.center = center;</div><div class="line">                snapShot.alpha = 0.0f;</div><div class="line">                [_tableView addSubview:snapShot];</div><div class="line">                </div><div class="line">                [UIView animateWithDuration:0.25 animations:^&#123;</div><div class="line">                    center = CGPointMake(center.x, location.y);</div><div class="line">                    snapShot.center = center;</div><div class="line">                    snapShot.transform = CGAffineTransformScale(snapShot.transform, 1.05, 1.05);</div><div class="line">                    snapShot.alpha = 0.98;</div><div class="line">                    cell.backgroundColor = [UIColor blackColor];</div><div class="line">                  </div><div class="line">                &#125;];</div><div class="line">                </div><div class="line">                </div><div class="line">                </div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case UIGestureRecognizerStateChanged:</div><div class="line">        &#123;</div><div class="line">            CGPoint center = snapShot.center;</div><div class="line">            snapShot.center = CGPointMake(center.x, location.y);</div><div class="line">            if (indexPath &amp;&amp; ![indexPath isEqual:sourceIndexPath]) &#123;</div><div class="line">                </div><div class="line">                [saveAry exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];</div><div class="line">                [_tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:indexPath];</div><div class="line">                sourceIndexPath = indexPath;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            </div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">        &#123;</div><div class="line">            UITableViewCell *cell = [_tableView cellForRowAtIndexPath:sourceIndexPath];</div><div class="line">            [UIView animateWithDuration:0.5 animations:^&#123;</div><div class="line">                snapShot.center = cell.center;</div><div class="line">                snapShot.transform = CGAffineTransformIdentity;</div><div class="line">                snapShot.alpha = 0.0f;</div><div class="line">                cell.backgroundColor = [UIColor whiteColor];</div><div class="line">                </div><div class="line">            &#125; completion:^(BOOL finished) &#123;</div><div class="line">                [snapShot removeFromSuperview];</div><div class="line">                snapShot = nil;</div><div class="line">                </div><div class="line">            &#125;];</div><div class="line">            sourceIndexPath = nil;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>获取截屏</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-(UIView *)customeSnapShotFromView:(UIView *)inputView</div><div class="line">&#123;</div><div class="line">    UIView *snapShotView = [inputView snapshotViewAfterScreenUpdates:YES];</div><div class="line">    snapShotView.layer.masksToBounds = NO;</div><div class="line">    snapShotView.layer.cornerRadius = 0.0f;</div><div class="line">    snapShotView.layer.shadowOffset = CGSizeMake(-0.5, 0);</div><div class="line">    snapShotView.layer.shadowRadius = 5.0f;</div><div class="line">    snapShotView.layer.shadowOpacity = 0.4;</div><div class="line">    return snapShotView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
+        google-site-verification: google2f3b8be703c11d23.html
       
 
       
@@ -212,17 +180,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -273,7 +230,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://devchao.com/2016/03/17/利用长按手势移动tableviewcell/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://devchao.com/google2f3b8be703c11d23.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,25 +242,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2016/04/12/BLE 4.0 技术学习（一）core bluetooth 概述/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          BLE 4.0 技术学习（一）core bluetooth 概述
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/03/08/iOS设备旋转问题实践总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">iOS设备旋转问题实践总结</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 
 
@@ -314,8 +252,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "https://devchao.com/2016/03/17/利用长按手势移动tableviewcell/", 
-    sourceId: "利用长按手势移动tableviewcell",
+    url: "https://devchao.com/google2f3b8be703c11d23.html", 
+    sourceId: "undefined",
     productKey: "b2316564c29a473ba0b7e40a6f1fe688",
     target: "cloud-tie-wrapper"
   };
@@ -348,7 +286,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
