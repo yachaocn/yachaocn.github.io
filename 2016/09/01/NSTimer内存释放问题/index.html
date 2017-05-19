@@ -10,8 +10,7 @@
 <meta name="twitter:title" content="NSTimer内存释放问题">
 <meta name="twitter:description" content="NSTimer 内存释放问题当我们在某个对象中使用定时器时，如果在对象释放前没有对定时器合理的释放（从runloop中移除），你将发现，即使你将对象置为nil，该对象也不会被释放，原因是定时器的RunLoop中仍然持有该对象。  那么如何合理的释放定时器呢？ PS.在对象释放前，调用 [timer invalidate]，如下： 12345if (timer.isValid) &amp;#123;">     <link rel="stylesheet" type="text/css" href="/./main.b3331d.css"> 
  
- <meta name="google-site-verification" content="Ba-3awwjC1UFDf___EBuN56ThoIMU3SyOWwlTWYm5aI" /> 
-
+ 
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
