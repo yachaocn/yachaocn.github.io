@@ -177,6 +177,155 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BLE 4.0 技术学习（四）蓝牙后台进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/13/BLE 4.0 技术学习（四）蓝牙后台进程/">BLE 4.0 技术学习（四）蓝牙后台进程</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/13/BLE 4.0 技术学习（四）蓝牙后台进程/" class="archive-article-date">
+  	<time datetime="2016-04-13T08:35:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="BLE-4-0-学习（三）蓝牙后台进程"><a href="#BLE-4-0-学习（三）蓝牙后台进程" class="headerlink" title="BLE 4.0 学习（三）蓝牙后台进程"></a>BLE 4.0 学习（三）蓝牙后台进程</h1><hr>
+<h2 id="iOS-APP-Core-Bluetooth-后台进程"><a href="#iOS-APP-Core-Bluetooth-后台进程" class="headerlink" title="iOS APP Core Bluetooth 后台进程"></a>iOS APP Core Bluetooth 后台进程</h2><p>当你的应用在后台或者被挂起时，通常情况下central和peripheral的Core Bluetooth任务都会被禁用。你可以声明你的app允许蓝牙核心背景执行模式从挂起状态苏醒，然后去执行一些与蓝牙有关的事件。即使您的应用程序并不需要全方位的后台处理支持，当有重要事件发生，它仍然可以要求通过系统提醒。</p>
+<p>即使您的应用程序支持一个或两个核心蓝牙后台执行模式，它不能永远运行。在某些时候，系统可能需要终止您的应用程序以释放内存对于当前的前景应用程序，造成任何活动或挂起的连接丢失。</p>
+<p>###只在前台活动的app（指那些没有声明支持蓝牙后台进程的应用）</p>
+<p><code>以下简称只在前台活动的app</code></p>
+<p>大多数app是不支持后台进程的，除非你请求特定的蓝牙后台服务，否则在你应用程序在前台时经历短暂的挂起状态进入到后台时，您的应用程序无法执行蓝牙相关的任务，也不是能处理任何蓝牙相关的事件，直到它恢复到前台。</p>
+<p>只在前台活动的app，当其进入挂起状态或者进入后台后，在Central那一侧是无法扫描，发现正在广播的Peripheral的。在Peripheral那一侧，广播也会被禁用，任何Central试图去获取characteristic的值时都会产生一个错误，</p>
+<p>基于这些情况，当你的应用程序进入挂起或进入后台，你是不会收到任何的通知的。</p>
+<p><strong>解决办法：利用Peripheral的连接时的选项</strong></p>
+<p>当只在前台活动的app，当有蓝牙相关事件产生时，系统将会将其放入队列中，然后当其再次进入前台时，将此事件传递给app。 也就是说，当Central产生一些事件时，Core Bluetooth提供了一个警示框去提示用户，用户可以使用这个警示框决定应用是否使该应用重新进入前台！</p>
+<p>你可以在CBCentralManager中的connectPeripheral:options:方法中的options参数中设定这些参数：</p>
+<ul>
+<li>CBConnectPeripheralOptionNotifyOnConnectionKey：当设备连接状态是成功的时，应用程序突然被挂起，系统将会弹出一个警示框。</li>
+<li>CBConnectPeripheralOptionNotifyOnDisconnectionKey:对于给定的Peripheral，如果你想在应用程序挂起造成蓝牙断开连接时，弹出一个断开连接的提示框时，你可以使用此键。</li>
+<li>CBConnectPeripheralOptionNotifyOnNotificationKey：对于给定的一个Peripheral，当应用程序进入挂起状态时，如果你想对所有的通知都给出一个提示框，用此键。</li>
+</ul>
+<p>###蓝牙核心后台执行模式</p>
+<p>如果你想要你的app在进入后台时执行一些后台的任务，你必须在Info.plist中声明，使你的app支持后台执行模式。当你声明了这些时，当应用进入挂起状态时系统将会唤醒你的app，并允许app去执行与蓝牙相关的事件。</p>
+<p><strong>I.配置plist</strong></p>
+<p>有两个后台执行模式需要声明：一个是作为Central时，一个是作为Peripheral时，如果你的app两个都声明了，那么你的app就会具有了后台执行蓝牙相关事件的能力。添加UIBackgroundModes键到你的Info.plist，去声明你的app支持后台执行模式，设置这个键为一个数组，包含下面一个或两个字符串。</p>
+<ul>
+<li>bluetooth-central :使用Core Bluetooth framework与BLE Peripheral进行交流。</li>
+<li>bluetooth-peripheral :使用Core Bluetooth framework分享app数据。<br>如图：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/bleBG.png" alt=""></li>
+</ul>
+<p><code>PS:iOS 10 后需要在info-plist中添加 NSBluetoothPeripheralUsageDescription 键，该键是string类型，用于申请使用蓝牙时的提示信息，如果没有此键蓝牙功能将不能使用！</code></p>
+<p>如下：</p>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-12-16%20%E4%B8%8B%E5%8D%883.44.45.png" alt="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-12-16%20%E4%B8%8B%E5%8D%883.44.45.png"></p>
+<p><strong>II.Central端后台执行模式</strong></p>
+<p>当你的app在Info.plist中的UIBackgroundModes键配置了 bluetooth-central字符时， Core Bluetooth framework允许允许你的应用程序在后台时执行一些蓝牙相关事件操作。当你的app在后台时，你仍然可以搜索并连接到Peripheral，搜索并和Peripheral进行数据交互，此外系统唤醒你的app时，CBCentralManagerDelegate 或者 CBPeripheralDelegate的代理方法都照样被调用，让你的app来处理重要的Central相关事件。例如当建立连接，或断开连接；Peripheral发送更新的characteristic的值时；当Central Manager的状态发生变化时，Central都会调用上述方法。</p>
+<p>尽管你的app在后台时能够执行一些蓝牙相关的事件，但是在扫描设备时，app在前台与在后台是不一样的，当你的app在后台扫描设备时：</p>
+<ul>
+<li>CBCentralManagerScanOptionAllowDuplicatesKey键将会被忽略，多重发现的Peripheral事件，将会被合成一个单一的发现事件。</li>
+<li><p>所有的在后台扫描Peripheral外设的Centarl，搜索到广告包的时间将会增加，也就是Central将会花费很长的时间发现正在广播的Peripheral。</p>
+<p>这些变化有助于减少无线电的使用，提升您的iOS设备上的电池寿命。</p>
+</li>
+</ul>
+<p><strong>III.Peripheral端后台执行模式</strong></p>
+<p>当执行Peripheral端后台任务时，你必须在Info.plist中UIBackgroundModes键中配置bluetooth-peripheral字符串，当你配置了这些时，系统将会唤醒你的app去执行读，写，订阅事件。</p>
+<p>除了允许你的app被唤醒去执行读，写，和从连接的Central收到请求外， Core Bluetooth framework 也允许你的app在后台进行广播，总的来说有如下不同：</p>
+<ul>
+<li>CBAdvertisementDataLocalNameKey 键将会被忽略并且Peripheral的本地名将不会被广播。</li>
+<li>包含在CBAdvertisementDataServiceUUIDsKey广告键值所有服务的UUID被放置在一个特殊的“溢出”区;他们只能通过显式扫描他们的iOS设备才会被发现。</li>
+<li>在后台广播的Peripheral的发送广播的频率将会被降低。</li>
+</ul>
+<p>###更好的使用后台模式</p>
+<p>虽然声明你的应用程序，使其支持蓝牙核心后台执行模式中的一种或两种可能需要满足特定的用例，你应该始终负责任地执行后台处理。由于执行许多蓝牙相关的任务，需要积极利用iOS设备的机载无线电和，相反，无线电使用对iOS设备的电池产生不利影响，所以尽量减少后台工作量。被唤醒的app需要迅速处理它的相关事件，否则app有可能再此进入挂起状态。</p>
+<p>声明对蓝牙核心后台执行模式的支持时，任何应用程序必须遵循几个基本原则：</p>
+<ul>
+<li>应用程式应基于会话，并提供一个界面，允许用户决定何时开始和停止蓝牙相关事件的输送。</li>
+<li>一旦被唤醒，应用程序有10秒左右时间去完成的任务。理想的情况下，就应该尽可能快完成的任务，并允许自身被再次挂起。那些花太多时间在后台执行的应用程序可能被系统杀掉。</li>
+<li>不要唤醒app让其执行一些无关的任务，</li>
+</ul>
+<p>###执行长期的后台工作</p>
+<p>一些app需要 Core Bluetooth framework执行长期的后台工作，想象一下，你看发了一款家庭安全app，他能用蓝牙和门的锁进行交互，当用户离开家的时候，设备超出了锁的监控范围，和锁的蓝牙的连接就会断掉，然后锁就会自动锁上门，当用户转了一小圈再次回到家时，iOS设备将自动再次连接到锁。</p>
+<p>现在想象一下：如果用户离开家几天后，如果当用户离开家的时候，用户将app终止掉（退出），当用户重新回到家时，app将无法与锁自动连接，用户可能无法打开家门，对于这样的app来说，当用户重新回到家时，能够继续使用Core Bluetooth执行长期的后台活动是十分必要的！那么我们如何去解决这种问题呢？请看下面：</p>
+<p><strong>I.状态的保存与恢复</strong></p>
+<p>由于状态的保存和恢复是建立在Core Bluetooth基础上的。你的app可以选择这个功能去要求系统存储app的Central Manager和Peripheral Mnager的状态，并继续代表它们执行一些蓝牙相关任务，甚至是你的app不再运行，当这些任务之一完成之后，系统将会重新启动你的app进入后台，并给你的app一个机会去恢复它的状态并妥善处理这一事件。在上述的家庭安全App的情况下，系统将会监控连接请求，当用户重新回到家中，系统会重新启动app，调用 centralManager:didConnectPeripheral: 代理回调，连接蓝牙。</p>
+<p>Core Bluetooth支持Central和Peripheral端的状态的存储与恢复！当你的app添加Central角色并添加了支持状态的保存与恢复后，当系统打算中止你的app并释放内存资源时，系统会存储你的Central Manager对象的状态（如果你的app有多个Central Manager对象时，你可以选择那一个需要系统跟踪存储）。对于给定的CBCentralManager对象，系统将会跟踪它的：</p>
+<ul>
+<li>Central Manager扫描的服务（和当扫描开始的时候，扫描的参数options，）</li>
+<li>Central Manager试图或已经连接的Peripherals</li>
+<li>Central Manager订阅的一些characteristics</li>
+</ul>
+<p>对于给定的CBPeripheralManager对象，系统将会跟踪它的：</p>
+<ul>
+<li>Peripheral正在广播的数据</li>
+<li>Peripheral已经发布到设备数据库的服务（services）和特征（characteristics）</li>
+<li><p>已经订阅了Peripheral的特征值的一些Centrals</p>
+<p>当你的重新被系统唤醒并进入后台时，你可以重新实例化你的Central和Peripheral 管理对象并存储他们的状态。下一节将详细描述如何在你的app中存储并恢复其状态。</p>
+</li>
+</ul>
+<p><strong>II.添加对状态存储和恢复的支持</strong></p>
+<p>在Core Bluetooth中状态的保存与恢复是可选的特征有助于你的app更好的工作。你可以按如下步骤添加对此特性的支持：</p>
+<ul>
+<li>(必须)在初始化Central Manager和Peripheral Manager是选择状态的存储与恢复。在下面的”选择状态的存储与恢复”小节会提到如何做。</li>
+<li>(必须)在你的app被系统重新启动的时候重新实例化这些Central Manager和Peripheral Manager对象。在下面的“重新实例化Central和Peripheral管理对象”小节会提到。</li>
+<li>(必须)实现相应的恢复委托方法。在下面的“实现适当的委托方法”小节中提到。</li>
+<li>(可选)更新你的Central和Peripheral的管理对象的初始化过程。在下面的“更新你的初始化过程”小节中会提到。</li>
+</ul>
+<p><em>1.选择状态的存储与恢复</em></p>
+<p>当你初始化一个central 或 peripheral manager时，选择状态的存储与恢复需要提供一个唯一的存储标记：identifier.</p>
+<p>例如初始化一个CBCentralManager时需要提供CBCentralManagerOptionRestoreIdentifierKey选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">myCentralManager =</div><div class="line">       [[CBCentralManager alloc] initWithDelegate:self queue:nil</div><div class="line">        options:@&#123; CBCentralManagerOptionRestoreIdentifierKey:</div><div class="line">        @&quot;myCentralManagerIdentifier&quot; &#125;];</div></pre></td></tr></table></figure>
+<p><code>PS:应为设备上的app可以有多个CBCentralManager 和 CBPeripheralManager 对象，所以在使用CBCentralManagerOptionRestoreIdentifierKey时提供一个唯一的标示，以至于系统能够区分它们</code></p>
+<p><em>2.重新实例化Central和Peripheral管理对象</em></p>
+<p>当你的系统重新启动你的app，并进入后台时，要做的第一件事情就是：用它们对应的存储标记重新初始化你的Central和Peripheral Manager对象。如果你的app只有一个Central或者Peripheral管理对象并且这个管理对象存在于你app整个生命周期，那么其它的步骤就不需要做了。</p>
+<p>如果你的app中使用了一个或多个Central或Peripheral Manager的对象，或者如果它没有存在于你app整个生命周期，那么，当它被系统重新启动时，你的app需要去知道那些管理者（managers）需要去初始化。通过app代理的application:didFinishLaunchingWithOptions:方法中的(UIApplicationLaunchOptionsBluetoothCentralsKey 和 UIApplicationLaunchOptionsBluetoothPeripheralsKey)键， 你会获得一个当系统退出app时保存的这个管理对象的标记的列表。</p>
+<p>例如当你的应用程序被系统重新启动时，你可以检索所有系统为你保存的Central Manager对象的存储标记（identifiers）。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application</div><div class="line">didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line"> </div><div class="line">    NSArray *centralManagerIdentifiers =</div><div class="line">        launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey];</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>在你获得这些标记后，用一个循环重新初始化这些对象。</p>
+<p><code>在应用程序不再运行时，你的应用被系统重新启动，用系统提供的标记初始化的对象，可以执行一些与蓝牙有关的操作</code></p>
+<p><em>3.实现适当的委托方法</em></p>
+<p>在你的app中重新初始化适当的central 和 peripheral manager 对象后，用Bluetooth系统状态通过同步它们的状态恢复它们，要使你的系统的自身的方法是你的app快速恢复其状态，需要实现适当的恢复代理方法。对于central manager使用 centralManager:willRestoreState: 代理方法，对于peripheral manager使用 peripheralManager:willRestoreState:方法。</p>
+<p><code>PS：对于选择使用Core Bluetooth的存储和恢复特性的app，首先会掉用centralManager:willRestoreState: 和peripheralManager:willRestoreState:，对于那些没有选择使用Core Bluetooth的存储和恢复特性的app， centralManagerDidUpdateState: and peripheralManagerDidUpdateState: 代理方法首先会被调用</code></p>
+<p>在两个代理方法中，最后一个字典参数存储了，当app被退出时存储的管理者的信息，例如centralManagerDidUpdateState: 中的到central manager已经或尝试连接的一些Peripheral。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)centralManager:(CBCentralManager *)central</div><div class="line">      willRestoreState:(NSDictionary *)state &#123;</div><div class="line"> </div><div class="line">    NSArray *peripherals =</div><div class="line">        state[CBCentralManagerRestoredStatePeripheralsKey];</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>对于获得的这些外设我们可以恢复与它的状态！比如用  [myCentralManager connectPeripheral:peripheral options:nil]重新连接外设。</p>
+<p><em>4.更新你的初始化过程</em></p>
+<p>在你实现了上面的三步后，你可能会关注更新你的central 和 peripheral manager的初始化过程。通过这一步可选的步骤，可能会使你的事情顺利进行。例如你的应用程序可能在搜索已连接的外设的数据时被中止，当你的app被中止时，不知道发现（discovery）进程进展到什么地步了，为你又想要确定到底进展到什么地步了。<br>当你的app代理方法centralManagerDidUpdateState: 中初始化时，你会发现你已经成功的搜索到了特定的恢复的Peripheral的Service，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSUInteger serviceUUIDIndex =</div><div class="line">    [peripheral.services indexOfObjectPassingTest:^BOOL(CBService *obj,</div><div class="line">    NSUInteger index, BOOL *stop) &#123;</div><div class="line">        return [obj.UUID isEqual:myServiceUUIDString];</div><div class="line">    &#125;];</div><div class="line"> </div><div class="line">if (serviceUUIDIndex == NSNotFound) &#123;</div><div class="line">    [peripheral discoverServices:@[myServiceUUIDString]];</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>正如上面所说，如果系统在你的Central还没完成搜索Peripheral的服务时中止你的app，同时调用 discoverServices:开始探索恢复的Peripheral的数据；如果你的app已经成功发现了设备的服务，你应该检查适当的characteristics是否被发现了，是否成功订阅了它们；以这种方式更新你的初始化过程，你才能够确保能在正确的时间处理正确的事件！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/04/13/BLE 4.0 技术学习（四）蓝牙后台进程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-BLE 4.0 技术学习（三）外设Peripheral" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1052,133 +1201,9 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-Sqlite3数据库加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/03/Sqlite3数据库加密/">Sqlite3数据库加密</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/03/Sqlite3数据库加密/" class="archive-article-date">
-  	<time datetime="2016-03-03T03:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="sqlit3数据库加密"><a href="#sqlit3数据库加密" class="headerlink" title="sqlit3数据库加密"></a>sqlit3数据库加密</h1><p><strong>前言：</strong>你是否正在为数据库中数据的安全性儿担忧？本节我讲一下关于数据库的加密相关的知识。</p>
-<p><code>工具：</code></p>
-<ul>
-<li>FMDB</li>
-<li>sqlcipher</li>
-<li>Xcode 7.2</li>
-</ul>
-<hr>
-<h2 id="I-构建项目运行环境"><a href="#I-构建项目运行环境" class="headerlink" title="I.构建项目运行环境"></a>I.构建项目运行环境</h2><hr>
-<p>###导入FMDB到项目</p>
-<ul>
-<li><a href="https://github.com/ccgus/fmdb/archive/master.zip" target="_blank" rel="external">下载FMDB</a>，也可以去github上去clone</li>
-<li>导入项目<ul>
-<li>在下载的目录下找到./src/fmdb</li>
-<li>把其拖入项目中</li>
-</ul>
-</li>
-<li>加入sqlite依赖库libsqlite3.tbd<ul>
-<li>targets&gt;build phases&gt;link bnary with Libraries点‘+’搜索libsqlite3.tbd加入到项目中</li>
-</ul>
-</li>
-</ul>
-<p>###导入sqlcipher到项目</p>
-<p><a href="http://sqlcipher.net/ios-tutorial" target="_blank" rel="external">官方教程</a></p>
-<p><code>sqlcipher不再依赖openssl</code>，从官网教程这样描述</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">OpenSSL</div><div class="line">OpenSSL is no longer required for building SQLCipher on iOS and OS X, as the project by default uses Apple&apos;s CommonCrypto framework for hardware-accelerated encryption. You can still build SQLCipher with other crypto providers like OpenSSL if you&apos;d prefer, or you can write your own.</div></pre></td></tr></table></figure>
-<p><strong>说在ios和OS X 上openssl不再是编译sqlcipher所必须的库了，sqlcipher默认情况下使用苹果的硬件加速CommonCrypto框架加密。</strong></p>
-<p>下面我们实践一下</p>
-<ul>
-<li>1.<a href="https://github.com/sqlcipher/sqlcipher/archive/master.zip" target="_blank" rel="external">下载sqlcipher</a>，也可以去github上去clone</li>
-<li>2.把sqlcipher.xcodeproj加入到你的项目中,<code>注意不要选择copy items if needed</code><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.03.05.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.03.28.png" alt=""></li>
-<li>3.配置Target Dependencies 和 Link Binary With Libraries<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.29.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.46.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.54.png" alt=""></li>
-</ul>
-<p><code>PS:移除Link Binary With Libraries中的libsqlite3.dylib和其他的SQLite framework，否则会报错：’duplicate symbol errors‘</code></p>
-<ul>
-<li>配置编译设置<ul>
-<li>在Header Search Paths中添加sqlcipher中的src文件路径我的是../sqlcipher/src<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.15.05.png" alt=""></li>
-<li>Other C Flags中添加-DSQLITE_HAS_CODEC<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.15.15.png" alt=""></li>
-</ul>
-</li>
-</ul>
-<h2 id="II-应用sqlcipher实现数据库的加密解密"><a href="#II-应用sqlcipher实现数据库的加密解密" class="headerlink" title="II.应用sqlcipher实现数据库的加密解密"></a>II.应用sqlcipher实现数据库的加密解密</h2><p>在Viewcontroller中引入</p>
-<ul>
-<li>FMDatabase.h</li>
-<li>FMDatabaseAdditions.h</li>
-<li>#define docPath NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]</li>
-</ul>
-<hr>
-<p><code>1.创建未加密数据库</code></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;unencryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">        </div><div class="line">//       创建未加密数据库</div><div class="line">        NSString *sql = @&quot;create table if not exists polit(id integer, userName text, password text)&quot;;</div><div class="line">        </div><div class="line">        BOOL result = [db executeUpdate:sql];</div><div class="line">        </div><div class="line">        if (result) &#123;</div><div class="line">            NSLog(@&quot;create table polit succsss...&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;create table polit error...&quot;);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">//        插入数据</div><div class="line">        NSString *insertSql = @&quot;insert into polit(id, userName, password) values(1,&apos;张三&apos;,&apos;zhangsan&apos;)&quot;;</div><div class="line">        BOOL insetResult = [db executeUpdate:insertSql];</div><div class="line">        if (insetResult) &#123;</div><div class="line">            NSLog(@&quot;insert into polit a value success....&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;insert into polit a value error...&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
-<p><code>2.- 使用SQLCipher加密已存在的数据库unencryptDB.db3</code> </p>
-<p>SQLCipher提供了sqlcipher_export()函数，该函数可以方便的对一个普通数据库导入到SQLCipher加密加密的数据库中，操作方式如下:</p>
-<p><strong>数据库端操作</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ ./sqlcipher plaintext.db  </div><div class="line">sqlite&gt; ATTACH DATABASE &apos;encrypted.db&apos; AS encrypted KEY &apos;testkey&apos;;  </div><div class="line">sqlite&gt; SELECT sqlcipher_export(&apos;encrypted&apos;);  </div><div class="line">sqlite&gt; DETACH DATABASE encrypted;</div></pre></td></tr></table></figure>
-<p><strong>iOS端操作</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;unencryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">    NSString *encryptDBsql =[NSString stringWithFormat:@&quot;ATTACH DATABASE &apos;%@&apos; AS encrypted KEY &apos;zhangyachao&apos;;&quot;</div><div class="line">                                 &quot;SELECT sqlcipher_export(&apos;encrypted&apos;);&quot;</div><div class="line">                                 &quot;DETACH DATABASE encrypted;&quot;,[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">       BOOL sql3 = [db executeStatements:encryptDBsql];</div><div class="line">        if (sql3) &#123;</div><div class="line">            NSLog(@&quot;statament success...&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;statament error....&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
-<p><code>3.验证数据库是否加密成功</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">   if ([db open] &amp;&amp; [db setKey:@&quot;zhangyachao&quot;]) &#123;</div><div class="line">            NSLog(@&quot;密码正确，打开加密数据库成功....&quot;);</div><div class="line">        &#125;else &#123;</div><div class="line">             NSLog(@&quot;密码错误，打开加密数据库失败....&quot;);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        NSString *tableCountSql = @&quot;select count(*) from SQLITE_MASTER where sql is not null and type=&apos;table&apos;&quot;;</div><div class="line">        NSInteger count = [db intForQuery:tableCountSql];</div><div class="line">        if (count &gt; 0) &#123;</div><div class="line">            NSLog(@&quot;数据库中表的个数为%ld&quot;,count);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;查询表个数错误！&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
-<p><code>4.解除使用SQLCipher加密的数据库密码</code></p>
-<p><strong>数据库端操作</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ./sqlcipher encrypted.db  </div><div class="line">sqlite&gt; PRAGMA key = &apos;testkey&apos;;  </div><div class="line">sqlite&gt; ATTACH DATABASE &apos;plaintext.db&apos; AS plaintext KEY &apos;&apos;;  -- empty key will disable encryption </div><div class="line">sqlite&gt; SELECT sqlcipher_export(&apos;plaintext&apos;);  </div><div class="line">sqlite&gt; DETACH DATABASE plaintext;</div></pre></td></tr></table></figure>
-<p><strong>iOS端操作</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">[db open]</div><div class="line">NSString *otherUnencryptDBsql =[NSString stringWithFormat:@&quot;PRAGMA key = &apos;zhangyachao&apos;;&quot;</div><div class="line">                             &quot;ATTACH DATABASE &apos;%@&apos; AS otherUnencryptDB KEY &apos;&apos;;&quot;</div><div class="line">                             &quot;SELECT sqlcipher_export(&apos;otherUnencryptDB&apos;);&quot;</div><div class="line">                             &quot;DETACH DATABASE encrypted;&quot;,[docPath stringByAppendingPathComponent:@&quot;otherUnencryptDB.db3&quot;]];</div><div class="line">    BOOL otherUnencryptDBRes = [db executeStatements:otherUnencryptDBsql];</div><div class="line">    if (otherUnencryptDBRes) &#123;</div><div class="line">        NSLog(@&quot;数据库解密成功...&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;数据客解密失败...&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>SQLCipher是一个使用方便，灵活性高的数据库加密工具。</code><br>最后奉上本人的加解密代码<a href="https://github.com/yachaocn/sqlite3-sqlcipher" target="_blank" rel="external">Sqlit3附加数据库</a></p>
-<p>本文部分参考了<a href="http://foggry.com/blog/2014/05/19/jia-mi-ni-de-sqlite/" target="_blank" rel="external">王中周的技术博客</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/03/Sqlite3数据库加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -1272,11 +1297,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">

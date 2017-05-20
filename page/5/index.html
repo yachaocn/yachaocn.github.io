@@ -177,6 +177,130 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Sqlite3数据库加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/03/Sqlite3数据库加密/">Sqlite3数据库加密</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/03/Sqlite3数据库加密/" class="archive-article-date">
+  	<time datetime="2016-03-03T03:14:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="sqlit3数据库加密"><a href="#sqlit3数据库加密" class="headerlink" title="sqlit3数据库加密"></a>sqlit3数据库加密</h1><p><strong>前言：</strong>你是否正在为数据库中数据的安全性儿担忧？本节我讲一下关于数据库的加密相关的知识。</p>
+<p><code>工具：</code></p>
+<ul>
+<li>FMDB</li>
+<li>sqlcipher</li>
+<li>Xcode 7.2</li>
+</ul>
+<hr>
+<h2 id="I-构建项目运行环境"><a href="#I-构建项目运行环境" class="headerlink" title="I.构建项目运行环境"></a>I.构建项目运行环境</h2><hr>
+<p>###导入FMDB到项目</p>
+<ul>
+<li><a href="https://github.com/ccgus/fmdb/archive/master.zip" target="_blank" rel="external">下载FMDB</a>，也可以去github上去clone</li>
+<li>导入项目<ul>
+<li>在下载的目录下找到./src/fmdb</li>
+<li>把其拖入项目中</li>
+</ul>
+</li>
+<li>加入sqlite依赖库libsqlite3.tbd<ul>
+<li>targets&gt;build phases&gt;link bnary with Libraries点‘+’搜索libsqlite3.tbd加入到项目中</li>
+</ul>
+</li>
+</ul>
+<p>###导入sqlcipher到项目</p>
+<p><a href="http://sqlcipher.net/ios-tutorial" target="_blank" rel="external">官方教程</a></p>
+<p><code>sqlcipher不再依赖openssl</code>，从官网教程这样描述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">OpenSSL</div><div class="line">OpenSSL is no longer required for building SQLCipher on iOS and OS X, as the project by default uses Apple&apos;s CommonCrypto framework for hardware-accelerated encryption. You can still build SQLCipher with other crypto providers like OpenSSL if you&apos;d prefer, or you can write your own.</div></pre></td></tr></table></figure>
+<p><strong>说在ios和OS X 上openssl不再是编译sqlcipher所必须的库了，sqlcipher默认情况下使用苹果的硬件加速CommonCrypto框架加密。</strong></p>
+<p>下面我们实践一下</p>
+<ul>
+<li>1.<a href="https://github.com/sqlcipher/sqlcipher/archive/master.zip" target="_blank" rel="external">下载sqlcipher</a>，也可以去github上去clone</li>
+<li>2.把sqlcipher.xcodeproj加入到你的项目中,<code>注意不要选择copy items if needed</code><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.03.05.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.03.28.png" alt=""></li>
+<li>3.配置Target Dependencies 和 Link Binary With Libraries<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.29.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.46.png" alt=""><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.07.54.png" alt=""></li>
+</ul>
+<p><code>PS:移除Link Binary With Libraries中的libsqlite3.dylib和其他的SQLite framework，否则会报错：’duplicate symbol errors‘</code></p>
+<ul>
+<li>配置编译设置<ul>
+<li>在Header Search Paths中添加sqlcipher中的src文件路径我的是../sqlcipher/src<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.15.05.png" alt=""></li>
+<li>Other C Flags中添加-DSQLITE_HAS_CODEC<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-03%20%E4%B8%8A%E5%8D%8810.15.15.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h2 id="II-应用sqlcipher实现数据库的加密解密"><a href="#II-应用sqlcipher实现数据库的加密解密" class="headerlink" title="II.应用sqlcipher实现数据库的加密解密"></a>II.应用sqlcipher实现数据库的加密解密</h2><p>在Viewcontroller中引入</p>
+<ul>
+<li>FMDatabase.h</li>
+<li>FMDatabaseAdditions.h</li>
+<li>#define docPath NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]</li>
+</ul>
+<hr>
+<p><code>1.创建未加密数据库</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;unencryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">        </div><div class="line">//       创建未加密数据库</div><div class="line">        NSString *sql = @&quot;create table if not exists polit(id integer, userName text, password text)&quot;;</div><div class="line">        </div><div class="line">        BOOL result = [db executeUpdate:sql];</div><div class="line">        </div><div class="line">        if (result) &#123;</div><div class="line">            NSLog(@&quot;create table polit succsss...&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;create table polit error...&quot;);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">//        插入数据</div><div class="line">        NSString *insertSql = @&quot;insert into polit(id, userName, password) values(1,&apos;张三&apos;,&apos;zhangsan&apos;)&quot;;</div><div class="line">        BOOL insetResult = [db executeUpdate:insertSql];</div><div class="line">        if (insetResult) &#123;</div><div class="line">            NSLog(@&quot;insert into polit a value success....&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;insert into polit a value error...&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p><code>2.- 使用SQLCipher加密已存在的数据库unencryptDB.db3</code> </p>
+<p>SQLCipher提供了sqlcipher_export()函数，该函数可以方便的对一个普通数据库导入到SQLCipher加密加密的数据库中，操作方式如下:</p>
+<p><strong>数据库端操作</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ ./sqlcipher plaintext.db  </div><div class="line">sqlite&gt; ATTACH DATABASE &apos;encrypted.db&apos; AS encrypted KEY &apos;testkey&apos;;  </div><div class="line">sqlite&gt; SELECT sqlcipher_export(&apos;encrypted&apos;);  </div><div class="line">sqlite&gt; DETACH DATABASE encrypted;</div></pre></td></tr></table></figure>
+<p><strong>iOS端操作</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;unencryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">    NSString *encryptDBsql =[NSString stringWithFormat:@&quot;ATTACH DATABASE &apos;%@&apos; AS encrypted KEY &apos;zhangyachao&apos;;&quot;</div><div class="line">                                 &quot;SELECT sqlcipher_export(&apos;encrypted&apos;);&quot;</div><div class="line">                                 &quot;DETACH DATABASE encrypted;&quot;,[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">       BOOL sql3 = [db executeStatements:encryptDBsql];</div><div class="line">        if (sql3) &#123;</div><div class="line">            NSLog(@&quot;statament success...&quot;);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;statament error....&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p><code>3.验证数据库是否加密成功</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">   [db open]</div><div class="line">   if ([db open] &amp;&amp; [db setKey:@&quot;zhangyachao&quot;]) &#123;</div><div class="line">            NSLog(@&quot;密码正确，打开加密数据库成功....&quot;);</div><div class="line">        &#125;else &#123;</div><div class="line">             NSLog(@&quot;密码错误，打开加密数据库失败....&quot;);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        NSString *tableCountSql = @&quot;select count(*) from SQLITE_MASTER where sql is not null and type=&apos;table&apos;&quot;;</div><div class="line">        NSInteger count = [db intForQuery:tableCountSql];</div><div class="line">        if (count &gt; 0) &#123;</div><div class="line">            NSLog(@&quot;数据库中表的个数为%ld&quot;,count);</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;查询表个数错误！&quot;);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p><code>4.解除使用SQLCipher加密的数据库密码</code></p>
+<p><strong>数据库端操作</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ./sqlcipher encrypted.db  </div><div class="line">sqlite&gt; PRAGMA key = &apos;testkey&apos;;  </div><div class="line">sqlite&gt; ATTACH DATABASE &apos;plaintext.db&apos; AS plaintext KEY &apos;&apos;;  -- empty key will disable encryption </div><div class="line">sqlite&gt; SELECT sqlcipher_export(&apos;plaintext&apos;);  </div><div class="line">sqlite&gt; DETACH DATABASE plaintext;</div></pre></td></tr></table></figure>
+<p><strong>iOS端操作</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:[docPath stringByAppendingPathComponent:@&quot;encryptDB.db3&quot;]];</div><div class="line">[db open]</div><div class="line">NSString *otherUnencryptDBsql =[NSString stringWithFormat:@&quot;PRAGMA key = &apos;zhangyachao&apos;;&quot;</div><div class="line">                             &quot;ATTACH DATABASE &apos;%@&apos; AS otherUnencryptDB KEY &apos;&apos;;&quot;</div><div class="line">                             &quot;SELECT sqlcipher_export(&apos;otherUnencryptDB&apos;);&quot;</div><div class="line">                             &quot;DETACH DATABASE encrypted;&quot;,[docPath stringByAppendingPathComponent:@&quot;otherUnencryptDB.db3&quot;]];</div><div class="line">    BOOL otherUnencryptDBRes = [db executeStatements:otherUnencryptDBsql];</div><div class="line">    if (otherUnencryptDBRes) &#123;</div><div class="line">        NSLog(@&quot;数据库解密成功...&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;数据客解密失败...&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>SQLCipher是一个使用方便，灵活性高的数据库加密工具。</code><br>最后奉上本人的加解密代码<a href="https://github.com/yachaocn/sqlite3-sqlcipher" target="_blank" rel="external">Sqlit3附加数据库</a></p>
+<p>本文部分参考了<a href="http://foggry.com/blog/2014/05/19/jia-mi-ni-de-sqlite/" target="_blank" rel="external">王中周的技术博客</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/03/Sqlite3数据库加密/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS9网络请求之NSURLSession" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -957,82 +1081,9 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-iOS-7添加pch全局引用文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/30/iOS-7添加pch全局引用文件/">iOS_7添加pch全局引用文件</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/30/iOS-7添加pch全局引用文件/" class="archive-article-date">
-  	<time datetime="2016-01-30T01:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##xcode 7 添加pch文件</p>
-<hr>
-<ul>
-<li>1.command+N选择Other》PCH</li>
-</ul>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.15.23.png" alt=""></p>
-<ul>
-<li><p>2.在target》build setting 中搜索 prefix header<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.19.18.png" alt=""></p>
-</li>
-<li><p>3.双击后面空白，把你刚刚创建的pch文件拖进来，会自动填入你的pch文件的本地绝对路径，编译》success<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.23.50.png" alt=""></p>
-</li>
-<li><p>4.恭喜你</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/30/iOS-7添加pch全局引用文件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
@@ -1126,11 +1177,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
