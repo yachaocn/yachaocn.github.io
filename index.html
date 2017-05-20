@@ -197,15 +197,11 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hexo自定义网站升级为https"><a href="#Hexo自定义网站升级为https" class="headerlink" title="Hexo自定义网站升级为https"></a>Hexo自定义网站升级为https</h1><p>##前言</p>
-<p>最近发现，各大网站好像已经开始全站使用HTTPS，看着浏览器地址栏左边有着一把绿色的小锁，好像是一件很酷的事情。国内的网络环境好像越来越差，除了学会科学上网之外，好像也难免会遇到通讯服务商在网站上加上小广告的问题。随着不断了解计算机的知识，安全概念也越来越重。看着某某网站又被脱裤，一不小心自己的隐私可能就泄露出去了。今天是周末，也想给自己的博客加上把绿色的小锁HTTPS。</p>
-<p>##什么是HTTPS</p>
-<p>HTTPS全称Hypertext Transfer Protocol Secure 超文本安全协议。也就是HTTP加上安全传输层协议TSL/SSL。介于HTTP层与TCP层之间的一层安全协议。通过安全认证，可以避免HTTP中间人攻击，信息污染，信息劫持等问题。详细信息的话腾讯Bugly的文章<a href="https://segmentfault.com/a/1190000004199917" target="_blank" rel="external">全站HTTPS</a>来了介绍得很详细。HTTPS基础原理，通信过程，在这篇文章里都有详细地讲到。</p>
-<p>##给博客加上HTTPS</p>
-<p>###数字证书<br>通过上述的HTTPS介绍，可以知道如果我们要给让博客的协议变成HTTPS，就需要有CA认可的证书才可以，一般这样子的证书是需要自己进行购买和申请认证的。简单RSA非对称性的加密算法是无法避免中间人攻击的。存在着中间人攻击和信息抵赖的风险。所以我这里所采用的方法是用，<a href="https://www.cloudflare.com/" target="_blank" rel="external">Cloudflare</a>所提供的CDN来作为HTTPS的接入口。</p>
-<p>###CDN<br>什么是CDN? CDN的全称就是Content Delivery Network，内容分发网络。其最基本的思路就是，用户在访问一个网站的时候，不直接访问这个网站的服务器，CDN系统会根据地理位置，将用户重新导向离其最近的CDN服务器。网站的内容在这个CDN服务器上会有相应的缓存，从而使用户更快地访问到所需要的内容，可以减少网络拥堵的情况，也可以减轻网站的服务器承受太大的访问量，以及带宽不足的情况。</p>
-<p>###主要步骤</p>
-<ul>
+        <h1 id="Hexo自定义网站升级为https"><a href="#Hexo自定义网站升级为https" class="headerlink" title="Hexo自定义网站升级为https"></a>Hexo自定义网站升级为https</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近发现，各大网站好像已经开始全站使用HTTPS，看着浏览器地址栏左边有着一把绿色的小锁，好像是一件很酷的事情。国内的网络环境好像越来越差，除了学会科学上网之外，好像也难免会遇到通讯服务商在网站上加上小广告的问题。随着不断了解计算机的知识，安全概念也越来越重。看着某某网站又被脱裤，一不小心自己的隐私可能就泄露出去了。今天是周末，也想给自己的博客加上把绿色的小锁HTTPS。</p>
+<h2 id="什么是HTTPS"><a href="#什么是HTTPS" class="headerlink" title="什么是HTTPS"></a>什么是HTTPS</h2><p>HTTPS全称Hypertext Transfer Protocol Secure 超文本安全协议。也就是HTTP加上安全传输层协议TSL/SSL。介于HTTP层与TCP层之间的一层安全协议。通过安全认证，可以避免HTTP中间人攻击，信息污染，信息劫持等问题。详细信息的话腾讯Bugly的文章<a href="https://segmentfault.com/a/1190000004199917" target="_blank" rel="external">全站HTTPS</a>来了介绍得很详细。HTTPS基础原理，通信过程，在这篇文章里都有详细地讲到。</p>
+<h2 id="给博客加上HTTPS"><a href="#给博客加上HTTPS" class="headerlink" title="给博客加上HTTPS"></a>给博客加上HTTPS</h2><h3 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h3><p>通过上述的HTTPS介绍，可以知道如果我们要给让博客的协议变成HTTPS，就需要有CA认可的证书才可以，一般这样子的证书是需要自己进行购买和申请认证的。简单RSA非对称性的加密算法是无法避免中间人攻击的。存在着中间人攻击和信息抵赖的风险。所以我这里所采用的方法是用，<a href="https://www.cloudflare.com/" target="_blank" rel="external">Cloudflare</a>所提供的CDN来作为HTTPS的接入口。</p>
+<h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><p>什么是CDN? CDN的全称就是Content Delivery Network，内容分发网络。其最基本的思路就是，用户在访问一个网站的时候，不直接访问这个网站的服务器，CDN系统会根据地理位置，将用户重新导向离其最近的CDN服务器。网站的内容在这个CDN服务器上会有相应的缓存，从而使用户更快地访问到所需要的内容，可以减少网络拥堵的情况，也可以减轻网站的服务器承受太大的访问量，以及带宽不足的情况。</p>
+<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ul>
 <li>注册Cloudflare，添加个人网站，根据指引一步步添加自己的网站。</li>
 <li>获取Cloudflare的<code>Domain Name Server</code>。(<code>alla.ns.cloudflare.com</code>和<code>vin.ns.cloudflare.com</code>)</li>
 <li>在域名提供商处修改自己域名的<code>Domain Name Server</code>为2所获取的DNS</li>
@@ -220,8 +216,7 @@ ga('send', 'pageview');
 <li>更改Cloudflare &gt; Crypto &gt; SSL 选择 <code>Flexible</code>。(加密方式有三种：Flexible、Full SSL 、 Full SSL(strict),这里选择Flexible)</li>
 <li>更改Cloudflare &gt; Crypto &gt; Automatic HTTPS Rewrites 打开开关</li>
 </ul>
-<p>####flexible的SSL加密方式解析</p>
-<blockquote>
+<h4 id="flexible的SSL加密方式解析"><a href="#flexible的SSL加密方式解析" class="headerlink" title="flexible的SSL加密方式解析"></a>flexible的SSL加密方式解析</h4><blockquote>
 <p>There is an encrypted connection between your website visitors and Cloudflare, but not from Cloudflare to your server.</p>
 <ul>
 <li>There is an encrypted connection between your website visitors and Cloudflare, but not from Cloudflare to your server.</li>
@@ -233,8 +228,7 @@ ga('send', 'pageview');
 <ul>
 <li>在cloudflare上的Page Rules设置中，添加上一条规则使得通过http协议的访问也会强制跳转到https上。<br><img src="https://ws1.sinaimg.cn/large/00663vn1gy1ffrm9w3d5nj317s0okad7.jpg" alt=""></li>
 </ul>
-<p>###全站https</p>
-<p>要做到成功让这个博客满足https的要求，在博客所使用所有的图片自然也是要使用https的链接才行的，只要网站上所使用的资源不是全部通过https的就存在着安全的风险。且网站会被chrome等浏览器认为是不安全的。</p>
+<h3 id="全站https"><a href="#全站https" class="headerlink" title="全站https"></a>全站https</h3><p>要做到成功让这个博客满足https的要求，在博客所使用所有的图片自然也是要使用https的链接才行的，只要网站上所使用的资源不是全部通过https的就存在着安全的风险。且网站会被chrome等浏览器认为是不安全的。</p>
 <p>这里所使用的是新浪微博的图床，在chrome商店可以找到对应的插件。在左下角有的https的选项，只要勾选上了就可以默认生成https的图片链接了。<br><img src="https://ws1.sinaimg.cn/large/00663vn1gy1ffrmfntohij31860u8whj.jpg" alt=""></p>
 
       
