@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-05-20T05:13:13.000Z</updated>
+  <updated>2017-05-20T05:13:37.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="https://devchao.com/2017/05/20/Hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7%E4%B8%BAhttps/"/>
     <id>https://devchao.com/2017/05/20/Hexo自定义网站升级为https/</id>
     <published>2017-05-20T05:09:20.000Z</published>
-    <updated>2017-05-20T05:13:13.000Z</updated>
+    <updated>2017-05-20T05:13:37.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Hexo自定义网站升级为https"><a href="#Hexo自定义网站升级为https" class="headerlink" title="Hexo自定义网站升级为https"></a>Hexo自定义网站升级为https</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近发现，各大网站好像已经开始全站使用HTTPS，看着浏览器地址栏左边有着一把绿色的小锁，好像是一件很酷的事情。国内的网络环境好像越来越差，除了学会科学上网之外，好像也难免会遇到通讯服务商在网站上加上小广告的问题。随着不断了解计算机的知识，安全概念也越来越重。看着某某网站又被脱裤，一不小心自己的隐私可能就泄露出去了。今天是周末，也想给自己的博客加上把绿色的小锁HTTPS。</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近发现，各大网站好像已经开始全站使用HTTPS，看着浏览器地址栏左边有着一把绿色的小锁，好像是一件很酷的事情。国内的网络环境好像越来越差，除了学会科学上网之外，好像也难免会遇到通讯服务商在网站上加上小广告的问题。随着不断了解计算机的知识，安全概念也越来越重。看着某某网站又被脱裤，一不小心自己的隐私可能就泄露出去了。今天是周末，也想给自己的博客加上把绿色的小锁HTTPS。</p>
 <h2 id="什么是HTTPS"><a href="#什么是HTTPS" class="headerlink" title="什么是HTTPS"></a>什么是HTTPS</h2><p>HTTPS全称Hypertext Transfer Protocol Secure 超文本安全协议。也就是HTTP加上安全传输层协议TSL/SSL。介于HTTP层与TCP层之间的一层安全协议。通过安全认证，可以避免HTTP中间人攻击，信息污染，信息劫持等问题。详细信息的话腾讯Bugly的文章<a href="https://segmentfault.com/a/1190000004199917" target="_blank" rel="external">全站HTTPS</a>来了介绍得很详细。HTTPS基础原理，通信过程，在这篇文章里都有详细地讲到。</p>
 <h2 id="给博客加上HTTPS"><a href="#给博客加上HTTPS" class="headerlink" title="给博客加上HTTPS"></a>给博客加上HTTPS</h2><h3 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h3><p>通过上述的HTTPS介绍，可以知道如果我们要给让博客的协议变成HTTPS，就需要有CA认可的证书才可以，一般这样子的证书是需要自己进行购买和申请认证的。简单RSA非对称性的加密算法是无法避免中间人攻击的。存在着中间人攻击和信息抵赖的风险。所以我这里所采用的方法是用，<a href="https://www.cloudflare.com/" target="_blank" rel="external">Cloudflare</a>所提供的CDN来作为HTTPS的接入口。</p>
 <h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><p>什么是CDN? CDN的全称就是Content Delivery Network，内容分发网络。其最基本的思路就是，用户在访问一个网站的时候，不直接访问这个网站的服务器，CDN系统会根据地理位置，将用户重新导向离其最近的CDN服务器。网站的内容在这个CDN服务器上会有相应的缓存，从而使用户更快地访问到所需要的内容，可以减少网络拥堵的情况，也可以减轻网站的服务器承受太大的访问量，以及带宽不足的情况。</p>
@@ -59,7 +59,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;Hexo自定义网站升级为https&quot;&gt;&lt;a href=&quot;#Hexo自定义网站升级为https&quot; class=&quot;headerlink&quot; title=&quot;Hexo自定义网站升级为https&quot;&gt;&lt;/a&gt;Hexo自定义网站升级为https&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近发现，各大网站好像已经开始全站使用HTTPS，看着浏览器地址栏左边有着一把绿色的小锁，好像是一件很酷的事情。国内的网络环境好像越来越差，
     
     </summary>
     
