@@ -213,6 +213,7 @@ ga('send', 'pageview');
 <li>App在每次激活或者启动时下载JS代码，下载完成后执行代码,修复线上Bug。</li>
 <li>Server通过Apple的APNS服务器推送<a href="https://devchao.com/2017/04/24/Silent-Remote-Notification/">静默通知</a>,APP后台静默下载补丁文件，下载完成后执行代码，修补线上Bug。</li>
 </ul>
+<p><code>下发代码时可根据设备的UDID实现以航空公司为单位批量修复Bug,想想都高兴</code></p>
 <p>2.如何实现在后台配置APP图标，app下载后设置app图标 ,从而实现让航空公司自己配置自己公司APP的图标？</p>
 <ul>
 <li>首先Apple是不允许APP加载Bundle外的图片的，并且APP的Bundle是只读的,所以要想实现后台配置APP的icon，app的icon文件必须在APP Bundle中.故不能通过后台配置app图标，app下载后，从而加载app Icon。</li>

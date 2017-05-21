@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-05-21T14:51:49.000Z</updated>
+  <updated>2017-05-21T15:00:47.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://devchao.com/2017/05/21/EFB%E6%80%BB%E7%BB%93%E4%B8%8E%E5%90%AF%E5%8F%91/"/>
     <id>https://devchao.com/2017/05/21/EFB总结与启发/</id>
     <published>2017-05-21T14:39:39.000Z</published>
-    <updated>2017-05-21T14:51:49.000Z</updated>
+    <updated>2017-05-21T15:00:47.000Z</updated>
     
     <content type="html"><![CDATA[<p>基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.不发布app如何修改已发布版本的bug？</p>
@@ -32,6 +32,7 @@
 <li>App在每次激活或者启动时下载JS代码，下载完成后执行代码,修复线上Bug。</li>
 <li>Server通过Apple的APNS服务器推送<a href="https://devchao.com/2017/04/24/Silent-Remote-Notification/">静默通知</a>,APP后台静默下载补丁文件，下载完成后执行代码，修补线上Bug。</li>
 </ul>
+<p><code>下发代码时可根据设备的UDID实现以航空公司为单位批量修复Bug,想想都高兴</code></p>
 <p>2.如何实现在后台配置APP图标，app下载后设置app图标 ,从而实现让航空公司自己配置自己公司APP的图标？</p>
 <ul>
 <li>首先Apple是不允许APP加载Bundle外的图片的，并且APP的Bundle是只读的,所以要想实现后台配置APP的icon，app的icon文件必须在APP Bundle中.故不能通过后台配置app图标，app下载后，从而加载app Icon。</li>
