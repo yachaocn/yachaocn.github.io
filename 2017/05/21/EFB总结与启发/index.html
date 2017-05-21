@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
 <meta property="og:description" content="基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。 问题1.不发布app如何修改已发布版本的bug？ 使用JSPatch,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。 代码派发示意图如下：  至于为什么选择JSPatch请看这篇">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg">
-<meta property="og:updated_time" content="2017-05-21T14:40:47.000Z">
+<meta property="og:updated_time" content="2017-05-21T14:45:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EFB总结与启发">
 <meta name="twitter:description" content="基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。 问题1.不发布app如何修改已发布版本的bug？ 使用JSPatch,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。 代码派发示意图如下：  至于为什么选择JSPatch请看这篇">
@@ -209,7 +209,7 @@ ga('send', 'pageview');
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.不发布app如何修改已发布版本的bug？</p>
 <p>使用<a href="https://jspatch.com/" target="_blank" rel="external">JSPatch</a>,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。</p>
 <p>代码派发示意图如下：<br><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
-<p> 至于为什么选择JSPatch请看<a href="">这篇文章</a></p>
+<p> 至于为什么选择JSPatch请看<a href="https://devchao.com/2017/05/21/App%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B9%8BJSPatch/">这篇文章</a></p>
 <p> 其中服务器如何下发JS代码有以下2种方案：</p>
 <ul>
 <li>App在每次激活或者启动时下载JS代码，下载完成后执行代码,修复线上Bug。</li>
