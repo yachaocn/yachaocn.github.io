@@ -183,6 +183,90 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-EFB总结与启发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/21/EFB总结与启发/">EFB总结与启发</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/21/EFB总结与启发/" class="archive-article-date">
+  	<time datetime="2017-05-21T14:39:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.不发布app如何修改已发布版本的bug？</p>
+<p>使用<a href="https://jspatch.com/" target="_blank" rel="external">JSPatch</a>,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。</p>
+<p>代码派发示意图如下：<br><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
+<p> 至于为什么选择JSPatch请看<a href="">这篇文章</a></p>
+<p> 其中服务器如何下发JS代码有以下2种方案：</p>
+<ul>
+<li>App在每次激活或者启动时下载JS代码，下载完成后执行代码,修复线上Bug。</li>
+<li>Server通过Apple的APNS服务器推送<a href="https://devchao.com/2017/04/24/Silent-Remote-Notification/">静默通知</a>,APP后台静默下载补丁文件，下载完成后执行代码，修补线上Bug。</li>
+</ul>
+<p>2.如何实现在后台配置APP图标，app下载后设置app图标 ,从而实现让航空公司自己配置自己公司APP的图标？</p>
+<ul>
+<li>首先Apple是不允许APP加载Bundle外的图片的，并且APP的Bundle是只读的,所以要想实现后台配置APP的icon，app的icon文件必须在APP Bundle中.故不能通过后台配置app图标，app下载后，从而加载app Icon。</li>
+<li>其次我们虽然不能通过后台配置app图标，app下载后设置app图标，但是Apple允许我们在bundle中配置多个app图标，然后在app中切换他们，基于这一点我们可以为各个航空公司配置多个App图标，根据各自的喜好选择适合自己的。iOS设置APP icon技术实现:<a href="https://devchao.com/2017/05/15/change-app-icon/">https://devchao.com/2017/05/15/change-app-icon/</a></li>
+</ul>
+<h2 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h2><p>事件：上次因为飞行员临时更换飞机号，然后下载完的放行资料机号和排班中机号不一致问题。单单从测试方面我受到的启发有以下2点：</p>
+<blockquote>
+<p>测试数据</p>
+<ul>
+<li>公司测试环境上的数据够真实，但覆盖不够全面，只有覆盖全面的数据，才能编写功能覆盖全面的测试用例。因此应该搭建一整套覆盖所有功能模块的覆盖全面的测试数据，而非和航空公司一致的真实数据。</li>
+</ul>
+<p>测试方案</p>
+<ul>
+<li>基于覆盖全面的数据之上，因该编写一整套每一个功能模块的测试用例，并整理归档，新添加功能时，将当前功能所需的<code>数据</code>和<code>操作步骤</code>记录整理归档，并将测试数据更新到测试数据库，依次类推。。。每次测试只需根据现有的测试用例测试即可将所有功能测试完善。这样以来下次测试时，测试任务就会十分清晰，测试覆盖的功能就会相当完善；对于新入职的测试员工能够减少一定的培训的成本，并且能够让测试对自己的工作内容变得十分清晰。 </li>
+</ul>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/21/EFB总结与启发/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-App热更新之JSPatch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -215,8 +299,7 @@ ga('send', 'pageview');
 </ul>
 <p>关于JSPatch与React native的比较可参见<a href="https://blog.cnbang.net/tech/3237/" target="_blank" rel="external">这篇文章</a>。</p>
 <p>由于React native接入的复杂性、学习成本高(JSX)，DynamicCocoa没有开源，Weex使用html、CSS编写，个人又对JS、Html不太熟练，所以比较推荐iOS前端开发者JSPatch.</p>
-<p>##JSPatch线上修复Bug示意</p>
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
+<h2 id="JSPatch线上修复Bug示意"><a href="#JSPatch线上修复Bug示意" class="headerlink" title="JSPatch线上修复Bug示意"></a>JSPatch线上修复Bug示意</h2><p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
 <h2 id="JSPatch-简单用法"><a href="#JSPatch-简单用法" class="headerlink" title="JSPatch 简单用法"></a>JSPatch 简单用法</h2><p>例如线上 APP 有一段代码出现 bug 导致 crash：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@implementation JPTableViewController</div><div class="line">...</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">  NSString *content = self.dataSource[[indexPath row]];  //可能会超出数组范围导致crash</div><div class="line">  JPViewController *ctrl = [[JPViewController alloc] initWithContent:content];</div><div class="line">  [self.navigationController pushViewController:ctrl];</div><div class="line">&#125;</div><div class="line">...</div><div class="line">@end</div></pre></td></tr></table></figure>
 <p>可以通过下发这样一段 JS 代码，覆盖掉原方法，修复这个 bug：</p>
@@ -916,104 +999,6 @@ yachaocn          9043   0.0  0.0  2434840    764 s001  R+    3:52下午   0:00.
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/23/毛玻璃效果的实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-Linux-cp和scp命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/23/Linux-cp和scp命令/">Linux cp和scp命令</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/23/Linux-cp和scp命令/" class="archive-article-date">
-  	<time datetime="2017-03-23T09:31:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Linux-cp和scp命令"><a href="#Linux-cp和scp命令" class="headerlink" title="Linux cp和scp命令"></a>Linux cp和scp命令</h1><p>Linux为我们提供了两个用于文件copy的命令，一个是cp，一个是scp，但是他们略有不同:</p>
-<ul>
-<li>cp — 主要是用于在同一台电脑上，在不同的目录之间来回copy文件 </li>
-<li>scp — 主要是在不同的Linux系统之间来回copy文件 </li>
-</ul>
-<p>##cp<br></p>
-<p>详细见</p>
-<pre><code>$ man 1 cp
-</code></pre><p>cp [OPTIONS] SOURCE DEST — 从源路径copy文件到目的路径 </p>
-<p>cp [OPTIONS] SOURCE… DIRECTORY — 将多个源文件copy到指定的目录（多个源文件用空格分隔</p>
-<p><code>OPTIONS：</code> </p>
-<p><code>-a</code> same as -dpR 尽可能将源文件状态、权限等资料都照原装予以复制，并且是递归copy；</p>
-<p><code>-r</code> 表示递归copy，若source中含有目录名，则将目录下之档案亦皆依序拷贝至目的地； </p>
-<p><code>-f</code> 表示force，若目的地已经有相同档名的档案存在，则在复制前先予以删除再行复制； </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">范例： </div><div class="line"></div><div class="line">1. 将档案 aaa 复制(已存在)，并命名为 bbb： </div><div class="line">cp aaa bbb </div><div class="line">2. 将所有的C语言程式拷贝至 Finished 子目录中： </div><div class="line">cp *.c Finished/</div></pre></td></tr></table></figure>
-<p>##scp<br><br><br>scp是有Security的文件copy，基于ssh登录。操作起来比较方便，比如要把当前一个文件copy到远程另外一台主机上，可以如下命令：</p>
-<pre><code>$scp /home/daisy/full.tar.gz root@172.19.2.75:/home/root 
-</code></pre><p><code>命令基本格式：</code></p>
-<p>scp [OPTIONS] file_source file_target </p>
-<p><code>从本地复制到远程</code></p>
-<pre><code>$ scp local_file remote_username@remote_ip:remote_folder 
-$ scp local_file remote_ip:remote_file 
-</code></pre><p><code>从远程复制到本地</code></p>
-<pre><code>scp root@www.cumt.edu.cn:/home/root/others/music /home/space/music/1.mp3 
-scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/ 
-</code></pre><p><code>复制目录</code>: OPTIONS 填入 <code>-r</code>即可</p>
-<p>完整格式：<strong>scp [本地用户名]@[IP地址]:[文件名1] [远程用户名]@[IP地址]:[文件名2] 
-</strong></p>
-<p><code>本地用户名@IP地址:</code>可以不输入,可能需要输入远程用户名所对应的密码.</p>
-<p><code>[OPTIONS]</code></p>
-<p>-v 和大多数 linux 命令中的 -v 意思一样 , 用来显示进度 . 可以用来查看连接 , 认证 , 或是配置错误 . </p>
-<p>-C 使能压缩选项 . </p>
-<p>-P 选择端口 . 注意 -p 已经被 rcp 使用 . </p>
-<p>-4 强行使用 IPV4 地址 . </p>
-<p>-6 强行使用 IPV6 地址 .</p>
-<pre><code>注意两点： 
-1.如果远程服务器防火墙有特殊限制，scp便要走特殊端口，具体用什么端口视情况而定，命令格式如下： 
-#scp -p 4588 remote@www.abc.com:/usr/local/sin.sh /home/administrator 
-2.使用scp要注意所使用的用户是否具有可读取远程服务器相应文件的权限。
-</code></pre><p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/23/Linux-cp和scp命令/">展开全文 >></a>
         </p>
       
 

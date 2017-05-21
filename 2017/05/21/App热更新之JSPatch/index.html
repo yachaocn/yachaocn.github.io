@@ -17,7 +17,7 @@
 <meta property="og:description" content="目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：  React native: ReactNative基于React,安装配置麻烦，React native官方中文网提供的热更新组件react-native-pushy可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见React native集成指南集成到现有项目,再使用react">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1ffsyhfflwcj31gy11o43t.jpg">
-<meta property="og:updated_time" content="2017-05-21T14:34:02.000Z">
+<meta property="og:updated_time" content="2017-05-21T14:42:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="App热更新之JSPatch">
 <meta name="twitter:description" content="目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：  React native: ReactNative基于React,安装配置麻烦，React native官方中文网提供的热更新组件react-native-pushy可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见React native集成指南集成到现有项目,再使用react">
@@ -218,8 +218,7 @@ ga('send', 'pageview');
 </ul>
 <p>关于JSPatch与React native的比较可参见<a href="https://blog.cnbang.net/tech/3237/" target="_blank" rel="external">这篇文章</a>。</p>
 <p>由于React native接入的复杂性、学习成本高(JSX)，DynamicCocoa没有开源，Weex使用html、CSS编写，个人又对JS、Html不太熟练，所以比较推荐iOS前端开发者JSPatch.</p>
-<p>##JSPatch线上修复Bug示意</p>
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
+<h2 id="JSPatch线上修复Bug示意"><a href="#JSPatch线上修复Bug示意" class="headerlink" title="JSPatch线上修复Bug示意"></a>JSPatch线上修复Bug示意</h2><p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
 <h2 id="JSPatch-简单用法"><a href="#JSPatch-简单用法" class="headerlink" title="JSPatch 简单用法"></a>JSPatch 简单用法</h2><p>例如线上 APP 有一段代码出现 bug 导致 crash：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@implementation JPTableViewController</div><div class="line">...</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">  NSString *content = self.dataSource[[indexPath row]];  //可能会超出数组范围导致crash</div><div class="line">  JPViewController *ctrl = [[JPViewController alloc] initWithContent:content];</div><div class="line">  [self.navigationController pushViewController:ctrl];</div><div class="line">&#125;</div><div class="line">...</div><div class="line">@end</div></pre></td></tr></table></figure>
 <p>可以通过下发这样一段 JS 代码，覆盖掉原方法，修复这个 bug：</p>
@@ -300,6 +299,15 @@ ga('send', 'pageview');
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/05/21/EFB总结与启发/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          EFB总结与启发
+        
+      </div>
+    </a>
   
   
     <a href="/2017/05/20/Hexo自定义网站升级为https/" id="article-nav-older" class="article-nav-link-wrap">

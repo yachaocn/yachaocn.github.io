@@ -183,6 +183,68 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RemoteNotifycation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/16/RemoteNotifycation/">RemoteNotifycation</a>
+    </h1>
+  
+
+        
+        <a href="/2015/12/16/RemoteNotifycation/" class="archive-article-date">
+  	<time datetime="2015-12-16T02:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#ios远程通知</p>
+<hr>
+<p><strong>步骤</strong></p>
+<ul>
+<li>1.注册通知类型</li>
+<li>2.注册远程通知[[UIApplication sharedApplication] registerForRemoteNotifications];</li>
+<li>3.如果注册成功，APNS返回device Token给设备，iOS操作系统把device Token传递给app 代理，在app代理方法application:didRegisterForRemoteNotificationsWithDeviceToken:中获得device Token，app以二进制格式编码，并把其传递给app的服务提供者，如果获得device Token时 出现问题操作系统就会把错误信息传递给app代理方法application:didFailToRegisterForRemoteNotificationsWithError:<br>error描述了错误产生的原因。<br>注： 如果蜂窝移动网、WiFi 不可用下面两个app代理方法将会调用<br>application:didRegisterForRemoteNotificationsWithDeviceToken: application:didFailToRegisterForRemoteNotificationsWithError:</li>
+<li>4.把device Token提供给app推送提供者。</li>
+<li>5.当app<code>不在前台</code>运行时，传递信息依靠呈现一个弹窗、播放一个声音、标记app一个徽章，或许现实一个很多的按钮给用户点击。当用户点击一个按钮时（ios8以后），iOS会调用application:handleActionWithIdentifier:forRemoteNotification:completionHandler:</li>
+<li>6.如果app<code>正在前台</code>运行接收到通知则会调用application:didReceiveRemoteNotification:fetchCompletionHandler不能实现，则会实现application:didReceiveRemoteNotification:方法,如果你想要你的app在程序前台运行时，获取到远程通知必须实现这个方法：application:didReceiveRemoteNotification:fetchCompletionHandler:此时代理开始安排下载等待的数据、消息、其他的元素；一个字典值在第二个参数中传递过来</li>
+</ul>
+<p>####代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">//  AppDelegate.m</div><div class="line">//  RemoteNotificationDemo</div><div class="line">//</div><div class="line">//  Created by NavchinaMacBook on 15/8/4.</div><div class="line">//  Copyright (c) 2015年 NavchinaMacBook. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line"></div><div class="line">#import &quot;AppDelegate.h&quot;</div><div class="line"></div><div class="line">@interface AppDelegate ()</div><div class="line"></div><div class="line">@property(nonatomic) BOOL registered;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation AppDelegate</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark - 注册远程通知</div><div class="line">//用户点击默认按钮、app图标时调用此方法。</div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line"></div><div class="line">//注册通知事件</div><div class="line">    // 第一个事件</div><div class="line">    </div><div class="line">    UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc]init];</div><div class="line">    //创建一个identify用于标记action</div><div class="line">    acceptAction.identifier = @&quot;ACCEPT_IDENTIFIER&quot;;</div><div class="line">    acceptAction.title = @&quot;Accept&quot;;</div><div class="line">    //如果activationMode设置为UIUserNotificationActivationModeForeground，则authenticationRequired将被系统强制设置为yes，将忽视后面的设置。</div><div class="line">    //选择在什么情况加激活应用程序。</div><div class="line">    acceptAction.activationMode = UIUserNotificationActivationModeBackground;</div><div class="line">    //提示字体颜色：yes ：红色 no :蓝色</div><div class="line">    acceptAction.destructive = NO;</div><div class="line">    //是否需要密码验证，yes需要，no：不需要</div><div class="line">    acceptAction.authenticationRequired = NO;</div><div class="line">    </div><div class="line">//    第二个事件</div><div class="line">    UIMutableUserNotificationAction *meetingAction = [[UIMutableUserNotificationAction alloc]init];</div><div class="line">    //创建一个identify用于标记action</div><div class="line">    meetingAction.identifier = @&quot;MEETING_IDENTIFIER&quot;;</div><div class="line">    meetingAction.title = @&quot;OK&quot;;</div><div class="line">    //如果activationMode设置为UIUserNotificationActivationModeForeground，则authenticationRequired将被系统强制设置为yes，将忽视后面的设置。</div><div class="line">    //选择在什么情况加激活应用程序。</div><div class="line">    meetingAction.activationMode = UIUserNotificationActivationModeBackground;</div><div class="line">    //提示字体颜色：yes ：红色 no :蓝色</div><div class="line">    meetingAction.destructive = YES;</div><div class="line">    //是否需要密码验证，yes需要，no：不需要</div><div class="line">    meetingAction.authenticationRequired = NO;</div><div class="line">    </div><div class="line">    </div><div class="line">//添加到不同的类别中去</div><div class="line">    UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc]init];</div><div class="line">    inviteCategory.identifier = @&quot;INVITE_CATEGORY&quot;;</div><div class="line">    [inviteCategory setActions:@[acceptAction,meetingAction] forContext:UIUserNotificationActionContextDefault];</div><div class="line">    [inviteCategory setActions:@[acceptAction,meetingAction] forContext:UIUserNotificationActionContextMinimal];</div><div class="line">    </div><div class="line">//注册通知类别</div><div class="line">    NSSet *categories = [NSSet setWithObjects:inviteCategory,/*alarmCategory*/ nil];</div><div class="line">    CGFloat systemVersion = [[UIDevice currentDevice].systemVersion floatValue];</div><div class="line">    if (systemVersion &gt;= 8.0) &#123;</div><div class="line">    //注册通知类型</div><div class="line">        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;</div><div class="line">        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:categories];</div><div class="line">        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];</div><div class="line">    &#125;else&#123;</div><div class="line">    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];</div><div class="line">    &#125;</div><div class="line">    //向ios操作系统注册远程通知，以获取decice Token.</div><div class="line">    [[UIApplication sharedApplication] registerForRemoteNotifications];</div><div class="line">    return YES;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;%@&quot;,deviceToken);</div><div class="line">    const void *deviceTokenBytes = [deviceToken bytes];</div><div class="line">    //注册成功</div><div class="line">    self.registered = YES;</div><div class="line">    //发送给本地服务器</div><div class="line">//    [self sendProviderDeviceToken:deviceTokenBytes];</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error</div><div class="line">&#123;</div><div class="line">    //注册device Token时失败。</div><div class="line">    NSLog(@&quot;%@&quot;,error);</div><div class="line">&#125;</div><div class="line">#pragma mark - 用户点击按钮后执行方法</div><div class="line">-(void)handleAcceptActionWithNotification:(NSDictionary *)userInfo</div><div class="line">&#123;</div><div class="line">    //设置用户点击按钮后程序需要执行的操作。</div><div class="line">&#125;</div><div class="line">#pragma mark - 收到远程通知</div><div class="line">//收到用户点击事件 （应用程序在后台，用户点击一个按钮时触发）</div><div class="line">-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler</div><div class="line">&#123;</div><div class="line">    //具体实现</div><div class="line">    if ([identifier isEqualToString:@&quot;ACCEPT_IDENTIFIER&quot;]) &#123;</div><div class="line">        [self handleAcceptActionWithNotification:userInfo];</div><div class="line">    &#125;</div><div class="line">    if ([identifier isEqualToString:@&quot;MEETING_IDENTIFIER&quot;]) &#123;</div><div class="line">        //执行具体操作。</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    completionHandler();</div><div class="line">&#125;</div><div class="line">//应用程序在前台收到远程通知时会调用此方法，如果此方法不被实现则会调用application:didReceiveRemoteNotification</div><div class="line">-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler</div><div class="line">&#123;</div><div class="line">    NSString *itemName = [userInfo objectForKey:@&quot;ToDoItemKey&quot;];</div><div class="line">    //具体的实现</div><div class="line">    application.applicationIconBadgeNumber = 3;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo</div><div class="line">&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>附件》》<a href="https://github.com/yachaocn/RemoteNotification" target="_blank" rel="external">下载源码</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/12/16/RemoteNotifycation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-AES对称加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -771,56 +833,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/08/26/iOS中晃动事件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-ipad键盘参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/26/ipad键盘参数/">ipad键盘参数</a>
-    </h1>
-  
-
-        
-        <a href="/2015/08/26/ipad键盘参数/" class="archive-article-date">
-  	<time datetime="2015-08-26T02:20:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ipad键盘参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSConcreteNotification 0x15ddbe30 &#123;name = UIKeyboardWillShowNotification; userInfo = &#123;</div><div class="line">    UIKeyboardAnimationCurveUserInfoKey = 7;</div><div class="line">    UIKeyboardAnimationDurationUserInfoKey = &quot;0.25&quot;;</div><div class="line">    UIKeyboardBoundsUserInfoKey = &quot;NSRect: &#123;&#123;0, 0&#125;, &#123;1024, 352&#125;&#125;&quot;;</div><div class="line">    UIKeyboardCenterBeginUserInfoKey = &quot;NSPoint: &#123;512, 944&#125;&quot;;</div><div class="line">    UIKeyboardCenterEndUserInfoKey = &quot;NSPoint: &#123;512, 592&#125;&quot;;</div><div class="line">    UIKeyboardFrameBeginUserInfoKey = &quot;NSRect: &#123;&#123;0, 768&#125;, &#123;1024, 352&#125;&#125;&quot;;</div><div class="line">    UIKeyboardFrameEndUserInfoKey = &quot;NSRect: &#123;&#123;0, 416&#125;, &#123;1024, 352&#125;&#125;&quot;;</div><div class="line">&#125;&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/08/26/ipad键盘参数/">展开全文 >></a>
         </p>
       
 
