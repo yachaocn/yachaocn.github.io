@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
 <meta property="og:description" content="基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。 问题1.不发布app如何修改已发布版本的bug？ 使用JSPatch,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。 代码派发示意图如下：  至于为什么选择JSPatch请看这篇">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg">
-<meta property="og:updated_time" content="2017-05-21T14:45:18.000Z">
+<meta property="og:updated_time" content="2017-05-21T14:51:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EFB总结与启发">
 <meta name="twitter:description" content="基于现在公司EFB项目的问题，查阅相关资料后针对某些问题写下如下不成熟的解决方案和启发,抛砖引玉。 问题1.不发布app如何修改已发布版本的bug？ 使用JSPatch,其实现原理为：开发者编写JS代码，并将JS代码上传服务器，APP自动下载到本地，JSPatch Engine将JS代码转换为OC代码，然后执行，从而实现修复线上bug。 代码派发示意图如下：  至于为什么选择JSPatch请看这篇">
@@ -228,7 +228,7 @@ ga('send', 'pageview');
 </ul>
 <p>测试方案</p>
 <ul>
-<li>基于覆盖全面的数据之上，因该编写一整套每一个功能模块的测试用例，并整理归档，新添加功能时，将当前功能所需的<code>数据</code>和<code>操作步骤</code>记录整理归档，并将测试数据更新到测试数据库，依次类推。。。每次测试只需根据现有的测试用例测试即可将所有功能测试完善。这样以来下次测试时，测试任务就会十分清晰，测试覆盖的功能就会相当完善；对于新入职的测试员工能够减少一定的培训的成本，并且能够让测试对自己的工作内容变得十分清晰。 </li>
+<li>基于覆盖全面的数据之上，应该编写一整套每一个功能模块的测试用例，并整理归档，新添加功能时，将当前功能所需的<code>数据</code>和<code>操作步骤</code>记录整理归档，并将测试数据更新到测试数据库，依次类推。。。每次测试只需根据现有的测试用例测试即可将所有功能测试完善。这样以来下次测试时，测试任务就会十分清晰，测试覆盖的功能就会相当完善；对于新入职的测试员工能够减少一定的培训的成本，并且能够让测试对自己的工作内容变得十分清晰。 </li>
 </ul>
 </blockquote>
 
