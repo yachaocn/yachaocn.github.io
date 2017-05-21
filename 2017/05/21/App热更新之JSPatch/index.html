@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://devchao.com">
-  <title>AES对称加密 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
+  <title>App热更新之JSPatch | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#AES对称加密 - by yachaocn  摘要 AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。 ####1.创建NSData的一个类别Encryption .h文件 123456#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface">
+  <meta name="description" content="目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：  React native: ReactNative基于React,安装配置麻烦，React native官方中文网提供的热更新组件react-native-pushy可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见React native集成指南集成到现有项目,再使用react">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AES对称加密">
-<meta property="og:url" content="https://devchao.com/2015/12/11/AES对称加密/index.html">
+<meta property="og:title" content="App热更新之JSPatch">
+<meta property="og:url" content="https://devchao.com/2017/05/21/App热更新之JSPatch/index.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="#AES对称加密 - by yachaocn  摘要 AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。 ####1.创建NSData的一个类别Encryption .h文件 123456#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface">
-<meta property="og:updated_time" content="2016-09-18T08:33:11.000Z">
+<meta property="og:description" content="目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：  React native: ReactNative基于React,安装配置麻烦，React native官方中文网提供的热更新组件react-native-pushy可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见React native集成指南集成到现有项目,再使用react">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1ffsyhfflwcj31gy11o43t.jpg">
+<meta property="og:updated_time" content="2017-05-21T14:34:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AES对称加密">
-<meta name="twitter:description" content="#AES对称加密 - by yachaocn  摘要 AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。 ####1.创建NSData的一个类别Encryption .h文件 123456#import &amp;lt;Foundation/Foundation.h&amp;gt;@interface">
+<meta name="twitter:title" content="App热更新之JSPatch">
+<meta name="twitter:description" content="目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：  React native: ReactNative基于React,安装配置麻烦，React native官方中文网提供的热更新组件react-native-pushy可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见React native集成指南集成到现有项目,再使用react">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Welcome | 张亚超的技术博客YACHAO&#39;Blog" type="application/atom+xml">
   
@@ -182,38 +186,57 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-AES对称加密" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-App热更新之JSPatch" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      AES对称加密
+      App热更新之JSPatch
     </h1>
   
 
         
-        <a href="/2015/12/11/AES对称加密/" class="archive-article-date">
-  	<time datetime="2015-12-11T02:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-11</time>
+        <a href="/2017/05/21/App热更新之JSPatch/" class="archive-article-date">
+  	<time datetime="2017-05-21T14:32:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#AES对称加密 - by yachaocn</p>
-<hr>
-<p><strong>摘要</strong></p>
-<p>AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。</p>
-<p>####1.创建NSData的一个类别Encryption</p>
-<p><code>.h文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key;   //加密</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key;   //解密 </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>.m文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;NSData+Encryption.h&quot;</div><div class="line">#import &lt;CommonCrypto/CommonCrypto.h&gt;</div><div class="line"></div><div class="line">@implementation NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key   //加密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesEncrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesEncrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key   //解密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesDecrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesDecrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesDecrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>调用测试</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">    NSString *str = @&quot;你好&quot;;</div><div class="line">    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    </div><div class="line">//    加密</div><div class="line">    NSString *key = @&quot;535541213&quot;;</div><div class="line">    NSData *encryptionData = [data AES256ParmEncryptWithKey:key];</div><div class="line">    NSLog(@&quot;%@加密后数据：%@&quot;,data,encryptionData);</div><div class="line">    </div><div class="line">//解密</div><div class="line">   NSData *deData = [encryptionData AES256ParmDecryptWithKey:key];</div><div class="line">    NSString *deStr = [[NSString alloc]initWithData:deData encoding:NSUTF8StringEncoding];</div><div class="line">    NSLog(@&quot;解密后数据：%@&quot;,deStr);</div></pre></td></tr></table></figure>
-<p>本人代码：<a href="https://github.com/yachaocn/AES-Encryption" target="_blank" rel="external">下载代码</a></p>
+        <p>目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：</p>
+<ul>
+<li><p><a href="https://facebook.github.io/react-native/" target="_blank" rel="external">React native</a>: ReactNative基于<a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>,安装配置麻烦，React native官方中文网提供的热更新组件<a href="https://github.com/reactnativecn/react-native-pushy" target="_blank" rel="external">react-native-pushy</a>可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见<a href="https://facebook.github.io/react-native/docs/integration-with-existing-apps.html" target="_blank" rel="external">React native集成指南</a>集成到现有项目,再使用react-native-pushy。开发需要学习JSX模版。</p>
+</li>
+<li><p><a href="https://microsoft.github.io/code-push/docs/getting-started.html" target="_blank" rel="external">CodePush</a>: 针对<a href="https://facebook.github.io/react-native/" target="_blank" rel="external">React native</a>和<a href="https://cordova.apache.org/" target="_blank" rel="external">Cordova</a>的热更新方案。</p>
+</li>
+<li><a href="https://weex.apache.org/cn/" target="_blank" rel="external">Weex</a>:weex基于<a href="https://cn.vuejs.org/" target="_blank" rel="external">vue.js</a>, weex安装cli之后就可以使用，开发语法类似于普通的html，样式直接使用CSS。集成到现有项目参见<a href="https://weex.apache.org/cn/guide/integrate-to-your-app.html" target="_blank" rel="external">集成 Weex 到已有应用</a></li>
+<li><a href="https://jspatch.com/" target="_blank" rel="external">JPatch</a>: JSPatch 是一个开源项目(<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">Github链接</a>)，只需要在项目里引入极小的引擎文件，就可以使用 JavaScript 调用任何 Objective-C 的原生接口，替换任意 Objective-C 原生方法。目前主要用于下发 JS 脚本替换原生 Objective-C 代码，实时修复线上 bug。具有以下优点:安全、快速、实时、简单。并且有代码补全工具<a href="https://github.com/bang590/JSPatchX" target="_blank" rel="external">JSPatchX</a>、OC到JS代码转换工具<a href="https://bang590.github.io/JSPatchConvertor/" target="_blank" rel="external">JSPatchConvertor</a>。</li>
+<li><a href="https://github.com/DynamicCocoa/DynamicCocoa" target="_blank" rel="external">DynamicCocoa</a>:滴滴iOS的一个框架，准备开源，与JSPatch比更加智能化，用OC在XCode中写完代码，用工具可以自动生成可以更新的js文件。</li>
+</ul>
+<p>关于JSPatch与React native的比较可参见<a href="https://blog.cnbang.net/tech/3237/" target="_blank" rel="external">这篇文章</a>。</p>
+<p>由于React native接入的复杂性、学习成本高(JSX)，DynamicCocoa没有开源，Weex使用html、CSS编写，个人又对JS、Html不太熟练，所以比较推荐iOS前端开发者JSPatch.</p>
+<p>##JSPatch线上修复Bug示意</p>
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
+<h2 id="JSPatch-简单用法"><a href="#JSPatch-简单用法" class="headerlink" title="JSPatch 简单用法"></a>JSPatch 简单用法</h2><p>例如线上 APP 有一段代码出现 bug 导致 crash：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@implementation JPTableViewController</div><div class="line">...</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">  NSString *content = self.dataSource[[indexPath row]];  //可能会超出数组范围导致crash</div><div class="line">  JPViewController *ctrl = [[JPViewController alloc] initWithContent:content];</div><div class="line">  [self.navigationController pushViewController:ctrl];</div><div class="line">&#125;</div><div class="line">...</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>可以通过下发这样一段 JS 代码，覆盖掉原方法，修复这个 bug：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//JS</div><div class="line">defineClass(&quot;JPTableViewController&quot;, &#123;</div><div class="line">  //instance method definitions</div><div class="line">  tableView_didSelectRowAtIndexPath: function(tableView, indexPath) &#123;</div><div class="line">    var row = indexPath.row()</div><div class="line">    if (self.dataSource().length &gt; row) &#123;  //加上判断越界的逻辑</div><div class="line">      var content = self.dataArr()[row];</div><div class="line">      var ctrl = JPViewController.alloc().initWithContent(content);</div><div class="line">      self.navigationController().pushViewController(ctrl);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;, &#123;&#125;)</div></pre></td></tr></table></figure>
+<p>其他高级用法详见<a href="https://github.com/bang590/JSPatch/wiki" target="_blank" rel="external">https://github.com/bang590/JSPatch/wiki</a></p>
+<p><code>JSPatch</code> 提供了JSPatch SDK 提供了脚本后台托管，版本管理，保证传输安全等功能，让你无需搭建一个后台，无需关心部署操作，只需引入一个 SDK 即可立即使用 JSPatch,不过一些服务是收费的。</p>
+<h2 id="JSPatch-SDK-与-github-上开源代码的关系？"><a href="#JSPatch-SDK-与-github-上开源代码的关系？" class="headerlink" title="JSPatch SDK 与 github 上开源代码的关系？"></a>JSPatch SDK 与 github 上开源代码的关系？</h2><p>Github 开源的是 JSPatch 核心代码，使用完全免费自由，若打算自己搭建后台下发 JSPatch 脚本，可以直接使用 github 上的核心代码，与 JSPatch 平台上的 SDK 无关。JSPatch 平台的 SDK 在核心代码的基础上增加了向平台请求脚本/传输解密/版本管理等功能，只用于这个平台。</p>
+<p>##JSPatch SDK接入价格</p>
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1ffsyhfflwcj31gy11o43t.jpg" alt="JSPatch价格"><br>觉得贵的可以搭建自己的后台。</p>
+<p>本文摘录自：</p>
+<ul>
+<li><a href="https://facebook.github.io/react-native/" target="_blank" rel="external">https://facebook.github.io/react-native/</a></li>
+<li><a href="https://microsoft.github.io/code-push/docs/getting-started.html" target="_blank" rel="external">https://microsoft.github.io/code-push/docs/getting-started.html</a></li>
+<li><a href="https://weex.apache.org/cn/" target="_blank" rel="external">https://weex.apache.org/cn/</a></li>
+<li><a href="https://jspatch.com/" target="_blank" rel="external">https://jspatch.com/</a></li>
+</ul>
+<p>如发现本文侵犯了您的知识产权请马上通知我:<code>zyachao@163.com</code>，我将在第一时间删除！</p>
 <p><code>技术交流群:</code><strong>494826724</strong></p>
 
       
@@ -254,6 +277,17 @@ ga('send', 'pageview');
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -267,18 +301,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2015/12/16/RemoteNotifycation/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          RemoteNotifycation
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/11/27/iOS9画中画/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ios9画中画</div>
+    <a href="/2017/05/20/Hexo自定义网站升级为https/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo自定义网站升级为https</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -294,8 +319,8 @@ ga('send', 'pageview');
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "https://devchao.com/2015/12/11/AES对称加密/", 
-    sourceId: "AES对称加密",
+    url: "https://devchao.com/2017/05/21/App热更新之JSPatch/", 
+    sourceId: "App热更新之JSPatch",
     productKey: "b2316564c29a473ba0b7e40a6f1fe688",
     target: "cloud-tie-wrapper"
   };

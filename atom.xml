@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-05-20T05:13:37.000Z</updated>
+  <updated>2017-05-21T14:34:02.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>App热更新之JSPatch</title>
+    <link href="https://devchao.com/2017/05/21/App%E7%83%AD%E6%9B%B4%E6%96%B0%E4%B9%8BJSPatch/"/>
+    <id>https://devchao.com/2017/05/21/App热更新之JSPatch/</id>
+    <published>2017-05-21T14:32:28.000Z</published>
+    <updated>2017-05-21T14:34:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：</p>
+<ul>
+<li><p><a href="https://facebook.github.io/react-native/" target="_blank" rel="external">React native</a>: ReactNative基于<a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a>,安装配置麻烦，React native官方中文网提供的热更新组件<a href="https://github.com/reactnativecn/react-native-pushy" target="_blank" rel="external">react-native-pushy</a>可便捷实现热更新。首先你需要有一个基于React Native开发的应用，如果没有可参见<a href="https://facebook.github.io/react-native/docs/integration-with-existing-apps.html" target="_blank" rel="external">React native集成指南</a>集成到现有项目,再使用react-native-pushy。开发需要学习JSX模版。</p>
+</li>
+<li><p><a href="https://microsoft.github.io/code-push/docs/getting-started.html" target="_blank" rel="external">CodePush</a>: 针对<a href="https://facebook.github.io/react-native/" target="_blank" rel="external">React native</a>和<a href="https://cordova.apache.org/" target="_blank" rel="external">Cordova</a>的热更新方案。</p>
+</li>
+<li><a href="https://weex.apache.org/cn/" target="_blank" rel="external">Weex</a>:weex基于<a href="https://cn.vuejs.org/" target="_blank" rel="external">vue.js</a>, weex安装cli之后就可以使用，开发语法类似于普通的html，样式直接使用CSS。集成到现有项目参见<a href="https://weex.apache.org/cn/guide/integrate-to-your-app.html" target="_blank" rel="external">集成 Weex 到已有应用</a></li>
+<li><a href="https://jspatch.com/" target="_blank" rel="external">JPatch</a>: JSPatch 是一个开源项目(<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">Github链接</a>)，只需要在项目里引入极小的引擎文件，就可以使用 JavaScript 调用任何 Objective-C 的原生接口，替换任意 Objective-C 原生方法。目前主要用于下发 JS 脚本替换原生 Objective-C 代码，实时修复线上 bug。具有以下优点:安全、快速、实时、简单。并且有代码补全工具<a href="https://github.com/bang590/JSPatchX" target="_blank" rel="external">JSPatchX</a>、OC到JS代码转换工具<a href="https://bang590.github.io/JSPatchConvertor/" target="_blank" rel="external">JSPatchConvertor</a>。</li>
+<li><a href="https://github.com/DynamicCocoa/DynamicCocoa" target="_blank" rel="external">DynamicCocoa</a>:滴滴iOS的一个框架，准备开源，与JSPatch比更加智能化，用OC在XCode中写完代码，用工具可以自动生成可以更新的js文件。</li>
+</ul>
+<p>关于JSPatch与React native的比较可参见<a href="https://blog.cnbang.net/tech/3237/" target="_blank" rel="external">这篇文章</a>。</p>
+<p>由于React native接入的复杂性、学习成本高(JSX)，DynamicCocoa没有开源，Weex使用html、CSS编写，个人又对JS、Html不太熟练，所以比较推荐iOS前端开发者JSPatch.</p>
+<p>##JSPatch线上修复Bug示意</p>
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1fftb349t9oj30qy0ragn6.jpg" alt=""></p>
+<h2 id="JSPatch-简单用法"><a href="#JSPatch-简单用法" class="headerlink" title="JSPatch 简单用法"></a>JSPatch 简单用法</h2><p>例如线上 APP 有一段代码出现 bug 导致 crash：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@implementation JPTableViewController</div><div class="line">...</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">  NSString *content = self.dataSource[[indexPath row]];  //可能会超出数组范围导致crash</div><div class="line">  JPViewController *ctrl = [[JPViewController alloc] initWithContent:content];</div><div class="line">  [self.navigationController pushViewController:ctrl];</div><div class="line">&#125;</div><div class="line">...</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>可以通过下发这样一段 JS 代码，覆盖掉原方法，修复这个 bug：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//JS</div><div class="line">defineClass(&quot;JPTableViewController&quot;, &#123;</div><div class="line">  //instance method definitions</div><div class="line">  tableView_didSelectRowAtIndexPath: function(tableView, indexPath) &#123;</div><div class="line">    var row = indexPath.row()</div><div class="line">    if (self.dataSource().length &gt; row) &#123;  //加上判断越界的逻辑</div><div class="line">      var content = self.dataArr()[row];</div><div class="line">      var ctrl = JPViewController.alloc().initWithContent(content);</div><div class="line">      self.navigationController().pushViewController(ctrl);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;, &#123;&#125;)</div></pre></td></tr></table></figure>
+<p>其他高级用法详见<a href="https://github.com/bang590/JSPatch/wiki" target="_blank" rel="external">https://github.com/bang590/JSPatch/wiki</a></p>
+<p><code>JSPatch</code> 提供了JSPatch SDK 提供了脚本后台托管，版本管理，保证传输安全等功能，让你无需搭建一个后台，无需关心部署操作，只需引入一个 SDK 即可立即使用 JSPatch,不过一些服务是收费的。</p>
+<h2 id="JSPatch-SDK-与-github-上开源代码的关系？"><a href="#JSPatch-SDK-与-github-上开源代码的关系？" class="headerlink" title="JSPatch SDK 与 github 上开源代码的关系？"></a>JSPatch SDK 与 github 上开源代码的关系？</h2><p>Github 开源的是 JSPatch 核心代码，使用完全免费自由，若打算自己搭建后台下发 JSPatch 脚本，可以直接使用 github 上的核心代码，与 JSPatch 平台上的 SDK 无关。JSPatch 平台的 SDK 在核心代码的基础上增加了向平台请求脚本/传输解密/版本管理等功能，只用于这个平台。</p>
+<p>##JSPatch SDK接入价格</p>
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1gy1ffsyhfflwcj31gy11o43t.jpg" alt="JSPatch价格"><br>觉得贵的可以搭建自己的后台。</p>
+<p>本文摘录自：</p>
+<ul>
+<li><a href="https://facebook.github.io/react-native/" target="_blank" rel="external">https://facebook.github.io/react-native/</a></li>
+<li><a href="https://microsoft.github.io/code-push/docs/getting-started.html" target="_blank" rel="external">https://microsoft.github.io/code-push/docs/getting-started.html</a></li>
+<li><a href="https://weex.apache.org/cn/" target="_blank" rel="external">https://weex.apache.org/cn/</a></li>
+<li><a href="https://jspatch.com/" target="_blank" rel="external">https://jspatch.com/</a></li>
+</ul>
+<p>如发现本文侵犯了您的知识产权请马上通知我:<code>zyachao@163.com</code>，我将在第一时间删除！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;目前有以下几种个人觉得比较好的热更新方案(原理都是通过JS代码调用OC代码)：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://facebook.github.io/react-native/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo自定义网站升级为https</title>
@@ -913,34 +967,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     <summary type="html">
     
       &lt;h1 id=&quot;关于CoreLocation定位的方向问题&quot;&gt;&lt;a href=&quot;#关于CoreLocation定位的方向问题&quot; class=&quot;headerlink&quot; title=&quot;关于CoreLocation定位的方向问题&quot;&gt;&lt;/a&gt;关于CoreLocation定位的方向问题&lt;/
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据模型排序.md</title>
-    <link href="https://devchao.com/2016/11/21/%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E6%8E%92%E5%BA%8F-md/"/>
-    <id>https://devchao.com/2016/11/21/数据模型排序-md/</id>
-    <published>2016-11-21T01:53:35.000Z</published>
-    <updated>2016-11-21T01:53:57.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="数据模型排序"><a href="#数据模型排序" class="headerlink" title="数据模型排序"></a>数据模型排序</h1><p>前提：有一个装满Model的数组 self.dataSourceArray</p>
-<p><code>排序代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSArray *array = [self.dataSourceArray sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">        //给对象排序</div><div class="line">        NSComparisonResult result = [obj1 compareParkInfo:obj2];</div><div class="line">        return result;</div><div class="line">    &#125;];</div><div class="line">    // 排序好的</div><div class="line">    for (ParkInfo *info in array) &#123;</div><div class="line">        NSLog(@&quot;%ld&quot;, (long)info.feePredict);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>实现代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// Model.h</div><div class="line">- (NSComparisonResult)compareParkInfo:(ParkInfo *)parkinfo;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 在Model.m</div><div class="line">// 自定义排序方法</div><div class="line">- (NSComparisonResult)compareParkInfo:(ParkInfo *)parkinfo&#123;</div><div class="line">    // 升序</div><div class="line">    NSComparisonResult result = [[NSNumber numberWithInteger:self.feePredict] compare:[NSNumber numberWithInteger:parkinfo.feePredict]];</div><div class="line">    if (result == NSOrderedSame) &#123;</div><div class="line">        // 可以按照其他属性进行排序</div><div class="line">    &#125;</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>技术交流：</strong>494826724</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;数据模型排序&quot;&gt;&lt;a href=&quot;#数据模型排序&quot; class=&quot;headerlink&quot; title=&quot;数据模型排序&quot;&gt;&lt;/a&gt;数据模型排序&lt;/h1&gt;&lt;p&gt;前提：有一个装满Model的数组 self.dataSourceArray&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;排序代
     
     </summary>
     

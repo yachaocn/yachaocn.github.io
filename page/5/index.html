@@ -25,7 +25,7 @@
   
   <link rel="stylesheet" type="text/css" href="/./main.b3331d.css">
 
-<meta name="baidu-site-verification" content="SFR5rR8Ckp" />
+<meta name="baidu-site-verification" content="bL82QHzSMw" />
 <!-- Google search console -->
 <meta name="google-site-verification" content="Ba-3awwjC1UFDf___EBuN56ThoIMU3SyOWwlTWYm5aI" />
 
@@ -182,6 +182,66 @@ ga('send', 'pageview');
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-UIPopoverPresentationController解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/03/UIPopoverPresentationController解析/">UIPopoverPresentationController解析</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/03/UIPopoverPresentationController解析/" class="archive-article-date">
+  	<time datetime="2016-03-03T09:41:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="iOS8新特性之UIPopoverPresentationController"><a href="#iOS8新特性之UIPopoverPresentationController" class="headerlink" title="iOS8新特性之UIPopoverPresentationController"></a>iOS8新特性之UIPopoverPresentationController</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if ([[UIDevice currentDevice].systemVersion floatValue] &lt; 8.0f) &#123;</div><div class="line">       UIViewController *contVC = [[UIViewController alloc]init];</div><div class="line">       contVC.view.frame = self.view.frame;</div><div class="line">       UIPopoverController *popVC = [[UIPopoverController alloc]initWithContentViewController:contVC];</div><div class="line">       if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) &#123;</div><div class="line">           [popVC presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];</div><div class="line">       &#125;else&#123;</div><div class="line">           [self presentViewController:contVC animated:YES completion:nil];</div><div class="line">       &#125;</div><div class="line">   &#125;else&#123;</div><div class="line">       </div><div class="line">        UIViewController *VC = [[UIViewController alloc]init];</div><div class="line">        VC.view.frame = self.view.frame;//最大320 X 600</div><div class="line">        VC.modalPresentationStyle = UIModalPresentationPopover;</div><div class="line">        VC.view.backgroundColor = [UIColor yellowColor];</div><div class="line">        UIPopoverPresentationController *popPreVC = VC.popoverPresentationController;</div><div class="line">        popPreVC.sourceRect = _button.frame;</div><div class="line">        popPreVC.sourceView = self.view;</div><div class="line">        popPreVC.barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_button];</div><div class="line">        popPreVC.permittedArrowDirections = UIPopoverArrowDirectionAny;</div><div class="line">        popPreVC.delegate = self;</div><div class="line">        [self presentViewController:VC animated:YES completion:nil];</div><div class="line">        </div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/03/UIPopoverPresentationController解析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
   
     <article id="post-Sqlite3数据库加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1005,74 +1065,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/02/18/framework missing submodule/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-Missing iOS Distribution signing identity" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/16/Missing iOS Distribution signing identity/">Missing iOS Distribution signing identity</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/16/Missing iOS Distribution signing identity/" class="archive-article-date">
-  	<time datetime="2016-02-16T09:16:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="此证书的签发者无效Missing-iOS-Distribution-signing-identity问题解决"><a href="#此证书的签发者无效Missing-iOS-Distribution-signing-identity问题解决" class="headerlink" title="此证书的签发者无效Missing iOS Distribution signing identity问题解决"></a>此证书的签发者无效Missing iOS Distribution signing identity问题解决</h2><p>今天准备打包ipa，结果Xcode报以下错误：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-16%20%E4%B8%8B%E5%8D%885.02.17.png" alt=""></p>
-<p>查看证书后发现Develop证书和Distribution证书都提示：<code>此证书的签发者无效</code>。</p>
-<hr>
-<p>问题原因：</p>
-<ul>
-<li><p>Apple Worldwide Developer Relations Certification Authority证书过期了。<br>AppleWWDRCA证书实际上就是对iOS证书（即Develop证书和Distribution证书）的授权认证，其公钥用于解密认证证书的可靠性。</p>
-</li>
-<li><p>iOS以及Mac OS X系统（在安装Xcode时）将自动安装AppleWWDRCA.cer(Apple Worldwide Developer Relations Certification Authority)这个中间证书（Intermediate Certificates）。</p>
-</li>
-</ul>
-<hr>
-<p>解决办法：</p>
-<ul>
-<li>下载最新的AppleWWDRCA证书。 <a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">点击下载</a> </li>
-<li>打开钥匙串，选择登录，然后选择下面的证书</li>
-<li>选择桌面左上角的显示→显示已过期的证书。</li>
-<li>这时候你会发现一个过期的“WWDR Certificate”（Apple Worldwide Developer Relations Certification Authority），删除它。<code>特别注意：有的在系统那一栏也有这个过期的“WWDR Certificate”，也一并删除它，没有就不作处理。</code></li>
-<li>再回头点击Develop证书和Distribution证书，不出意外他们都变成“此证书有效”了。</li>
-</ul>
-<p>摘录自<a href="http://blog.csdn.net/iosHot" target="_blank" rel="external">http://blog.csdn.net/iosHot</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/02/16/Missing iOS Distribution signing identity/">展开全文 >></a>
         </p>
       
 
