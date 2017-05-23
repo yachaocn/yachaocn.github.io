@@ -183,6 +183,75 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS中晃动事件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/26/iOS中晃动事件/">ios晃动事件</a>
+    </h1>
+  
+
+        
+        <a href="/2015/08/26/iOS中晃动事件/" class="archive-article-date">
+  	<time datetime="2015-08-26T02:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="晃动事件"><a href="#晃动事件" class="headerlink" title="晃动事件"></a>晃动事件</h2><p>#####ios中晃动事件：</p>
+<p><code>声明：在ios中事件的相应者链中指出：1.对于触摸事件响应者传给host View，远程控制事件（耳机线控等）、晃动事件则传递给第一响应者。</code></p>
+<p>1.实现[UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;告诉ios系统支持晃动事件。</p>
+<p>2.重载<br>-(BOOL)canBecomeFirstResponder<br>{<br>    return YES;<br>}//指明控制器可以成为第一响应者。</p>
+<p>3.分别在控制器中书写以下方法</p>
+<pre><code>-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+
+                [self becomeFirstResponder];
+
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self resignFirstResponder];
+}
+</code></pre><p>4、viewController 方法</p>
+<p>-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event<br>{<br>    if (motion == UIEventSubtypeMotionShake) {<br>        NSLog(@”%s”,<strong>func</strong>);<br>    }</p>
+<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/08/26/iOS中晃动事件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-ipad键盘参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

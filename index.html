@@ -183,6 +183,101 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-PlistBuddy的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/23/PlistBuddy的使用/">PlistBuddy的使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/23/PlistBuddy的使用/" class="archive-article-date">
+  	<time datetime="2017-05-23T14:19:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PlistBuddy的使用"><a href="#PlistBuddy的使用" class="headerlink" title="PlistBuddy的使用"></a>PlistBuddy的使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。</p>
+<p>由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具：</p>
+<p>查看帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy --help</div></pre></td></tr></table></figure>
+<p>新建plist文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy testing.plist</div></pre></td></tr></table></figure>
+<p>查看plist</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print</div><div class="line">Dict &#123;</div></pre></td></tr></table></figure>
+<p>在第一层添加一个键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Add :Version string 1.0</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在改变它的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Set :Version 1.1</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来我们将创建一个数组，并放入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications array</div><div class="line">Command: Add :Applications: string app1</div><div class="line">Command: Add :Applications: string app2</div><div class="line">Command: Add :Applications: string app3</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以在数组索引为0的位置插入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications:0 string app0a</div><div class="line">Command: Add :Applications:0 string app0b</div><div class="line">Command: Add :Applications:0 string app0c</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app0c</div><div class="line">        app0b</div><div class="line">        app0a</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们将删除一个条目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Applications</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div></pre></td></tr></table></figure>
+<p>现在让我们创建一个更为复杂的数据结构吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Command: Add :BrainCells integer 5</div><div class="line">Command: Add &quot;:Favourite Random Number&quot; real 3.9234</div><div class="line">Command: Add :Intelligent bool false</div><div class="line">Command: Add :Today date &quot;Sat Jun 27 18:51:00 AEST 2015&quot;</div><div class="line">Command: Add :Person dict</div><div class="line">Command: Add :Person:Name string &quot;Fotis Gimian&quot;</div><div class="line">Command: Add :Person:Occupation string &quot;Geek&quot;</div><div class="line">Command: Add :Person:Likes array</div><div class="line">Command: Add :Person:Likes: string Potatoes</div><div class="line">Command: Add :Person:Likes: string Apple</div><div class="line">Command: Add :Person:Likes: string Bouncing</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Apple</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在让我们调皮一下，让Microsoft取代Apple</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Command: Set :Person:Likes:1 Microsoft</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Microsoft</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以打印一个子节点的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes</div><div class="line">Array &#123;</div><div class="line">    Potatoes</div><div class="line">    Microsoft</div><div class="line">    Bouncing</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以使用索引移动到数组中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes:1</div><div class="line">Microsoft</div></pre></td></tr></table></figure>
+<p>当然了也可以使用冒号删除任何元组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Person:Likes</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以保存我们的辛苦工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Command: Save</div><div class="line">Saving...</div><div class="line">Command: Exit</div></pre></td></tr></table></figure>
+<p>可以使用-c选项直接从CLI调用这些命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print&quot; testing.plist</div><div class="line">Dict &#123;</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Version = 1.1</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果您想修改应用程序提供的plist文件，则需要向PlistBuddy提供文件的完整路径名)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">true</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Set :magnification bool false&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">false</div></pre></td></tr></table></figure>
+<p>小窍门：命令（即 Print, Set, Add等）不区分大小写，因此您可以使用小写字母键入。</p>
+<p>翻译自<a href="http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/" target="_blank" rel="external">http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/23/PlistBuddy的使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-EFB总结与启发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -944,62 +1039,6 @@ yachaocn          9043   0.0  0.0  2434840    764 s001  R+    3:52下午   0:00.
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/28/MAC-SSH-服务/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-毛玻璃效果的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/23/毛玻璃效果的实现/">毛玻璃效果的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/23/毛玻璃效果的实现/" class="archive-article-date">
-  	<time datetime="2017-03-23T09:36:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>####制作毛玻璃效果</p>
-<p>1.加入属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, strong) UIVisualEffectView *visualEfView;</div></pre></td></tr></table></figure>
-<p>2.添加图片</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];</div><div class="line">    [imageView setImage:[UIImage imageNamed:@&quot;1.jpg&quot;]];</div></pre></td></tr></table></figure>
-<p>3.添加毛玻璃效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">self.visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];</div><div class="line">    _visualEfView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height/2);</div><div class="line">    _visualEfView.alpha = 0.9;</div><div class="line">    [imageView addSubview:_visualEfView];</div><div class="line">    </div><div class="line">    [self.view addSubview:imageView];</div></pre></td></tr></table></figure>
-<p><strong>运行试一下吧</strong></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/23/毛玻璃效果的实现/">展开全文 >></a>
         </p>
       
 

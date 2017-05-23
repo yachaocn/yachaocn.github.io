@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://devchao.com">
-  <title>Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
+  <title>PlistBuddy的使用 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每一个不起眼的瞬间都是对生命的辜负！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:url" content="https://devchao.com/page/3/index.html">
+  <meta name="description" content="PlistBuddy的使用简介PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。 由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具： 查看帮助： 1/usr/libexec/PlistBuddy --help 新建plist文件 1/usr/libexec">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PlistBuddy的使用">
+<meta property="og:url" content="https://devchao.com/2017/05/23/PlistBuddy的使用/index.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta property="og:description" content="PlistBuddy的使用简介PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。 由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具： 查看帮助： 1/usr/libexec/PlistBuddy --help 新建plist文件 1/usr/libexec">
+<meta property="og:updated_time" content="2017-05-23T14:20:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta name="twitter:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta name="twitter:title" content="PlistBuddy的使用">
+<meta name="twitter:description" content="PlistBuddy的使用简介PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。 由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具： 查看帮助： 1/usr/libexec/PlistBuddy --help 新建plist文件 1/usr/libexec">
   
     <link rel="alternative" href="/atom.xml" title="Welcome | 张亚超的技术博客YACHAO&#39;Blog" type="application/atom+xml">
   
@@ -181,479 +183,97 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-iOS开启GPS精准定位" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-PlistBuddy的使用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/02/iOS开启GPS精准定位/">iOS开启GPS精准定位</a>
+    <h1 class="article-title" itemprop="name">
+      PlistBuddy的使用
     </h1>
   
 
         
-        <a href="/2016/12/02/iOS开启GPS精准定位/" class="archive-article-date">
-  	<time datetime="2016-12-02T01:57:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
+        <a href="/2017/05/23/PlistBuddy的使用/" class="archive-article-date">
+  	<time datetime="2017-05-23T14:19:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="开启GPS精准定位"><a href="#开启GPS精准定位" class="headerlink" title="开启GPS精准定位"></a>开启GPS精准定位</h1><hr>
-<p><strong>精准定位</strong></p>
-<p>1.在Info-plist中加入UIRequiredDeviceCapabilities键，此键是数组类型</p>
-<p><code>UIRequiredDeviceCapabilities</code>(lets iTunes and the App Store know which device-related features an app requires in order to run)</p>
-<p>2.在数组中加入<code>gps</code>关键字</p>
-<p>官方解释：</p>
-<p>Include this key if your app requires (or specifically prohibits) the presence of GPS (or AGPS) hardware when tracking locations. (You should include this key only if you need the higher accuracy offered by GPS hardware.) If you include this key, you should also include the location-services key. You should require GPS only if your app needs location data more accurate than the cellular or Wi-fi radios might otherwise provide.</p>
-<p>中文描述：(个人水平有限,如有错误，敬请指正，感激)</p>
-<p>如果你的app需要GPS或者AGPS硬件去获取位置信息时，需要加入此键。（如果你需要FPS或者AGPS硬件获得非常精准的位置信息时，需要加入此键），注意：加入此键时，也需要加入location-services字段，如果加入了<code>gps</code>和<code>location-services</code>两个字段，那么你的app将只能通过GPS进行定位，当然这比蜂窝移动网络、Wi-fi广播等其他提供的位置服务要精准的多。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/02/iOS开启GPS精准定位/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-关于CoreLocation定位的方向问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/02/关于CoreLocation定位的方向问题/">关于CoreLocation定位的方向问题</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/02/关于CoreLocation定位的方向问题/" class="archive-article-date">
-  	<time datetime="2016-12-02T01:54:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于CoreLocation定位的方向问题"><a href="#关于CoreLocation定位的方向问题" class="headerlink" title="关于CoreLocation定位的方向问题"></a>关于CoreLocation定位的方向问题</h1><p>Core Location支持两种不同的获取方向相关信息的方式：</p>
-<ul>
-<li>当设备处于某个点时，带有磁力计的设备能能够报告其位置信息；此类被称为设备的<code>朝向</code>。</li>
-<li><p>当设备处于移动过程中时，通过带有GPS硬件的报告的位置位置信息；此类被称为设备的<code>行动方向</code>。</p>
-<p><code>朝向</code>和<code>行动方向</code>表现出设备不同的信息。设备的朝向真实的反映出了设备在一个点时相对于磁北或者真北的朝向。而设备的行动方向则表现了设备在运动过程中的运动方向其并没有考虑设备的方向。你使用一种还是这两种相结合，完全取决于你的APP；例如：一个导航APP是否要在两者之间切换完全取决于用户的速度，在步行速度时，设备的朝向对于在当前环境下的确认用户方向是用户最为关心的事情；而在一辆车里运动时，行动方向则变得尤为重要。</p>
-</li>
-</ul>
-<hr>
-<p> 如果你的app用到了位置相关信息时，为了更好的运行，在Info.plist中加入UIRequiredDeviceCapabilities键，这个键是一个包涵字符串的数组，这个数组描述了你的app具有哪些服务特征。app store使用这些信息对app进行归类，更好的为用户服务。如：用户没有GPS功能，就会选择不包含GPS功能的app去下载。</p>
-<p> UIRequiredDeviceCapabilities中和方向相关的字符串有两个：</p>
-<ul>
-<li>magnetometer 包涵这个字符串时，app会获得设备的朝向</li>
-<li><p>gps              包涵这个字符串时，app会获得设备的行动方向。</p>
-<p><code>PS：加入gps时，也要加入location-services字符串。两者都需要时，再加入location-services字段</code></p>
-<p>总结：</p>
-<ul>
-<li>当只需要GPS或者AGPS加入location-services和gps字段。</li>
-<li>不需要GPS或者AGPS时，加入location-services和magnetometer.</li>
-<li>需要两种时,加入location-services和magnetometer和gps；或者只加入location-services（默认是两种都用）</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/02/关于CoreLocation定位的方向问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-数据模型排序-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/21/数据模型排序-md/">数据模型排序.md</a>
-    </h1>
-  
-
-        
-        <a href="/2016/11/21/数据模型排序-md/" class="archive-article-date">
-  	<time datetime="2016-11-21T01:53:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="数据模型排序"><a href="#数据模型排序" class="headerlink" title="数据模型排序"></a>数据模型排序</h1><p>前提：有一个装满Model的数组 self.dataSourceArray</p>
-<p><code>排序代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSArray *array = [self.dataSourceArray sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">        //给对象排序</div><div class="line">        NSComparisonResult result = [obj1 compareParkInfo:obj2];</div><div class="line">        return result;</div><div class="line">    &#125;];</div><div class="line">    // 排序好的</div><div class="line">    for (ParkInfo *info in array) &#123;</div><div class="line">        NSLog(@&quot;%ld&quot;, (long)info.feePredict);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><code>实现代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// Model.h</div><div class="line">- (NSComparisonResult)compareParkInfo:(ParkInfo *)parkinfo;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 在Model.m</div><div class="line">// 自定义排序方法</div><div class="line">- (NSComparisonResult)compareParkInfo:(ParkInfo *)parkinfo&#123;</div><div class="line">    // 升序</div><div class="line">    NSComparisonResult result = [[NSNumber numberWithInteger:self.feePredict] compare:[NSNumber numberWithInteger:parkinfo.feePredict]];</div><div class="line">    if (result == NSOrderedSame) &#123;</div><div class="line">        // 可以按照其他属性进行排序</div><div class="line">    &#125;</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>技术交流：</strong>494826724</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/21/数据模型排序-md/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-addChildViewController属性介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/23/addChildViewController属性介绍/">addChildViewController属性介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/23/addChildViewController属性介绍/" class="archive-article-date">
-  	<time datetime="2016-09-23T08:16:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="addChildViewController属性介绍"><a href="#addChildViewController属性介绍" class="headerlink" title="addChildViewController属性介绍)"></a>addChildViewController属性介绍)</h1><hr>
-<p>在iOS5中，ViewController中，苹果API添加了addChildViewController方法，希望我们在使用addSubview时，同时调用[self addChildViewController:child]方法将sub view对应的viewController也加到当前ViewController的管理中。<br>   对于那些当前暂时不需要显示的subview,需要显示时再调用transitionFromViewController方法。将其添加进入底层的ViewController中。</p>
-<p>优点：</p>
-<ul>
-<li>1.无疑，对页面中的逻辑更加分明了。相应的View对应相应的ViewController。</li>
-<li>2.当某个子View没有显示时，将不会被Load，减少了内存的使用。</li>
-<li>3.当内存紧张时，没有Load的View将被首先释放，优化了程序的内存释放机制。</li>
-<li>4.一些控制器不被调用的方法如：-(void)viewWillAppear;将会被调用。</li>
-</ul>
-<p><code>创建两个切换的控制器:</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> first=[[FirstViewController alloc]initWithNibName:@&quot;FirstViewController&quot;bundle:nil];</div><div class="line"> second=[[SecondViewController alloc]initWithNibName:@&quot;SecondViewController&quot;bundle:nil];</div><div class="line"> //启动后先添加first，大儿子</div><div class="line"> [self addChildViewController:first];</div><div class="line">[self.view addSubview:first.view];</div></pre></td></tr></table></figure>
-<p><code>first切换到second:</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)dealWithFirstClick&#123;</div><div class="line">    //调用addChildViewController之前会自动调用second的willMoveToParentViewController</div><div class="line">    [self addChildViewController:second];</div><div class="line">    [self transitionFromViewController:first toViewController:second duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished)&#123;</div><div class="line">//        addChildViewController之后手动添加的didMoveToParentViewController</div><div class="line">        [second didMoveToParentViewController:self];</div><div class="line">        //删除之前first之前手动添加的willMoveToParentViewController</div><div class="line">        [first willMoveToParentViewController:nil];</div><div class="line">        //调用removeFromParentViewController之后会自动调用first的didMoveToParentViewController</div><div class="line">        [first removeFromParentViewController];</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>second 切换到first:</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)dealWithSecondClick&#123;</div><div class="line">    [self addChildViewController:first];</div><div class="line">    [self transitionFromViewController:second toViewController:first duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:^(BOOL finished)&#123;</div><div class="line">        [first didMoveToParentViewController:self];</div><div class="line">        [second willMoveToParentViewController:nil];</div><div class="line">        [second removeFromParentViewController];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>参考<br><a href="https://www.objc.io/issues/1-view-controllers/containment-view-controller/" target="_blank" rel="external">https://www.objc.io/issues/1-view-controllers/containment-view-controller/</a></p>
-<p><a href="https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/CreatingCustomContainerViewControllers/CreatingCustomContainerViewControllers.html" target="_blank" rel="external">https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/CreatingCustomContainerViewControllers/CreatingCustomContainerViewControllers.html</a></p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/09/23/addChildViewController属性介绍/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-获取崩溃日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/获取崩溃日志/">获取崩溃日志</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/22/获取崩溃日志/" class="archive-article-date">
-  	<time datetime="2016-09-22T06:07:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="获取崩溃日志"><a href="#获取崩溃日志" class="headerlink" title="获取崩溃日志"></a>获取崩溃日志</h1><p><strong>实现原理：</strong></p>
-<p>主要借助产生异常时捕获异常的回调，在<code>NSException</code>的头文件中有如下定义：</p>
-<p><code>FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler * __nullable);</code><br><strong>步骤：</strong><br>1.在程序启动时赋予异常回调地址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSSetUncaughtExceptionHandler (&amp;UncaughtExceptionHandler);</div></pre></td></tr></table></figure>
-<p>2.实现异常回调函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> void UncaughtExceptionHandler(NSException *exception) &#123;</div><div class="line">    NSArray *arr = [exception callStackSymbols];//得到当前调用栈信息</div><div class="line">    NSString *reason = [exception reason];//非常重要，就是崩溃的原因</div><div class="line">    NSString *name = [exception name];//异常类型</div><div class="line">    </div><div class="line">    NSLog(@&quot;exception type : %@ \n crash reason : %@ \n call stack info : %@&quot;, name, reason, arr);</div><div class="line">//    NSThread *currentThread = [NSThread currentThread];</div><div class="line">    NSArray *symbolsArray = [NSThread callStackSymbols];</div><div class="line">    NSLog(@&quot;%@&quot;,symbolsArray);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>测试</strong></p>
-<p>1.测试代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSArray *array = @[@&quot;2&quot;,@&quot;1&quot;];</div><div class="line">        NSString *str = array[3];</div><div class="line">        NSLog(@&quot;%@&quot;,str);</div></pre></td></tr></table></figure>
-<p>2.控制台打印：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">2016-09-06 10:47:14.828 ViewControllerDemo[876:317539] exception type : NSRangeException </div><div class="line"> crash reason : *** -[__NSArrayI objectAtIndex:]: index 3 beyond bounds [0 .. 1] </div><div class="line"> call stack info : (</div><div class="line">	0   CoreFoundation                      0x0000000182666dc8 &lt;redacted&gt; + 148</div><div class="line">	1   libobjc.A.dylib                     0x0000000181ccbf80 objc_exception_throw + 56</div><div class="line">	2   CoreFoundation                      0x0000000182547098 CFRunLoopRemoveTimer + 0</div><div class="line">	3   ViewControllerDemo                  0x0000000100071804 __29-[ViewController viewDidLoad]_block_invoke + 156</div><div class="line">	4   libdispatch.dylib                   0x00000001000c5a7c _dispatch_call_block_and_release + 24</div><div class="line">	5   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	6   libdispatch.dylib                   0x00000001000d1cc8 _dispatch_after_timer_callback + 148</div><div class="line">	7   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	8   libdispatch.dylib                   0x00000001000ddde0 _dispatch_source_latch_and_call + 2848</div><div class="line">	9   libdispatch.dylib                   0x00000001000c7fe0 _dispatch_source_invoke + 808</div><div class="line">	10  libdispatch.dylib                   0x00000001000caec0 _dispatch_main_queue_callback_4CF + 524</div><div class="line">	11  CoreFoundation                      0x000000018261cd50 &lt;redacted&gt; + 12</div><div class="line">	12  CoreFoundation                      0x000000018261abb8 &lt;redacted&gt; + 1628</div><div class="line">	13  CoreFoundation                      0x0000000182544c50 CFRunLoopRunSpecific + 384</div><div class="line">	14  GraphicsServices                    0x0000000183e2c088 GSEventRunModal + 180</div><div class="line">	15  UIKit                               0x000000018782a088 UIApplicationMain + 204</div><div class="line">	16  ViewControllerDemo                  0x00000001000722c8 main + 124</div><div class="line">	17  libdyld.dylib                       0x00000001820e28b8 &lt;redacted&gt; + 4</div><div class="line">)</div><div class="line">2016-09-06 10:47:14.830 ViewControllerDemo[876:317539] (</div><div class="line">	0   ViewControllerDemo                  0x0000000100071eec UncaughtExceptionHandler + 220</div><div class="line">	1   CoreFoundation                      0x0000000182667138 &lt;redacted&gt; + 652</div><div class="line">	2   libobjc.A.dylib                     0x0000000181ccc23c &lt;redacted&gt; + 112</div><div class="line">	3   libc++abi.dylib                     0x0000000181cbef44 &lt;redacted&gt; + 16</div><div class="line">	4   libc++abi.dylib                     0x0000000181cbe85c &lt;redacted&gt; + 0</div><div class="line">	5   libobjc.A.dylib                     0x0000000181ccc094 &lt;redacted&gt; + 0</div><div class="line">	6   CoreFoundation                      0x0000000182547098 CFRunLoopRemoveTimer + 0</div><div class="line">	7   ViewControllerDemo                  0x0000000100071804 __29-[ViewController viewDidLoad]_block_invoke + 156</div><div class="line">	8   libdispatch.dylib                   0x00000001000c5a7c _dispatch_call_block_and_release + 24</div><div class="line">	9   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	10  libdispatch.dylib                   0x00000001000d1cc8 _dispatch_after_timer_callback + 148</div><div class="line">	11  libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	12  libdispatch.dylib                   0x00000001000ddde0 _dispatch_source_latch_and_call + 2848</div><div class="line">	13  libdispatch.dylib                   0x00000001000c7fe0 _dispatch_source_invoke + 808</div><div class="line">	14  libdispatch.dylib                   0x00000001000caec0 _dispatch_main_queue_callback_4CF + 524</div><div class="line">	15  CoreFoundation                      0x000000018261cd50 &lt;redacted&gt; + 12</div><div class="line">	16  CoreFoundation                      0x000000018261abb8 &lt;redacted&gt; + 1628</div><div class="line">	17  CoreFoundation                      0x0000000182544c50 CFRunLoopRunSpecific + 384</div><div class="line">	18  GraphicsServices                    0x0000000183e2c088 GSEventRunModal + 180</div><div class="line">	19  UIKit                               0x000000018782a088 UIApplicationMain + 204</div><div class="line">	20  ViewControllerDemo                  0x00000001000722c8 main + 124</div><div class="line">	21  libdyld.dylib                       0x00000001820e28b8 &lt;redacted&gt; + 4</div><div class="line">)</div><div class="line">2016-09-06 10:47:14.830 ViewControllerDemo[876:317539] *** Terminating app due to uncaught exception &apos;NSRangeException&apos;, reason: &apos;*** -[__NSArrayI objectAtIndex:]: index 3 beyond bounds [0 .. 1]&apos;</div><div class="line">*** First throw call stack:</div><div class="line">(0x182666db0 0x181ccbf80 0x182547098 0x100071804 0x1000c5a7c 0x1000c5a3c 0x1000d1cc8 0x1000c5a3c 0x1000ddde0 0x1000c7fe0 0x1000caec0 0x18261cd50 0x18261abb8 0x182544c50 0x183e2c088 0x18782a088 0x1000722c8 0x1820e28b8)</div><div class="line">libc++abi.dylib: terminating with uncaught exception of type NSException</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/09/22/获取崩溃日志/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-NSTimer内存释放问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/01/NSTimer内存释放问题/">NSTimer内存释放问题</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/01/NSTimer内存释放问题/" class="archive-article-date">
-  	<time datetime="2016-09-01T07:52:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NSTimer-内存释放问题"><a href="#NSTimer-内存释放问题" class="headerlink" title="NSTimer 内存释放问题"></a>NSTimer 内存释放问题</h1><p>当我们在某个对象中使用定时器时，如果在对象释放前没有对定时器合理的释放（从runloop中移除），你将发现，即使你将对象置为nil，该对象也不会被释放，原因是定时器的RunLoop中仍然持有该对象。</p>
-<hr>
-<p>那么如何合理的释放定时器呢？</p>
-<p><strong>PS</strong>.在对象释放前，调用 [timer invalidate]，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (timer.isValid) &#123;</div><div class="line">        [timer invalidate];</div><div class="line">    &#125;</div><div class="line">    timer=nil;</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div></pre></td></tr></table></figure>
-<p><code>如果你直接调用[self dismissViewControllerAnimated:YES completion:nil]，那么模态呈现的控制器并不会被释放掉..</code></p>
+        <h1 id="PlistBuddy的使用"><a href="#PlistBuddy的使用" class="headerlink" title="PlistBuddy的使用"></a>PlistBuddy的使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。</p>
+<p>由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具：</p>
+<p>查看帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy --help</div></pre></td></tr></table></figure>
+<p>新建plist文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy testing.plist</div></pre></td></tr></table></figure>
+<p>查看plist</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print</div><div class="line">Dict &#123;</div></pre></td></tr></table></figure>
+<p>在第一层添加一个键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Add :Version string 1.0</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在改变它的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Set :Version 1.1</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来我们将创建一个数组，并放入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications array</div><div class="line">Command: Add :Applications: string app1</div><div class="line">Command: Add :Applications: string app2</div><div class="line">Command: Add :Applications: string app3</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以在数组索引为0的位置插入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications:0 string app0a</div><div class="line">Command: Add :Applications:0 string app0b</div><div class="line">Command: Add :Applications:0 string app0c</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app0c</div><div class="line">        app0b</div><div class="line">        app0a</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们将删除一个条目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Applications</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div></pre></td></tr></table></figure>
+<p>现在让我们创建一个更为复杂的数据结构吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Command: Add :BrainCells integer 5</div><div class="line">Command: Add &quot;:Favourite Random Number&quot; real 3.9234</div><div class="line">Command: Add :Intelligent bool false</div><div class="line">Command: Add :Today date &quot;Sat Jun 27 18:51:00 AEST 2015&quot;</div><div class="line">Command: Add :Person dict</div><div class="line">Command: Add :Person:Name string &quot;Fotis Gimian&quot;</div><div class="line">Command: Add :Person:Occupation string &quot;Geek&quot;</div><div class="line">Command: Add :Person:Likes array</div><div class="line">Command: Add :Person:Likes: string Potatoes</div><div class="line">Command: Add :Person:Likes: string Apple</div><div class="line">Command: Add :Person:Likes: string Bouncing</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Apple</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在让我们调皮一下，让Microsoft取代Apple</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Command: Set :Person:Likes:1 Microsoft</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Microsoft</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以打印一个子节点的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes</div><div class="line">Array &#123;</div><div class="line">    Potatoes</div><div class="line">    Microsoft</div><div class="line">    Bouncing</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以使用索引移动到数组中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes:1</div><div class="line">Microsoft</div></pre></td></tr></table></figure>
+<p>当然了也可以使用冒号删除任何元组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Person:Likes</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以保存我们的辛苦工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Command: Save</div><div class="line">Saving...</div><div class="line">Command: Exit</div></pre></td></tr></table></figure>
+<p>可以使用-c选项直接从CLI调用这些命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print&quot; testing.plist</div><div class="line">Dict &#123;</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Version = 1.1</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果您想修改应用程序提供的plist文件，则需要向PlistBuddy提供文件的完整路径名)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">true</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Set :magnification bool false&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">false</div></pre></td></tr></table></figure>
+<p>小窍门：命令（即 Print, Set, Add等）不区分大小写，因此您可以使用小写字母键入。</p>
+<p>翻译自<a href="http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/" target="_blank" rel="external">http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/</a></p>
 <p><code>技术交流群:</code><strong>494826724</strong></p>
 
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/09/01/NSTimer内存释放问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-仿苹果安装软件进度条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/10/仿苹果安装软件进度条/">仿苹果安装软件进度条</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/10/仿苹果安装软件进度条/" class="archive-article-date">
-  	<time datetime="2016-08-10T07:25:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>苹果安装软件进度条特点分析：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-10%20%E4%B8%8A%E5%8D%889.47.40.png" alt=""></p>
-<ol>
-<li>由黑色半透明视图覆盖。</li>
-<li>中间有个完全透明的圆环。</li>
-<li>中间进度由圆饼状图形构成，且当前已完成进度为完全透明，未完成进度为黑色半透明。</li>
-<li>完成后完全透明视图向外扩散。</li>
-<li>暂停后出现暂停图标，继续时回复原状。</li>
-<li>暂停和继续均有扩散动画。(跟4动画相似)</li>
-</ol>
-<p>技术实现分析：为实现半透明视图覆盖＋自定义完全透明区域，考虑用Quartz 2D绘制图像实现。</p>
-<p><strong>1. command + N 新建类CircleProgressView 继承自UIControl(考虑到要添加相应事件)，定义常量。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#define YCColorMaker(r, g, b, a) [UIColor colorWithRed:((r)/255) green:((g)/255) blue:((b)/255) alpha:(a)]</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;CircleProgressView.h&quot;</div><div class="line">@interface CircleProgressView ()</div><div class="line"></div><div class="line">@property(nonatomic) BOOL beginCompletedAnimation;</div><div class="line">@property(nonatomic) CGFloat margin;//两个圆半径差</div><div class="line">@property(nonatomic) CGFloat R1;//大圆半径</div><div class="line">@property(nonatomic) CGFloat R2;//小圆半径</div><div class="line">@property(nonatomic)CGFloat pauseR;//暂停时添加的小圆半径</div><div class="line">@property(nonatomic) CGFloat MaxR;//进度完成后最大的扩散半径,（斜对角线的一半）</div><div class="line">//扩散动画的定时器</div><div class="line">@property(nonatomic,strong) CADisplayLink *timer;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><strong>2.添加初始化方法，初始化常量</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">-(instancetype)initWithFrame:(CGRect)frame</div><div class="line">&#123;</div><div class="line">    if (self = [super initWithFrame:frame]) &#123;</div><div class="line">        self.backgroundColor = [UIColor clearColor];</div><div class="line">      </div><div class="line">        _pauseR = 18;</div><div class="line">        self.progress = 0.0001;</div><div class="line">        _margin = 4.0f;</div><div class="line">        _R2 = 25;</div><div class="line">        _R1 = _R2 + _margin;</div><div class="line">        </div><div class="line">        CGFloat width = frame.size.width;</div><div class="line">        CGFloat height = frame.size.height;</div><div class="line">        CGFloat MaxR = sqrt(pow(width, 2) + pow(height, 2));</div><div class="line">        _MaxR = MaxR;</div><div class="line">        </div><div class="line">        self.userInteractionEnabled = YES;</div><div class="line">        [self addTarget:self action:@selector(clickedProgressView:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">        self.selected = NO;</div><div class="line">        self.layer.shouldRasterize = YES;</div><div class="line">        self.layer.rasterizationScale = [UIScreen mainScreen].scale;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>3. 暂停事件</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//点击暂停－开始</div><div class="line">-(void)clickedProgressView:(UIControl *)control</div><div class="line">&#123;</div><div class="line">	if (!self.delegate) &#123;</div><div class="line">	        return;</div><div class="line">	    &#125;</div><div class="line">    self.selected = !control.selected;</div><div class="line">   if (self.selected) &#123;</div><div class="line">        [self.delegate pause:self.progress];</div><div class="line">    &#125;else&#123;</div><div class="line">        [self.delegate active:self.progress];</div><div class="line">    &#125;</div><div class="line">     [self setNeedsDisplay];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>4. 进度条set方法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//Progress set modth</div><div class="line">-(void)setProgress:(CGFloat)progress</div><div class="line">&#123;</div><div class="line">    if (_progress != progress) &#123;</div><div class="line">        _progress = MIN(1.0, fabs(progress));</div><div class="line">        [self setNeedsDisplay];</div><div class="line">    &#125;</div><div class="line">//    开始扩散动画</div><div class="line">    if (_progress == 1.0) &#123;</div><div class="line">        static dispatch_once_t onceToken;</div><div class="line">        dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">          </div><div class="line">            [self performAnimation];</div><div class="line"></div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>5. 启动定时器，绘制扩散动画</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">//启动定时器，绘制扩散动画。</div><div class="line">-(void)performAnimation</div><div class="line">&#123;</div><div class="line">    if (_R1 &gt; _MaxR) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">      _timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(animate:)];</div><div class="line">    [_timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</div><div class="line">    [_timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:UITrackingRunLoopMode];</div><div class="line">    </div><div class="line">    /* PS</div><div class="line">     NSDefaultRunLoopMode - 标准优先级</div><div class="line">     NSRunLoopCommonModes - 高优先级</div><div class="line">     UITrackingRunLoopMode - 用于UIScrollView和别的控件的动画</div><div class="line">     </div><div class="line">     在我们的例子中，我们是用了NSDefaultRunLoopMode，但是不能保证动画平滑的运行，所以就可以用NSRunLoopCommonModes来替代。但是要小心，因为如果动画在一个高帧率情况下运行，你会发现一些别的类似于定时器的任务或者类似于滑动的其他iOS动画会暂停，直到动画结束。</div><div class="line">     </div><div class="line">     同样可以同时对CADisplayLink指定多个run loop模式，于是我们可以同时加入NSDefaultRunLoopMode和UITrackingRunLoopMode来保证它不会被滑动打断，也不会被其他UIKit控件动画影响性能</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">-(void)animate:(NSTimer *)sender</div><div class="line">&#123;</div><div class="line">    if (_R1 &lt;= _MaxR) &#123;</div><div class="line">        [self setNeedsDisplay];</div><div class="line">    &#125;else&#123;</div><div class="line">        [_timer invalidate];</div><div class="line">        _timer =nil;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>6. 重写-(void)drawRect:(CGRect)rect，开始绘制。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">-(void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">//    得到视图的宽度</div><div class="line">    CGFloat width = rect.size.width;</div><div class="line">//    得到视图的高度</div><div class="line">    CGFloat height = rect.size.height;</div><div class="line">//    计算圆心</div><div class="line">    CGFloat centerX = width/2;</div><div class="line">    CGFloat centerY = height/2;</div><div class="line">//    得到绘图上下文</div><div class="line">    CGContextRef context =  UIGraphicsGetCurrentContext();</div><div class="line">//    设置颜色</div><div class="line">    CGContextSetRGBFillColor(context, 0, 0, 0, 0.5);</div><div class="line">    </div><div class="line">//    绘制矩形</div><div class="line">    CGContextMoveToPoint(context, 0, 0);</div><div class="line">    CGContextAddRect(context, rect);</div><div class="line">//    绘制大圆</div><div class="line">    CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">    if (self.progress &lt; 1.0) &#123;</div><div class="line">        CGContextAddArc(context, centerX, centerY, _R1, -M_PI_2, -M_PI_2 + M_PI*2, 0);</div><div class="line">    &#125;else&#123;</div><div class="line">        _R1 +=1;</div><div class="line">        CGContextAddArc(context, centerX, centerY, _R1, -M_PI_2, -M_PI_2 + M_PI*2, 0);</div><div class="line">    &#125;</div><div class="line">//    绘制小圆</div><div class="line">    CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">//    参数一：绘图上下文；参数二：绘图圆心；参数三：起始角度；参数四，结束角度；参数五：绘制方向（1:顺时针，0:逆时针）</div><div class="line">    CGContextAddArc(context, centerX, centerY, _R2, -M_PI_2, -M_PI_2 + M_PI*2*self.progress, 1);</div><div class="line"></div><div class="line">    //暂停</div><div class="line">    if (self.isSelected) &#123;</div><div class="line">    </div><div class="line">         CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">        CGContextAddArc(context, centerX, centerY, _pauseR, -M_PI_2 +self.progress *M_PI*2, -M_PI_2, 1);</div><div class="line">//        暂停开始点1</div><div class="line">        CGFloat pasueX1 = centerX - _pauseR/4 - 2;</div><div class="line">        CGFloat pasueY1 = centerY - _pauseR/4;</div><div class="line">        CGRect pasueFrame1 = CGRectMake(pasueX1, pasueY1, 4, 12);</div><div class="line">//        暂停开始点2</div><div class="line">        CGFloat pasueX2 = centerX + _pauseR/4 - 2;</div><div class="line">        CGFloat pasueY2 = pasueY1;</div><div class="line">        CGRect pasueFrame2 = CGRectMake(pasueX2, pasueY2, 4, 12);</div><div class="line">        </div><div class="line">        CGContextMoveToPoint(context, pasueX1 , pasueY1);</div><div class="line">        CGContextAddRect(context, pasueFrame1);</div><div class="line">        CGContextMoveToPoint(context, pasueX2, pasueY2);</div><div class="line">        CGContextAddRect(context, pasueFrame2);</div><div class="line">    &#125;</div><div class="line">//    填充样式：奇偶填充（默认为非零绕束规则填充，）</div><div class="line">     CGContextEOFillPath(context);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>代码地址：</strong><a href="https://github.com/yachaocn/apple-install-app-progress" target="_blank" rel="external">https://github.com/yachaocn/apple-install-app-progress</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf2szndhj30gg0gadko.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf3i5lgkj30gu0guwgp.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -664,7 +284,7 @@ ga('send', 'pageview');
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -673,10 +293,6 @@ ga('send', 'pageview');
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/10/仿苹果安装软件进度条/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
@@ -684,197 +300,16 @@ ga('send', 'pageview');
   </div>
 </article>
 
-
-
-
-
   
-    <article id="post-OC常用技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/28/OC常用技巧/">OC常用技巧</a>
-    </h1>
   
-
-        
-        <a href="/2016/07/28/OC常用技巧/" class="archive-article-date">
-  	<time datetime="2016-07-28T09:40:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="OC常用技巧"><a href="#OC常用技巧" class="headerlink" title="OC常用技巧"></a>OC常用技巧</h1><p><strong>1.clang warning</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic push </div><div class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot; </div><div class="line">//code </div><div class="line">#pragma clang diagnostic pop</div></pre></td></tr></table></figure>
-<p>表示在这个区间里忽略一些特定的clang的编译警告，因为AFNetworking作为一个库被其他项目引用，所以不能全局忽略clang的一些警告，只能在有需要的时候局部这样做，作者喜欢用?:符号，所以经常见忽略-Wgnu警告的写法.<a href="http://nshipster.com/clang-diagnostics/" target="_blank" rel="external">详见这里</a></p>
-<p><strong>2.dispatch_once</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">static dispatch_queue_t url_request_operation_completion_queue() &#123; </div><div class="line">    static dispatch_queue_t af_url_request_operation_completion_queue; </div><div class="line">    static dispatch_once_t onceToken; </div><div class="line">    dispatch_once(&amp;onceToken, ^&#123; </div><div class="line">        af_url_request_operation_completion_queue = dispatch_queue_create(&quot;com.alamofire.networking.operation.queue&quot;,   DISPATCH_QUEUE_CONCURRENT ); </div><div class="line">    &#125;); </div><div class="line">    return af_url_request_operation_completion_queue; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>为保证线程安全，所有单例都用dispatch_once生成，保证只执行一次，这也是iOS开发常用的技巧。</p>
-<p><strong>3.weak &amp; strong self</strong></p>
-<p>常看到一个 block 要使用 self，会处理成在外部声明一个 weak 变量指向 self，在 block 里又声明一个 strong 变量指向 weakSelf：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__weak __typeof(self)weakSelf = self; </div><div class="line">self.backgroundTaskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^&#123; </div><div class="line">    __strong __typeof(weakSelf)strongSelf = weakSelf; </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>weakSelf是为了block不持有self，避免循环引用，而再声明一个strongSelf是因为一旦进入block执行，就不允许self在这个执行过程中释放。block执行完后这个strongSelf会自动释放，没有循环引用问题。</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/28/OC常用技巧/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
+    <a href="/2017/05/21/EFB总结与启发/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">EFB总结与启发</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
-    <article id="post-图片处理之图片着色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/28/图片处理之图片着色/">图片处理之图片着色</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/28/图片处理之图片着色/" class="archive-article-date">
-  	<time datetime="2016-07-28T08:54:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="图像效果"><a href="#图像效果" class="headerlink" title="图像效果"></a>图像效果</h1><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%8E%9F%E5%A7%8B.PNG" alt="yuanshi"><br>1.亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/light.PNG" alt="light"><br>2.特亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/extraLight.PNG" alt="extraLight"><br>3.黑暗图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/dark.PNG" alt="dark"><br>4.给图片上色<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/tin.PNG" alt="tint"></p>
-<p><strong>实现：</strong></p>
-<p>新建UIImage类别ImageEffects代码如下：<br><code>UIImage+ImageEffects.h</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@import UIKit;</div><div class="line"></div><div class="line">@interface UIImage (ImageEffects)</div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect;</div><div class="line">- (UIImage *)applyExtraLightEffect;</div><div class="line">- (UIImage *)applyDarkEffect;</div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor;</div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>UIImage+ImageEffects.m</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;UIImage+ImageEffects.h&quot;</div><div class="line"></div><div class="line">@import Accelerate;</div><div class="line">#import &lt;float.h&gt;</div><div class="line"></div><div class="line"></div><div class="line">@implementation UIImage (ImageEffects)</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];</div><div class="line">    return [self applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:2.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyExtraLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.97 alpha:0.82];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyDarkEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.11 alpha:0.73];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor</div><div class="line">&#123;</div><div class="line">    const CGFloat EffectColorAlpha = 0.6;</div><div class="line">    UIColor *effectColor = tintColor;</div><div class="line">    int componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);</div><div class="line">    if (componentCount == 2) &#123;</div><div class="line">        CGFloat b;</div><div class="line">        if ([tintColor getWhite:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithWhite:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        CGFloat r, g, b;</div><div class="line">        if ([tintColor getRed:&amp;r green:&amp;g blue:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return [self applyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage</div><div class="line">&#123;</div><div class="line">    // Check pre-conditions.</div><div class="line">    if (self.size.width &lt; 1 || self.size.height &lt; 1) &#123;</div><div class="line">        NSLog (@&quot;*** error: invalid size: (%.2f x %.2f). Both dimensions must be &gt;= 1: %@&quot;, self.size.width, self.size.height, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (!self.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: image must be backed by a CGImage: %@&quot;, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (maskImage &amp;&amp; !maskImage.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: maskImage must be backed by a CGImage: %@&quot;, maskImage);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    CGRect imageRect = &#123; CGPointZero, self.size &#125;;</div><div class="line">    UIImage *effectImage = self;</div><div class="line">    </div><div class="line">    BOOL hasBlur = blurRadius &gt; __FLT_EPSILON__;</div><div class="line">    BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) &gt; __FLT_EPSILON__;</div><div class="line">    if (hasBlur || hasSaturationChange) &#123;</div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectInContext = UIGraphicsGetCurrentContext();</div><div class="line">        CGContextScaleCTM(effectInContext, 1.0, -1.0);</div><div class="line">        CGContextTranslateCTM(effectInContext, 0, -self.size.height);</div><div class="line">        CGContextDrawImage(effectInContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">        vImage_Buffer effectInBuffer;</div><div class="line">        effectInBuffer.data     = CGBitmapContextGetData(effectInContext);</div><div class="line">        effectInBuffer.width    = CGBitmapContextGetWidth(effectInContext);</div><div class="line">        effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);</div><div class="line">        effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);</div><div class="line">    </div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectOutContext = UIGraphicsGetCurrentContext();</div><div class="line">        vImage_Buffer effectOutBuffer;</div><div class="line">        effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);</div><div class="line">        effectOutBuffer.width    = CGBitmapContextGetWidth(effectOutContext);</div><div class="line">        effectOutBuffer.height   = CGBitmapContextGetHeight(effectOutContext);</div><div class="line">        effectOutBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectOutContext);</div><div class="line"></div><div class="line">        if (hasBlur) &#123;</div><div class="line">            // A description of how to compute the box kernel width from the Gaussian</div><div class="line">            // radius (aka standard deviation) appears in the SVG spec:</div><div class="line">            // http://www.w3.org/TR/SVG/filters.html#feGaussianBlurElement</div><div class="line">            // </div><div class="line">            // For larger values of &apos;s&apos; (s &gt;= 2.0), an approximation can be used: Three</div><div class="line">            // successive box-blurs build a piece-wise quadratic convolution kernel, which</div><div class="line">            // approximates the Gaussian kernel to within roughly 3%.</div><div class="line">            //</div><div class="line">            // let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)</div><div class="line">            // </div><div class="line">            // ... if d is odd, use three box-blurs of size &apos;d&apos;, centered on the output pixel.</div><div class="line">            // </div><div class="line">            CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];</div><div class="line">            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);</div><div class="line">            if (radius % 2 != 1) &#123;</div><div class="line">                radius += 1; // force radius to be odd so that the three box-blur methodology works.</div><div class="line">            &#125;</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">        &#125;</div><div class="line">        BOOL effectImageBuffersAreSwapped = NO;</div><div class="line">        if (hasSaturationChange) &#123;</div><div class="line">            CGFloat s = saturationDeltaFactor;</div><div class="line">            CGFloat floatingPointSaturationMatrix[] = &#123;</div><div class="line">                0.0722 + 0.9278 * s,  0.0722 - 0.0722 * s,  0.0722 - 0.0722 * s,  0,</div><div class="line">                0.7152 - 0.7152 * s,  0.7152 + 0.2848 * s,  0.7152 - 0.7152 * s,  0,</div><div class="line">                0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,</div><div class="line">                                  0,                    0,                    0,  1,</div><div class="line">            &#125;;</div><div class="line">            const int32_t divisor = 256;</div><div class="line">            NSUInteger matrixSize = sizeof(floatingPointSaturationMatrix)/sizeof(floatingPointSaturationMatrix[0]);</div><div class="line">            int16_t saturationMatrix[matrixSize];</div><div class="line">            for (NSUInteger i = 0; i &lt; matrixSize; ++i) &#123;</div><div class="line">                saturationMatrix[i] = (int16_t)roundf(floatingPointSaturationMatrix[i] * divisor);</div><div class="line">            &#125;</div><div class="line">            if (hasBlur) &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">                effectImageBuffersAreSwapped = YES;</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (!effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">        if (effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Set up output context.</div><div class="line">    UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">    CGContextRef outputContext = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextScaleCTM(outputContext, 1.0, -1.0);</div><div class="line">    CGContextTranslateCTM(outputContext, 0, -self.size.height);</div><div class="line"></div><div class="line">    // Draw base image.</div><div class="line">    CGContextDrawImage(outputContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">    // Draw effect image.</div><div class="line">    if (hasBlur) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        if (maskImage) &#123;</div><div class="line">            CGContextClipToMask(outputContext, imageRect, maskImage.CGImage);</div><div class="line">        &#125;</div><div class="line">        CGContextDrawImage(outputContext, imageRect, effectImage.CGImage);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Add in color tint.</div><div class="line">    if (tintColor) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        CGContextSetFillColorWithColor(outputContext, tintColor.CGColor);</div><div class="line">        CGContextFillRect(outputContext, imageRect);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Output image is ready.</div><div class="line">    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">    return outputImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/28/图片处理之图片着色/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-生活" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/13/生活/">生活</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/13/生活/" class="archive-article-date">
-  	<time datetime="2016-05-13T02:58:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"><a href="#幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。" class="headerlink" title="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"></a>幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。</h1>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/13/生活/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
+</nav>
 
 
 
@@ -882,9 +317,21 @@ ga('send', 'pageview');
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "https://devchao.com/2017/05/23/PlistBuddy的使用/", 
+    sourceId: "PlistBuddy的使用",
+    productKey: "b2316564c29a473ba0b7e40a6f1fe688",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+  
+
   
 
 
@@ -922,8 +369,8 @@ ga('send', 'pageview');
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-05-21T15:00:47.000Z</updated>
+  <updated>2017-05-23T14:20:46.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PlistBuddy的使用</title>
+    <link href="https://devchao.com/2017/05/23/PlistBuddy%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>https://devchao.com/2017/05/23/PlistBuddy的使用/</id>
+    <published>2017-05-23T14:19:21.000Z</published>
+    <updated>2017-05-23T14:20:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="PlistBuddy的使用"><a href="#PlistBuddy的使用" class="headerlink" title="PlistBuddy的使用"></a>PlistBuddy的使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PlistBuddy是Mac系统自带的专门解析plist的小工具，可以很方便的对plist文件进行修改，对于批量修改plist是十分方便快捷的一种工具。</p>
+<p>由于PlistBuddy并不在Mac默认的Path里，所以我们得通过绝对路径来引用这个工具：</p>
+<p>查看帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy --help</div></pre></td></tr></table></figure>
+<p>新建plist文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/libexec/PlistBuddy testing.plist</div></pre></td></tr></table></figure>
+<p>查看plist</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print</div><div class="line">Dict &#123;</div></pre></td></tr></table></figure>
+<p>在第一层添加一个键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Add :Version string 1.0</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在改变它的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Command: Set :Version 1.1</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来我们将创建一个数组，并放入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications array</div><div class="line">Command: Add :Applications: string app1</div><div class="line">Command: Add :Applications: string app2</div><div class="line">Command: Add :Applications: string app3</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以在数组索引为0的位置插入一些数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Command: Add :Applications:0 string app0a</div><div class="line">Command: Add :Applications:0 string app0b</div><div class="line">Command: Add :Applications:0 string app0c</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div><div class="line">    Applications = Array &#123;</div><div class="line">        app0c</div><div class="line">        app0b</div><div class="line">        app0a</div><div class="line">        app1</div><div class="line">        app2</div><div class="line">        app3</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们将删除一个条目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Applications</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Version = 1.1</div></pre></td></tr></table></figure>
+<p>现在让我们创建一个更为复杂的数据结构吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">Command: Add :BrainCells integer 5</div><div class="line">Command: Add &quot;:Favourite Random Number&quot; real 3.9234</div><div class="line">Command: Add :Intelligent bool false</div><div class="line">Command: Add :Today date &quot;Sat Jun 27 18:51:00 AEST 2015&quot;</div><div class="line">Command: Add :Person dict</div><div class="line">Command: Add :Person:Name string &quot;Fotis Gimian&quot;</div><div class="line">Command: Add :Person:Occupation string &quot;Geek&quot;</div><div class="line">Command: Add :Person:Likes array</div><div class="line">Command: Add :Person:Likes: string Potatoes</div><div class="line">Command: Add :Person:Likes: string Apple</div><div class="line">Command: Add :Person:Likes: string Bouncing</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Apple</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在让我们调皮一下，让Microsoft取代Apple</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Command: Set :Person:Likes:1 Microsoft</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Likes = Array &#123;</div><div class="line">            Potatoes</div><div class="line">            Microsoft</div><div class="line">            Bouncing</div><div class="line">        &#125;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们也可以打印一个子节点的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes</div><div class="line">Array &#123;</div><div class="line">    Potatoes</div><div class="line">    Microsoft</div><div class="line">    Bouncing</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以使用索引移动到数组中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Command: Print :Person:Likes:1</div><div class="line">Microsoft</div></pre></td></tr></table></figure>
+<p>当然了也可以使用冒号删除任何元组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Command: Delete :Person:Likes</div><div class="line">Command: Print</div><div class="line">Dict &#123;</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">    Version = 1.1</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以保存我们的辛苦工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Command: Save</div><div class="line">Saving...</div><div class="line">Command: Exit</div></pre></td></tr></table></figure>
+<p>可以使用-c选项直接从CLI调用这些命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print&quot; testing.plist</div><div class="line">Dict &#123;</div><div class="line">    Person = Dict &#123;</div><div class="line">        Name = Fotis Gimian</div><div class="line">        Occupation = Geek</div><div class="line">    &#125;</div><div class="line">    Intelligent = false</div><div class="line">    BrainCells = 5</div><div class="line">    Version = 1.1</div><div class="line">    Today = Sat Jun 27 18:51:00 AEST 2015</div><div class="line">    Favourite Random Number = 3.923400</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果您想修改应用程序提供的plist文件，则需要向PlistBuddy提供文件的完整路径名)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">true</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Set :magnification bool false&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">➔ /usr/libexec/PlistBuddy -c &quot;Print :magnification&quot; ~/Library/Preferences/com.apple.dock.plist</div><div class="line">false</div></pre></td></tr></table></figure>
+<p>小窍门：命令（即 Print, Set, Add等）不区分大小写，因此您可以使用小写字母键入。</p>
+<p>翻译自<a href="http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/" target="_blank" rel="external">http://fgimian.github.io/blog/2015/06/27/a-simple-plistbuddy-tutorial/</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;PlistBuddy的使用&quot;&gt;&lt;a href=&quot;#PlistBuddy的使用&quot; class=&quot;headerlink&quot; title=&quot;PlistBuddy的使用&quot;&gt;&lt;/a&gt;PlistBuddy的使用&lt;/h1&gt;&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; cla
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://devchao.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>EFB总结与启发</title>
@@ -946,37 +1003,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="cocopods" scheme="https://devchao.com/tags/cocopods/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS开启GPS精准定位</title>
-    <link href="https://devchao.com/2016/12/02/iOS%E5%BC%80%E5%90%AFGPS%E7%B2%BE%E5%87%86%E5%AE%9A%E4%BD%8D/"/>
-    <id>https://devchao.com/2016/12/02/iOS开启GPS精准定位/</id>
-    <published>2016-12-02T01:57:29.000Z</published>
-    <updated>2016-12-02T01:57:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="开启GPS精准定位"><a href="#开启GPS精准定位" class="headerlink" title="开启GPS精准定位"></a>开启GPS精准定位</h1><hr>
-<p><strong>精准定位</strong></p>
-<p>1.在Info-plist中加入UIRequiredDeviceCapabilities键，此键是数组类型</p>
-<p><code>UIRequiredDeviceCapabilities</code>(lets iTunes and the App Store know which device-related features an app requires in order to run)</p>
-<p>2.在数组中加入<code>gps</code>关键字</p>
-<p>官方解释：</p>
-<p>Include this key if your app requires (or specifically prohibits) the presence of GPS (or AGPS) hardware when tracking locations. (You should include this key only if you need the higher accuracy offered by GPS hardware.) If you include this key, you should also include the location-services key. You should require GPS only if your app needs location data more accurate than the cellular or Wi-fi radios might otherwise provide.</p>
-<p>中文描述：(个人水平有限,如有错误，敬请指正，感激)</p>
-<p>如果你的app需要GPS或者AGPS硬件去获取位置信息时，需要加入此键。（如果你需要FPS或者AGPS硬件获得非常精准的位置信息时，需要加入此键），注意：加入此键时，也需要加入location-services字段，如果加入了<code>gps</code>和<code>location-services</code>两个字段，那么你的app将只能通过GPS进行定位，当然这比蜂窝移动网络、Wi-fi广播等其他提供的位置服务要精准的多。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;开启GPS精准定位&quot;&gt;&lt;a href=&quot;#开启GPS精准定位&quot; class=&quot;headerlink&quot; title=&quot;开启GPS精准定位&quot;&gt;&lt;/a&gt;开启GPS精准定位&lt;/h1&gt;&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;精准定位&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1.在Info-
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
     
   </entry>
   
