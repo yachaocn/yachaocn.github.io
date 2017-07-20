@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-07-20T06:47:13.000Z</updated>
+  <updated>2017-07-20T06:49:26.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,12 +20,12 @@
     <link href="https://devchao.com/2017/07/20/iOS%E8%B0%83%E8%8A%82%E6%98%BE%E7%A4%BA%E5%99%A8%E5%8F%82%E6%95%B0%E4%B9%8B%E5%B0%86%E5%B1%8F%E5%B9%95%E4%BA%AE%E5%BA%A6%E9%99%8D%E4%BD%8E%E8%87%B3%E7%B3%BB%E7%BB%9F%E4%BA%AE%E5%BA%A6%E4%BB%A5%E4%B8%8B/"/>
     <id>https://devchao.com/2017/07/20/iOS调节显示器参数之将屏幕亮度降低至系统亮度以下/</id>
     <published>2017-07-20T06:46:40.000Z</published>
-    <updated>2017-07-20T06:47:13.000Z</updated>
+    <updated>2017-07-20T06:49:26.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://github.com/anthonya1999/GoodNight" target="_blank" rel="external">GoodNight</a>:使用IOMobileFramebuffer调节显示器参数的App.能够实现以下功能：</p>
 <ul>
 <li>更改屏幕温度</li>
-<li>把亮度低于iOS通常会允许你</li>
+<li>把亮度低于iOS通常会允许你的最低亮度</li>
 <li>调整帧缓冲区的RGB值</li>
 </ul>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>1.下载GoodNight库，将Shared下文件添加入项目，具体如下</p>
@@ -64,7 +64,7 @@
     <link href="https://devchao.com/2017/07/20/webview%E7%BC%A9%E6%94%BE%E4%B8%8E%E6%A0%B7%E5%BC%8F/"/>
     <id>https://devchao.com/2017/07/20/webview缩放与样式/</id>
     <published>2017-07-20T06:45:20.000Z</published>
-    <updated>2017-07-20T06:45:55.000Z</updated>
+    <updated>2017-07-20T06:49:35.000Z</updated>
     
     <content type="html"><![CDATA[<p>Webview添加缩放与外观样式</p>
 <p>1.设置属性</p>
@@ -86,6 +86,8 @@
     
     </summary>
     
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
     
   </entry>
   
