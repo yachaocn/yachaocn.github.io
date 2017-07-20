@@ -183,6 +183,150 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-关于应用程序启动到后台" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/27/关于应用程序启动到后台/">关于应用程序启动到后台</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/27/关于应用程序启动到后台/" class="archive-article-date">
+  	<time datetime="2016-12-27T09:30:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于应用程序启动到后台"><a href="#关于应用程序启动到后台" class="headerlink" title="关于应用程序启动到后台"></a>关于应用程序启动到后台</h1><p>支持后台执行的应用程序可以由系统重新启动以处理传入事件。如果应用程序因用户强制退出之外的任何原因而终止，则系统在以下事件之一发生时启动应用程序:</p>
+<ul>
+<li>对于定位的APP:<ul>
+<li>系统接收到符合应用程序配置的传递标准的位置更新。<br>(<code>The system receives a location update that meets the app’s configured criteria for delivery.</code>)</li>
+<li>设备进入或退出注册区域。 （地区可以是地理区域或iBeacon地区。）<br>(<code>The device entered or exited a registered region. (Regions can be geographic regions or iBeacon regions.)</code>)</li>
+</ul>
+</li>
+<li>对于音频的APP:音频框架需要应用程序处理一些数据。 （音频应用包括播放音频或使用麦克风的应用）。<br>(<code>For audio apps, the audio framework needs the app to process some data. (Audio apps include those that play audio or use the microphone.)</code>)</li>
+<li>对于蓝牙的app：<ul>
+<li>以中心角色扮演的应用程序从连接的外围设备接收数据。<br>(<code>An app acting in the central role receives data from a connected peripheral.</code>)</li>
+<li>在外围角色中扮演的应用程序从连接的中心接收命令。<br>(<code>在外围角色中扮演的应用程序从连接的中心接收命令。</code>)</li>
+</ul>
+</li>
+<li>对于后台下载的app:<ul>
+<li>应用程序的推送通知到达，通知的有效内容包含键为<code>content-available</code>值为<code>1</code>的字段。<br>(<code>A push notification arrives for an app and the payload of the notification contains the content-available key with a value of 1.</code>)</li>
+<li>系统在机会性时刻唤醒应用程序，开始下载新内容。<br>(<code>The system wakes the app at opportunistic moments to begin downloading new content.</code>)</li>
+<li>对于使用NSURLSession类在后台下载内容的应用程序，与该会话对象关联的所有任务都已成功完成或接收到错误。<br>(<code>For apps downloading content in the background using the NSURLSession class, all tasks associated with that session object either completed successfully or received an error.</code>)</li>
+</ul>
+</li>
+</ul>
+<p>在大多数情况下，系统不会在用户强制退出后重新启动应用程序。一个例外是位置应用程序(在iOS 8和更高版本中，在用户强制退出后重新启动。),但在其他情况下，用户必须明确地启动应用程序或重新启动设备，然后应用程序才能由系统自动启动到后台。当设备上启用密码保护时，系统不会在用户首次解锁设备之前在后台启动应用程序。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/27/关于应用程序启动到后台/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-安装cocoapods遇到curl 56 SSLRead()" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/">安装cocoapods遇到curl 56 SSLRead()</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/" class="archive-article-date">
+  	<time datetime="2016-12-13T06:49:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题"><a href="#安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题" class="headerlink" title=" 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题"></a> 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题</h1><hr>
+<p> 在安装cocoapods遇到的问题</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> [!] /usr/bin/git clone https://github.com/gali8/Tesseract-OCR-iOS.git /var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c --template= --single-branch --depth 1 --branch 4.0.0</div><div class="line"></div><div class="line">Cloning into &apos;/var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c&apos;...</div><div class="line">error: RPC failed; curl 56 SSLRead() return error -36</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: early EOF</div><div class="line">fatal: index-pack failed</div></pre></td></tr></table></figure>
+<p>解决方案</p>
+<p>打开终端输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer</div></pre></td></tr></table></figure>
+<p>参考自<a href="http://blog.csdn.net/wm9028/article/details/51840759" target="_blank" rel="external">http://blog.csdn.net/wm9028/article/details/51840759</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">cocopods</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS开启GPS精准定位" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -758,129 +902,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-图片处理之图片着色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/28/图片处理之图片着色/">图片处理之图片着色</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/28/图片处理之图片着色/" class="archive-article-date">
-  	<time datetime="2016-07-28T08:54:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="图像效果"><a href="#图像效果" class="headerlink" title="图像效果"></a>图像效果</h1><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%8E%9F%E5%A7%8B.PNG" alt="yuanshi"><br>1.亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/light.PNG" alt="light"><br>2.特亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/extraLight.PNG" alt="extraLight"><br>3.黑暗图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/dark.PNG" alt="dark"><br>4.给图片上色<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/tin.PNG" alt="tint"></p>
-<p><strong>实现：</strong></p>
-<p>新建UIImage类别ImageEffects代码如下：<br><code>UIImage+ImageEffects.h</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@import UIKit;</div><div class="line"></div><div class="line">@interface UIImage (ImageEffects)</div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect;</div><div class="line">- (UIImage *)applyExtraLightEffect;</div><div class="line">- (UIImage *)applyDarkEffect;</div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor;</div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>UIImage+ImageEffects.m</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;UIImage+ImageEffects.h&quot;</div><div class="line"></div><div class="line">@import Accelerate;</div><div class="line">#import &lt;float.h&gt;</div><div class="line"></div><div class="line"></div><div class="line">@implementation UIImage (ImageEffects)</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];</div><div class="line">    return [self applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:2.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyExtraLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.97 alpha:0.82];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyDarkEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.11 alpha:0.73];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor</div><div class="line">&#123;</div><div class="line">    const CGFloat EffectColorAlpha = 0.6;</div><div class="line">    UIColor *effectColor = tintColor;</div><div class="line">    int componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);</div><div class="line">    if (componentCount == 2) &#123;</div><div class="line">        CGFloat b;</div><div class="line">        if ([tintColor getWhite:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithWhite:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        CGFloat r, g, b;</div><div class="line">        if ([tintColor getRed:&amp;r green:&amp;g blue:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return [self applyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage</div><div class="line">&#123;</div><div class="line">    // Check pre-conditions.</div><div class="line">    if (self.size.width &lt; 1 || self.size.height &lt; 1) &#123;</div><div class="line">        NSLog (@&quot;*** error: invalid size: (%.2f x %.2f). Both dimensions must be &gt;= 1: %@&quot;, self.size.width, self.size.height, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (!self.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: image must be backed by a CGImage: %@&quot;, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (maskImage &amp;&amp; !maskImage.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: maskImage must be backed by a CGImage: %@&quot;, maskImage);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    CGRect imageRect = &#123; CGPointZero, self.size &#125;;</div><div class="line">    UIImage *effectImage = self;</div><div class="line">    </div><div class="line">    BOOL hasBlur = blurRadius &gt; __FLT_EPSILON__;</div><div class="line">    BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) &gt; __FLT_EPSILON__;</div><div class="line">    if (hasBlur || hasSaturationChange) &#123;</div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectInContext = UIGraphicsGetCurrentContext();</div><div class="line">        CGContextScaleCTM(effectInContext, 1.0, -1.0);</div><div class="line">        CGContextTranslateCTM(effectInContext, 0, -self.size.height);</div><div class="line">        CGContextDrawImage(effectInContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">        vImage_Buffer effectInBuffer;</div><div class="line">        effectInBuffer.data     = CGBitmapContextGetData(effectInContext);</div><div class="line">        effectInBuffer.width    = CGBitmapContextGetWidth(effectInContext);</div><div class="line">        effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);</div><div class="line">        effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);</div><div class="line">    </div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectOutContext = UIGraphicsGetCurrentContext();</div><div class="line">        vImage_Buffer effectOutBuffer;</div><div class="line">        effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);</div><div class="line">        effectOutBuffer.width    = CGBitmapContextGetWidth(effectOutContext);</div><div class="line">        effectOutBuffer.height   = CGBitmapContextGetHeight(effectOutContext);</div><div class="line">        effectOutBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectOutContext);</div><div class="line"></div><div class="line">        if (hasBlur) &#123;</div><div class="line">            // A description of how to compute the box kernel width from the Gaussian</div><div class="line">            // radius (aka standard deviation) appears in the SVG spec:</div><div class="line">            // http://www.w3.org/TR/SVG/filters.html#feGaussianBlurElement</div><div class="line">            // </div><div class="line">            // For larger values of &apos;s&apos; (s &gt;= 2.0), an approximation can be used: Three</div><div class="line">            // successive box-blurs build a piece-wise quadratic convolution kernel, which</div><div class="line">            // approximates the Gaussian kernel to within roughly 3%.</div><div class="line">            //</div><div class="line">            // let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)</div><div class="line">            // </div><div class="line">            // ... if d is odd, use three box-blurs of size &apos;d&apos;, centered on the output pixel.</div><div class="line">            // </div><div class="line">            CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];</div><div class="line">            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);</div><div class="line">            if (radius % 2 != 1) &#123;</div><div class="line">                radius += 1; // force radius to be odd so that the three box-blur methodology works.</div><div class="line">            &#125;</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">        &#125;</div><div class="line">        BOOL effectImageBuffersAreSwapped = NO;</div><div class="line">        if (hasSaturationChange) &#123;</div><div class="line">            CGFloat s = saturationDeltaFactor;</div><div class="line">            CGFloat floatingPointSaturationMatrix[] = &#123;</div><div class="line">                0.0722 + 0.9278 * s,  0.0722 - 0.0722 * s,  0.0722 - 0.0722 * s,  0,</div><div class="line">                0.7152 - 0.7152 * s,  0.7152 + 0.2848 * s,  0.7152 - 0.7152 * s,  0,</div><div class="line">                0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,</div><div class="line">                                  0,                    0,                    0,  1,</div><div class="line">            &#125;;</div><div class="line">            const int32_t divisor = 256;</div><div class="line">            NSUInteger matrixSize = sizeof(floatingPointSaturationMatrix)/sizeof(floatingPointSaturationMatrix[0]);</div><div class="line">            int16_t saturationMatrix[matrixSize];</div><div class="line">            for (NSUInteger i = 0; i &lt; matrixSize; ++i) &#123;</div><div class="line">                saturationMatrix[i] = (int16_t)roundf(floatingPointSaturationMatrix[i] * divisor);</div><div class="line">            &#125;</div><div class="line">            if (hasBlur) &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">                effectImageBuffersAreSwapped = YES;</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (!effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">        if (effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Set up output context.</div><div class="line">    UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">    CGContextRef outputContext = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextScaleCTM(outputContext, 1.0, -1.0);</div><div class="line">    CGContextTranslateCTM(outputContext, 0, -self.size.height);</div><div class="line"></div><div class="line">    // Draw base image.</div><div class="line">    CGContextDrawImage(outputContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">    // Draw effect image.</div><div class="line">    if (hasBlur) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        if (maskImage) &#123;</div><div class="line">            CGContextClipToMask(outputContext, imageRect, maskImage.CGImage);</div><div class="line">        &#125;</div><div class="line">        CGContextDrawImage(outputContext, imageRect, effectImage.CGImage);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Add in color tint.</div><div class="line">    if (tintColor) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        CGContextSetFillColorWithColor(outputContext, tintColor.CGColor);</div><div class="line">        CGContextFillRect(outputContext, imageRect);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Output image is ready.</div><div class="line">    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">    return outputImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/28/图片处理之图片着色/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-生活" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/13/生活/">生活</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/13/生活/" class="archive-article-date">
-  	<time datetime="2016-05-13T02:58:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"><a href="#幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。" class="headerlink" title="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"></a>幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。</h1>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/05/13/生活/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -993,11 +1014,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1077,7 +1098,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             </li>
           
             <li class="search-li">
-              <a href="https://zsisme.gitbooks.io/ios-/content/chapter5/3d-transform.html#" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
+              <a href="https://zsisme.gitbooks.io/ios-/content/index.html" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
             </li>
           
             <li class="search-li">

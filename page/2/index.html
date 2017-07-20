@@ -183,6 +183,199 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-内敛函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/内敛函数/">内敛函数</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/内敛函数/" class="archive-article-date">
+  	<time datetime="2017-04-10T09:52:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="内联函数inline"><a href="#内联函数inline" class="headerlink" title="内联函数inline"></a>内联函数inline</h1><p><code>参考资料</code></p>
+<p><a href="http://www.jianshu.com/p/d557b0831c6a" target="_blank" rel="external">http://www.jianshu.com/p/d557b0831c6a</a></p>
+<p><a href="http://www.blogfshare.com/ioss-static-inline.html" target="_blank" rel="external">http://www.blogfshare.com/ioss-static-inline.html</a></p>
+<p><a href="http://www.blogfshare.com/ioss-static-inline.html" target="_blank" rel="external">http://www.blogfshare.com/ioss-static-inline.html</a></p>
+<p><code>例：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static inline UIBarButtonItem *UIBarButtonWithFixedWidth(CGFloat with)</div><div class="line">&#123;</div><div class="line">    UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];</div><div class="line">    button.width = with;</div><div class="line">    return button;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>概述：</code></p>
+<p>内联函数是一种小型函数，是以空间换效率的函数，功能较简单，他能够替代宏，static inline通常用于修饰函数或者方法，用于解决函数调用的效率问题：</p>
+<ul>
+<li><p>函数调用是内存地址之间通过call的方式调用,当函数调用完毕之后还会返回原来函数执行的地址,函数调用有时间开销, 汇编时会出现 call 指令.调用call指令就是就需要：</p>
+<ul>
+<li>(1)将下一条指令的所在地址入栈</li>
+<li>(2)并将子程序的起始地址送入PC（于是CPU的下一条指令就会转去执行子程序）</li>
+</ul>
+</li>
+<li><p>以inline的方式编译的会，会把该函数的code拷贝到每次调用该函数的地方。而static会让生成的二进制文件中没有清晰的符号表，让逆向的人很难弄清楚逻辑。</p>
+</li>
+</ul>
+<p>inline 的优点：</p>
+<p><strong><code>相比函数</code></strong></p>
+<ul>
+<li><p>inline函数避免了普通函数的,在汇编时必须调用call的缺点:取消了函数的参数压栈，减少了调用的开销,提高效率.所以执行速度确比一般函数的执行速度要快.</p>
+</li>
+<li><p>集成了宏的优点,使用时直接用代码替换(像宏一样);</p>
+</li>
+<li>以inline的方式编译的会，会把该函数的code拷贝到每次调用该函数的地方。而static会让生成的二进制文件中没有清晰的符号表，让逆向的人很难弄清楚逻辑。</li>
+</ul>
+<p><strong><code>相比宏</code></strong></p>
+<ul>
+<li><p>避免了宏的缺点:需要预编译.因为inline内联函数也是函数,不需要预编译.</p>
+</li>
+<li><p>编译器在调用一个内联函数时，会首先检查它的参数的类型，保证调用正确。然后进行一系列的相关检查，就像对待任何一个真正的函数一样。这样就消除了它的隐患和局限性。</p>
+</li>
+<li><p>可以使用所在类的保护成员及私有成员</p>
+</li>
+</ul>
+<p><code>使用内敛函数注意事项：</code></p>
+<ul>
+<li>内联函数只是我们向编译器提供的申请,编译器不一定采取inline形式调用函数.</li>
+<li>内联函数不能承载大量的代码.如果内联函数的函数体过大,编译器会自动放弃内联.</li>
+<li>内联函数内不允许使用循环语句或开关语句.</li>
+<li>内联函数的定义须在调用之前.</li>
+</ul>
+<hr>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/内敛函数/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-MAC-SSH-服务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/MAC-SSH-服务/">MAC SSH 服务</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/28/MAC-SSH-服务/" class="archive-article-date">
+  	<time datetime="2017-03-28T06:23:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MAC-SSH-服务"><a href="#MAC-SSH-服务" class="headerlink" title="MAC SSH 服务"></a>MAC SSH 服务</h1><p>SSH（Secure Shell）是一种通用的、功能强大的、基于软件的网络安全解决方案。计算机每次向网络发送数据时，SSH都会自动对其进行加密。运行 OS X 又或者是 macOS 的较新 Mac 设备都会默认预装 SSH，不过 SSH 守护进程是默认禁用的。</p>
+<blockquote>
+<p>配置</p>
+</blockquote>
+<p><code>Mac Terminal是自带SSH的，可以用whereis来看看：</code></p>
+<pre><code>$ whereis ssh
+</code></pre><p>但是在现有进程中找不到ssh对应的进程：</p>
+<pre><code>$ ps aux | grep ssh
+yachaocn          9043   0.0  0.0  2434840    764 s001  R+    3:52下午   0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn ssh
+</code></pre><p>直接用ssh命令连接本地主机或远程主机时会遇到下列错误提示：</p>
+<pre><code>ssh: connect to host localhost port 22: Connection refused
+</code></pre><p><strong>解决办法:</strong></p>
+<p> 在系统偏好设置》共享》勾选‘远程登陆’或者 终端键入如下命令:</p>
+<p><code>查看SSH服务状态</code></p>
+<pre><code>$ sudo systemsetup -getremotelogin
+</code></pre><p><code>快速开启 SSH 服务器并允许 SSH 连接进入当前 Mac</code></p>
+<pre><code>$ sudo systemsetup -setremotelogin on
+</code></pre><p>输入指令后并没有任何确认信息表明远程登录和 SSH 已经开启，但你可以使用上文提到的方法来检查是否开启成功。</p>
+<p><code>通过终端指令关闭Mac的SSH,并阻止远程连接</code></p>
+<pre><code>$ sudo systemsetup -setremotelogin off
+</code></pre><blockquote>
+<p>使用</p>
+</blockquote>
+<p><code>ssh链接远程电脑</code></p>
+<pre><code>ssh username@192.168.100.100
+</code></pre><p>username ： 登录的主机的用户名</p>
+<p>192.168.100.100 ：要登录的主机的IP地址</p>
+<p><code>scp远程copy文件</code></p>
+<pre><code>scp .zshrc username@192.168.100.100:/Users/username/
+</code></pre><p>将当前路径下的.zshrc文件复制到远程主机的/Users/username目录下。</p>
+<p><strong>具体用法参见</strong><br><a href="http://yachaocn.com/2017/03/23/Linux-cp%E5%92%8Cscp%E5%91%BD%E4%BB%A4/" target="_blank" rel="external">cp和scp用法</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/28/MAC-SSH-服务/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-毛玻璃效果的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -891,150 +1084,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
 
 
   
-    <article id="post-关于应用程序启动到后台" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/27/关于应用程序启动到后台/">关于应用程序启动到后台</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/27/关于应用程序启动到后台/" class="archive-article-date">
-  	<time datetime="2016-12-27T09:30:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于应用程序启动到后台"><a href="#关于应用程序启动到后台" class="headerlink" title="关于应用程序启动到后台"></a>关于应用程序启动到后台</h1><p>支持后台执行的应用程序可以由系统重新启动以处理传入事件。如果应用程序因用户强制退出之外的任何原因而终止，则系统在以下事件之一发生时启动应用程序:</p>
-<ul>
-<li>对于定位的APP:<ul>
-<li>系统接收到符合应用程序配置的传递标准的位置更新。<br>(<code>The system receives a location update that meets the app’s configured criteria for delivery.</code>)</li>
-<li>设备进入或退出注册区域。 （地区可以是地理区域或iBeacon地区。）<br>(<code>The device entered or exited a registered region. (Regions can be geographic regions or iBeacon regions.)</code>)</li>
-</ul>
-</li>
-<li>对于音频的APP:音频框架需要应用程序处理一些数据。 （音频应用包括播放音频或使用麦克风的应用）。<br>(<code>For audio apps, the audio framework needs the app to process some data. (Audio apps include those that play audio or use the microphone.)</code>)</li>
-<li>对于蓝牙的app：<ul>
-<li>以中心角色扮演的应用程序从连接的外围设备接收数据。<br>(<code>An app acting in the central role receives data from a connected peripheral.</code>)</li>
-<li>在外围角色中扮演的应用程序从连接的中心接收命令。<br>(<code>在外围角色中扮演的应用程序从连接的中心接收命令。</code>)</li>
-</ul>
-</li>
-<li>对于后台下载的app:<ul>
-<li>应用程序的推送通知到达，通知的有效内容包含键为<code>content-available</code>值为<code>1</code>的字段。<br>(<code>A push notification arrives for an app and the payload of the notification contains the content-available key with a value of 1.</code>)</li>
-<li>系统在机会性时刻唤醒应用程序，开始下载新内容。<br>(<code>The system wakes the app at opportunistic moments to begin downloading new content.</code>)</li>
-<li>对于使用NSURLSession类在后台下载内容的应用程序，与该会话对象关联的所有任务都已成功完成或接收到错误。<br>(<code>For apps downloading content in the background using the NSURLSession class, all tasks associated with that session object either completed successfully or received an error.</code>)</li>
-</ul>
-</li>
-</ul>
-<p>在大多数情况下，系统不会在用户强制退出后重新启动应用程序。一个例外是位置应用程序(在iOS 8和更高版本中，在用户强制退出后重新启动。),但在其他情况下，用户必须明确地启动应用程序或重新启动设备，然后应用程序才能由系统自动启动到后台。当设备上启用密码保护时，系统不会在用户首次解锁设备之前在后台启动应用程序。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/27/关于应用程序启动到后台/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-安装cocoapods遇到curl 56 SSLRead()" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/">安装cocoapods遇到curl 56 SSLRead()</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/" class="archive-article-date">
-  	<time datetime="2016-12-13T06:49:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题"><a href="#安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题" class="headerlink" title=" 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题"></a> 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题</h1><hr>
-<p> 在安装cocoapods遇到的问题</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> [!] /usr/bin/git clone https://github.com/gali8/Tesseract-OCR-iOS.git /var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c --template= --single-branch --depth 1 --branch 4.0.0</div><div class="line"></div><div class="line">Cloning into &apos;/var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c&apos;...</div><div class="line">error: RPC failed; curl 56 SSLRead() return error -36</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: early EOF</div><div class="line">fatal: index-pack failed</div></pre></td></tr></table></figure>
-<p>解决方案</p>
-<p>打开终端输入以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer</div></pre></td></tr></table></figure>
-<p>参考自<a href="http://blog.csdn.net/wm9028/article/details/51840759" target="_blank" rel="external">http://blog.csdn.net/wm9028/article/details/51840759</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">cocopods</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1147,11 +1196,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1231,7 +1280,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             </li>
           
             <li class="search-li">
-              <a href="https://zsisme.gitbooks.io/ios-/content/chapter5/3d-transform.html#" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
+              <a href="https://zsisme.gitbooks.io/ios-/content/index.html" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
             </li>
           
             <li class="search-li">

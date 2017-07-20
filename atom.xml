@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-05-23T14:20:46.000Z</updated>
+  <updated>2017-07-20T06:47:13.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,80 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS调节显示器参数之将屏幕亮度降低至系统亮度以下</title>
+    <link href="https://devchao.com/2017/07/20/iOS%E8%B0%83%E8%8A%82%E6%98%BE%E7%A4%BA%E5%99%A8%E5%8F%82%E6%95%B0%E4%B9%8B%E5%B0%86%E5%B1%8F%E5%B9%95%E4%BA%AE%E5%BA%A6%E9%99%8D%E4%BD%8E%E8%87%B3%E7%B3%BB%E7%BB%9F%E4%BA%AE%E5%BA%A6%E4%BB%A5%E4%B8%8B/"/>
+    <id>https://devchao.com/2017/07/20/iOS调节显示器参数之将屏幕亮度降低至系统亮度以下/</id>
+    <published>2017-07-20T06:46:40.000Z</published>
+    <updated>2017-07-20T06:47:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/anthonya1999/GoodNight" target="_blank" rel="external">GoodNight</a>:使用IOMobileFramebuffer调节显示器参数的App.能够实现以下功能：</p>
+<ul>
+<li>更改屏幕温度</li>
+<li>把亮度低于iOS通常会允许你</li>
+<li>调整帧缓冲区的RGB值</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>1.下载GoodNight库，将Shared下文件添加入项目，具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">IOMobileFramebufferClient.h</div><div class="line">IOMobileFramebufferClient.m</div><div class="line">MobileGestaltClient.h</div><div class="line">MobileGestaltClient.m</div><div class="line">SpringBoardServicesClient.h</div><div class="line">SpringBoardServicesClient.m</div><div class="line">GammaController.h</div><div class="line">GammaController.m</div><div class="line">Brightness.h</div><div class="line">Brightness.c</div><div class="line">NSDate+Extensions.h</div><div class="line">NSDate+Extensions.m</div><div class="line">Solar.h</div><div class="line">Solar.m</div></pre></td></tr></table></figure>
+<p>2.打开TARGETS&gt;Capabilities&gt;APPGroup，添加一个App groups,并选中打勾。<br><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fhqbyforvyj314s0c4aba.jpg" alt=""></p>
+<p>3.将下列代码添加至pch文件中, appGroupID 改成自己的app group ID.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#define appGroupID @&quot;your group id&quot;</div><div class="line">#define userDefaults [NSUserDefaults standardUserDefaults]</div><div class="line">#define groupDefaults [[NSUserDefaults alloc] initWithSuiteName:appGroupID]</div><div class="line">#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)</div><div class="line">#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)</div><div class="line">#define app [UIApplication sharedApplication]</div></pre></td></tr></table></figure>
+<p>4.在GammaController.h中添加如下头文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#pragma mark - custome</div><div class="line">+ (void)setDimWithRed:(float)redDim green:(float)greenDim blue:(float)blueDim;</div></pre></td></tr></table></figure>
+<p>5.在GammaController.m中添加如下实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#pragma mark - custome</div><div class="line">+ (void)setDimWithRed:(float)redDim green:(float)greenDim blue:(float)blueDim</div><div class="line">&#123;</div><div class="line">	//重置白点</div><div class="line">    [self resetWhitePoint];</div><div class="line">    //设置显示器参数</div><div class="line">    [self setGammaWithRed:redDim green:greenDim blue:blueDim];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>PS: redDim greenDim blueDim 分别为0-1之间的值，代表显示器的蒙版颜色</code></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>我们打算创建一个slider,然后拖动slider的同时改变屏幕的亮度，将其逐渐降低到最低。下面开始实现。</p>
+<p>1.新建一个工程项目，在主视图上添加一个UISlider，设置最小值为0，最大值为1，并进行简单的布局，如下图：<br><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fhqc9nxhhsj31f010kag7.jpg" alt=""></p>
+<p>2.为slider添加事件<code>- (IBAction)dimLevelChanged:(id)sender</code>，然后在viewcontroller中引入头文件<code>#import &quot;GammaController.h&quot;</code>.</p>
+<p>3.在<code>- (IBAction)dimLevelChanged:(id)sender</code>中调用如下方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UISlider *slider = (UISlider *)sender;</div><div class="line">    [GammaController setDimWithRed:slider.value green:slider.value blue:slider.value];</div></pre></td></tr></table></figure>
+<p>4.好的，Run 调节slider的值，你将会发现屏幕亮度随之发生了变化。</p>
+<p>如发现本文侵犯了您的知识产权请马上通知我:<code>zyachao@163.com</code>，我将在第一时间删除！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://github.com/anthonya1999/GoodNight&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GoodNight&lt;/a&gt;:使用IOMobileFramebuffer调节显示器参数的App.能够实现以下功
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>webview缩放与样式</title>
+    <link href="https://devchao.com/2017/07/20/webview%E7%BC%A9%E6%94%BE%E4%B8%8E%E6%A0%B7%E5%BC%8F/"/>
+    <id>https://devchao.com/2017/07/20/webview缩放与样式/</id>
+    <published>2017-07-20T06:45:20.000Z</published>
+    <updated>2017-07-20T06:45:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Webview添加缩放与外观样式</p>
+<p>1.设置属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pibWebView.scalesPageToFit = YES;</div><div class="line">pibWebView.delegate = self;</div></pre></td></tr></table></figure>
+<p>2.代理方法中添加如下JS代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)webViewDidFinishLoad:(UIWebView *)webView</div><div class="line">&#123;</div><div class="line">    //    yachaocn 2015年12月24日09:08:43</div><div class="line">    //js代码 写入缩放属性</div><div class="line">    NSString *jsMeta = [NSString stringWithFormat:@&quot;var meta = document.createElement(&apos;meta&apos;);meta.content=&apos;width=device-width,initial-scale=1.0,minimum-scale=.5,maximum-scale=3&apos;;meta.name=&apos;viewport&apos;;document.getElementsByTagName(&apos;head&apos;)[0].appendChild(meta);&quot;];</div><div class="line">    [webView stringByEvaluatingJavaScriptFromString:jsMeta];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>改变webview样式（也是模式）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//JS改变外观</div><div class="line">   if (isNightView) &#123;</div><div class="line">       //字体大小</div><div class="line">       //[webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.webkitTextSizeAdjust= &apos;330%&apos;&quot;];</div><div class="line">       //字体颜色</div><div class="line">       [webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.webkitTextFillColor= &apos;white&apos;&quot;];</div><div class="line">       //页面背景色 3c3f43</div><div class="line">       [webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.background=&apos;#000000&apos;&quot;];</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>如发现本文侵犯了您的知识产权请马上通知我:<code>zyachao@163.com</code>，我将在第一时间删除！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Webview添加缩放与外观样式&lt;/p&gt;
+&lt;p&gt;1.设置属性&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>PlistBuddy的使用</title>
@@ -935,74 +1009,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于应用程序启动到后台</title>
-    <link href="https://devchao.com/2016/12/27/%E5%85%B3%E4%BA%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E5%88%B0%E5%90%8E%E5%8F%B0/"/>
-    <id>https://devchao.com/2016/12/27/关于应用程序启动到后台/</id>
-    <published>2016-12-27T09:30:20.000Z</published>
-    <updated>2016-12-27T09:30:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="关于应用程序启动到后台"><a href="#关于应用程序启动到后台" class="headerlink" title="关于应用程序启动到后台"></a>关于应用程序启动到后台</h1><p>支持后台执行的应用程序可以由系统重新启动以处理传入事件。如果应用程序因用户强制退出之外的任何原因而终止，则系统在以下事件之一发生时启动应用程序:</p>
-<ul>
-<li>对于定位的APP:<ul>
-<li>系统接收到符合应用程序配置的传递标准的位置更新。<br>(<code>The system receives a location update that meets the app’s configured criteria for delivery.</code>)</li>
-<li>设备进入或退出注册区域。 （地区可以是地理区域或iBeacon地区。）<br>(<code>The device entered or exited a registered region. (Regions can be geographic regions or iBeacon regions.)</code>)</li>
-</ul>
-</li>
-<li>对于音频的APP:音频框架需要应用程序处理一些数据。 （音频应用包括播放音频或使用麦克风的应用）。<br>(<code>For audio apps, the audio framework needs the app to process some data. (Audio apps include those that play audio or use the microphone.)</code>)</li>
-<li>对于蓝牙的app：<ul>
-<li>以中心角色扮演的应用程序从连接的外围设备接收数据。<br>(<code>An app acting in the central role receives data from a connected peripheral.</code>)</li>
-<li>在外围角色中扮演的应用程序从连接的中心接收命令。<br>(<code>在外围角色中扮演的应用程序从连接的中心接收命令。</code>)</li>
-</ul>
-</li>
-<li>对于后台下载的app:<ul>
-<li>应用程序的推送通知到达，通知的有效内容包含键为<code>content-available</code>值为<code>1</code>的字段。<br>(<code>A push notification arrives for an app and the payload of the notification contains the content-available key with a value of 1.</code>)</li>
-<li>系统在机会性时刻唤醒应用程序，开始下载新内容。<br>(<code>The system wakes the app at opportunistic moments to begin downloading new content.</code>)</li>
-<li>对于使用NSURLSession类在后台下载内容的应用程序，与该会话对象关联的所有任务都已成功完成或接收到错误。<br>(<code>For apps downloading content in the background using the NSURLSession class, all tasks associated with that session object either completed successfully or received an error.</code>)</li>
-</ul>
-</li>
-</ul>
-<p>在大多数情况下，系统不会在用户强制退出后重新启动应用程序。一个例外是位置应用程序(在iOS 8和更高版本中，在用户强制退出后重新启动。),但在其他情况下，用户必须明确地启动应用程序或重新启动设备，然后应用程序才能由系统自动启动到后台。当设备上启用密码保护时，系统不会在用户首次解锁设备之前在后台启动应用程序。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;关于应用程序启动到后台&quot;&gt;&lt;a href=&quot;#关于应用程序启动到后台&quot; class=&quot;headerlink&quot; title=&quot;关于应用程序启动到后台&quot;&gt;&lt;/a&gt;关于应用程序启动到后台&lt;/h1&gt;&lt;p&gt;支持后台执行的应用程序可以由系统重新启动以处理传入事件。如果应用程序
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>安装cocoapods遇到curl 56 SSLRead()</title>
-    <link href="https://devchao.com/2016/12/13/%E5%AE%89%E8%A3%85cocoapods%E9%81%87%E5%88%B0curl%2056%20SSLRead()/"/>
-    <id>https://devchao.com/2016/12/13/安装cocoapods遇到curl 56 SSLRead()/</id>
-    <published>2016-12-13T06:49:53.000Z</published>
-    <updated>2016-12-13T06:52:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题"><a href="#安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题" class="headerlink" title=" 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题"></a> 安装cocoapods遇到error: RPC failed; curl 56 SSLRead() return error -36问题</h1><hr>
-<p> 在安装cocoapods遇到的问题</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> [!] /usr/bin/git clone https://github.com/gali8/Tesseract-OCR-iOS.git /var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c --template= --single-branch --depth 1 --branch 4.0.0</div><div class="line"></div><div class="line">Cloning into &apos;/var/folders/56/4ktty6b14t55wh8_lttpztnr0000gn/T/d20161121-12186-hcqt0c&apos;...</div><div class="line">error: RPC failed; curl 56 SSLRead() return error -36</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: early EOF</div><div class="line">fatal: index-pack failed</div></pre></td></tr></table></figure>
-<p>解决方案</p>
-<p>打开终端输入以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer</div></pre></td></tr></table></figure>
-<p>参考自<a href="http://blog.csdn.net/wm9028/article/details/51840759" target="_blank" rel="external">http://blog.csdn.net/wm9028/article/details/51840759</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-error-36问题&quot;&gt;&lt;a href=&quot;#安装cocoapods遇到error-RPC-failed-curl-56-SSLRead-return-erro
-    
-    </summary>
-    
-    
-      <category term="cocopods" scheme="https://devchao.com/tags/cocopods/"/>
     
   </entry>
   

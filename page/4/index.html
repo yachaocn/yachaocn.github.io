@@ -183,6 +183,129 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-图片处理之图片着色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/28/图片处理之图片着色/">图片处理之图片着色</a>
+    </h1>
+  
+
+        
+        <a href="/2016/07/28/图片处理之图片着色/" class="archive-article-date">
+  	<time datetime="2016-07-28T08:54:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="图像效果"><a href="#图像效果" class="headerlink" title="图像效果"></a>图像效果</h1><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%8E%9F%E5%A7%8B.PNG" alt="yuanshi"><br>1.亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/light.PNG" alt="light"><br>2.特亮图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/extraLight.PNG" alt="extraLight"><br>3.黑暗图像效果<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/dark.PNG" alt="dark"><br>4.给图片上色<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/tin.PNG" alt="tint"></p>
+<p><strong>实现：</strong></p>
+<p>新建UIImage类别ImageEffects代码如下：<br><code>UIImage+ImageEffects.h</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@import UIKit;</div><div class="line"></div><div class="line">@interface UIImage (ImageEffects)</div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect;</div><div class="line">- (UIImage *)applyExtraLightEffect;</div><div class="line">- (UIImage *)applyDarkEffect;</div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor;</div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p><code>UIImage+ImageEffects.m</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;UIImage+ImageEffects.h&quot;</div><div class="line"></div><div class="line">@import Accelerate;</div><div class="line">#import &lt;float.h&gt;</div><div class="line"></div><div class="line"></div><div class="line">@implementation UIImage (ImageEffects)</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];</div><div class="line">    return [self applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:2.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyExtraLightEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.97 alpha:0.82];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyDarkEffect</div><div class="line">&#123;</div><div class="line">    UIColor *tintColor = [UIColor colorWithWhite:0.11 alpha:0.73];</div><div class="line">    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor</div><div class="line">&#123;</div><div class="line">    const CGFloat EffectColorAlpha = 0.6;</div><div class="line">    UIColor *effectColor = tintColor;</div><div class="line">    int componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);</div><div class="line">    if (componentCount == 2) &#123;</div><div class="line">        CGFloat b;</div><div class="line">        if ([tintColor getWhite:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithWhite:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        CGFloat r, g, b;</div><div class="line">        if ([tintColor getRed:&amp;r green:&amp;g blue:&amp;b alpha:NULL]) &#123;</div><div class="line">            effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return [self applyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage</div><div class="line">&#123;</div><div class="line">    // Check pre-conditions.</div><div class="line">    if (self.size.width &lt; 1 || self.size.height &lt; 1) &#123;</div><div class="line">        NSLog (@&quot;*** error: invalid size: (%.2f x %.2f). Both dimensions must be &gt;= 1: %@&quot;, self.size.width, self.size.height, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (!self.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: image must be backed by a CGImage: %@&quot;, self);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    if (maskImage &amp;&amp; !maskImage.CGImage) &#123;</div><div class="line">        NSLog (@&quot;*** error: maskImage must be backed by a CGImage: %@&quot;, maskImage);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    CGRect imageRect = &#123; CGPointZero, self.size &#125;;</div><div class="line">    UIImage *effectImage = self;</div><div class="line">    </div><div class="line">    BOOL hasBlur = blurRadius &gt; __FLT_EPSILON__;</div><div class="line">    BOOL hasSaturationChange = fabs(saturationDeltaFactor - 1.) &gt; __FLT_EPSILON__;</div><div class="line">    if (hasBlur || hasSaturationChange) &#123;</div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectInContext = UIGraphicsGetCurrentContext();</div><div class="line">        CGContextScaleCTM(effectInContext, 1.0, -1.0);</div><div class="line">        CGContextTranslateCTM(effectInContext, 0, -self.size.height);</div><div class="line">        CGContextDrawImage(effectInContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">        vImage_Buffer effectInBuffer;</div><div class="line">        effectInBuffer.data     = CGBitmapContextGetData(effectInContext);</div><div class="line">        effectInBuffer.width    = CGBitmapContextGetWidth(effectInContext);</div><div class="line">        effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);</div><div class="line">        effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);</div><div class="line">    </div><div class="line">        UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">        CGContextRef effectOutContext = UIGraphicsGetCurrentContext();</div><div class="line">        vImage_Buffer effectOutBuffer;</div><div class="line">        effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);</div><div class="line">        effectOutBuffer.width    = CGBitmapContextGetWidth(effectOutContext);</div><div class="line">        effectOutBuffer.height   = CGBitmapContextGetHeight(effectOutContext);</div><div class="line">        effectOutBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectOutContext);</div><div class="line"></div><div class="line">        if (hasBlur) &#123;</div><div class="line">            // A description of how to compute the box kernel width from the Gaussian</div><div class="line">            // radius (aka standard deviation) appears in the SVG spec:</div><div class="line">            // http://www.w3.org/TR/SVG/filters.html#feGaussianBlurElement</div><div class="line">            // </div><div class="line">            // For larger values of &apos;s&apos; (s &gt;= 2.0), an approximation can be used: Three</div><div class="line">            // successive box-blurs build a piece-wise quadratic convolution kernel, which</div><div class="line">            // approximates the Gaussian kernel to within roughly 3%.</div><div class="line">            //</div><div class="line">            // let d = floor(s * 3*sqrt(2*pi)/4 + 0.5)</div><div class="line">            // </div><div class="line">            // ... if d is odd, use three box-blurs of size &apos;d&apos;, centered on the output pixel.</div><div class="line">            // </div><div class="line">            CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];</div><div class="line">            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);</div><div class="line">            if (radius % 2 != 1) &#123;</div><div class="line">                radius += 1; // force radius to be odd so that the three box-blur methodology works.</div><div class="line">            &#125;</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">            vImageBoxConvolve_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);</div><div class="line">        &#125;</div><div class="line">        BOOL effectImageBuffersAreSwapped = NO;</div><div class="line">        if (hasSaturationChange) &#123;</div><div class="line">            CGFloat s = saturationDeltaFactor;</div><div class="line">            CGFloat floatingPointSaturationMatrix[] = &#123;</div><div class="line">                0.0722 + 0.9278 * s,  0.0722 - 0.0722 * s,  0.0722 - 0.0722 * s,  0,</div><div class="line">                0.7152 - 0.7152 * s,  0.7152 + 0.2848 * s,  0.7152 - 0.7152 * s,  0,</div><div class="line">                0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,</div><div class="line">                                  0,                    0,                    0,  1,</div><div class="line">            &#125;;</div><div class="line">            const int32_t divisor = 256;</div><div class="line">            NSUInteger matrixSize = sizeof(floatingPointSaturationMatrix)/sizeof(floatingPointSaturationMatrix[0]);</div><div class="line">            int16_t saturationMatrix[matrixSize];</div><div class="line">            for (NSUInteger i = 0; i &lt; matrixSize; ++i) &#123;</div><div class="line">                saturationMatrix[i] = (int16_t)roundf(floatingPointSaturationMatrix[i] * divisor);</div><div class="line">            &#125;</div><div class="line">            if (hasBlur) &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectOutBuffer, &amp;effectInBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">                effectImageBuffersAreSwapped = YES;</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                vImageMatrixMultiply_ARGB8888(&amp;effectInBuffer, &amp;effectOutBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (!effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">        if (effectImageBuffersAreSwapped)</div><div class="line">            effectImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">        UIGraphicsEndImageContext();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Set up output context.</div><div class="line">    UIGraphicsBeginImageContextWithOptions(self.size, NO, [[UIScreen mainScreen] scale]);</div><div class="line">    CGContextRef outputContext = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextScaleCTM(outputContext, 1.0, -1.0);</div><div class="line">    CGContextTranslateCTM(outputContext, 0, -self.size.height);</div><div class="line"></div><div class="line">    // Draw base image.</div><div class="line">    CGContextDrawImage(outputContext, imageRect, self.CGImage);</div><div class="line"></div><div class="line">    // Draw effect image.</div><div class="line">    if (hasBlur) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        if (maskImage) &#123;</div><div class="line">            CGContextClipToMask(outputContext, imageRect, maskImage.CGImage);</div><div class="line">        &#125;</div><div class="line">        CGContextDrawImage(outputContext, imageRect, effectImage.CGImage);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Add in color tint.</div><div class="line">    if (tintColor) &#123;</div><div class="line">        CGContextSaveGState(outputContext);</div><div class="line">        CGContextSetFillColorWithColor(outputContext, tintColor.CGColor);</div><div class="line">        CGContextFillRect(outputContext, imageRect);</div><div class="line">        CGContextRestoreGState(outputContext);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Output image is ready.</div><div class="line">    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">    return outputImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/07/28/图片处理之图片着色/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-生活" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/13/生活/">生活</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/13/生活/" class="archive-article-date">
+  	<time datetime="2016-05-13T02:58:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"><a href="#幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。" class="headerlink" title="幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。"></a>幸福是每一个微小的生活愿望的达成，当你想吃的时候有的吃，想被爱的时候有人来爱你。</h1>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/05/13/生活/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-上善若水，人淡如菊！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -986,197 +1109,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-iOS设备旋转问题实践总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/08/iOS设备旋转问题实践总结/">iOS设备旋转问题实践总结</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/08/iOS设备旋转问题实践总结/" class="archive-article-date">
-  	<time datetime="2016-03-08T09:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS设备旋转问题实践总结"><a href="#iOS设备旋转问题实践总结" class="headerlink" title="iOS设备旋转问题实践总结"></a>iOS设备旋转问题实践总结</h1><hr>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>两种orientation</strong></p>
-<ul>
-<li><p>1.device orientation,设备的物理方向，由类型UIDeviceOrientation表示，当前设备方向获取方式：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIDevice currentDevice].orientation</div></pre></td></tr></table></figure>
-<p>  该属性的值一般是与当前设备方向保持一致的，但须注意以下几点：<code>官方Api</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic,readonly) UIDeviceOrientation orientation;       // return current device orientation.  this will return UIDeviceOrientationUnknown unless device orientation notifications are being generated.</div></pre></td></tr></table></figure>
-<p>  所以用下面的方法比较靠谱:</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> 	if (![UIDevice currentDevice].generatesDeviceOrientationNotifications) &#123;</div><div class="line">        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];</div><div class="line"> &#125;</div><div class="line">NSLog(@&quot;%d&quot;,[UIDevice currentDevice].orientation);</div><div class="line">[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];</div></pre></td></tr></table></figure>
-<p>  <code>PS:如果关闭了系统的横竖屏切换开关，即系统层级只允许竖屏时，再通过上述方式获取到的设备方向将永远是UIDeviceOrientationUnknown。可以通过Core Motion中的CMMotionManager来获取当前设备方向。</code></p>
-</li>
-<li><p>2.interface orientation,当前界面显示的方向，由类型UIInterfaceOrientation表示。当前界面显示方向有以下两种方式获取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> NSLog(@&quot;%d&quot;,[UIApplication sharedApplication].statusBarOrientation);</div><div class="line">NSLog(@&quot;%d&quot;,viewController.interfaceOrientation);//ios8被弃用</div></pre></td></tr></table></figure>
-</li>
-<li><p>3.二者区别：通过UIDevice获取到的设备方向在手机旋转时是实时的，通过UIApplication的statusBar或者viewController(已被弃用)获取到的界面方向在下述方法：</p>
-<p>  <code>下面方法调用后才改变UIApplication的statusBar</code>，而UIDevice得orientation将立即被改变</p>
-<p>  <strong>iOS8以后调用：</strong></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:	(id&lt;UIViewControllerTransitionCoordinator&gt;)coordinator</div></pre></td></tr></table></figure>
-<p>  <strong>iOS8以前调用</strong></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h2 id="相关的两个API"><a href="#相关的两个API" class="headerlink" title=" 相关的两个API"></a> 相关的两个API</h2><p><code>ios8后UIViewController又出了两个API:</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//新出现的API</div><div class="line">- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator NS_AVAILABLE_IOS(8_0);</div><div class="line"></div><div class="line">//用于下述废弃的Api的替代品</div><div class="line">- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator NS_AVAILABLE_IOS(8_0);</div></pre></td></tr></table></figure>
-<p>并废弃了以下API</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration</div><div class="line"></div><div class="line">- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration</div></pre></td></tr></table></figure>
-<p>其中<code>- (void)willTransitionToTraitCollection:***</code>后，在size class的设备compact到regular转变时，会调用的Api，官方这么说：<strong>This method is called when the view controller’s trait collection is changed by its parent.</strong></p>
-<p>而<code>- (void)viewWillTransitionToSize:**</code>则会在控制器的视图View发生变化时调用，官方这么说：<strong>This method is called when the view controller’s view’s size is changed by its parent</strong></p>
-<hr>
-<h2 id="用以上API实现监控设备的方向"><a href="#用以上API实现监控设备的方向" class="headerlink" title="用以上API实现监控设备的方向"></a>用以上API实现监控设备的方向</h2><ul>
-<li><p>1.在视图将要出现时添加通知对象,开始监控设备方向</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];</div><div class="line">   if (![[UIDevice currentDevice] isGeneratingDeviceOrientationNotifications]) &#123;</div><div class="line">       [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];</div><div class="line">	   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>2.视图消失时销毁通知和关闭设备方向获取</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];</div><div class="line">  [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];</div></pre></td></tr></table></figure>
-</li>
-<li><p>3.添加通知事件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"> -(void)deviceOrientationDidChanged:(NSNotification *)sender</div><div class="line">&#123;</div><div class="line">//   UIInterfaceOrientation or = [UIApplication sharedApplication].statusBarOrientation;</div><div class="line">//  获取应用程序显示方向 --- 上述方法第一次程序启动时获取的设备方向正确，在旋转时获得的值和实际值相反</div><div class="line">    </div><div class="line">//    此处我们采用设备的方向，</div><div class="line">   UIDeviceOrientation or = [UIDevice currentDevice].orientation;</div><div class="line">//    获取设备的方向</div><div class="line">    if (or == UIDeviceOrientationUnknown) &#123;</div><div class="line">        NSLog(@&quot;未知方向&quot;);</div><div class="line">    &#125;</div><div class="line">    if (or == UIInterfaceOrientationLandscapeLeft || or == UIInterfaceOrientationLandscapeRight) &#123;</div><div class="line">//        横屏</div><div class="line">        NSLog(@&quot;横屏&quot;);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;竖屏&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h2 id="其他方法实现屏幕旋转"><a href="#其他方法实现屏幕旋转" class="headerlink" title="其他方法实现屏幕旋转"></a>其他方法实现屏幕旋转</h2><p>如果你重写了<code>viewWillTransitionToSize：**</code>方法，这个方法也会被调用。（必须call他的super方法），如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id&lt;UIViewControllerTransitionCoordinator&gt;)coordinator</div><div class="line">&#123;</div><div class="line">[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</div><div class="line">//    UIInterfaceOrientation or = [UIApplication sharedApplication].statusBarOrientation;</div><div class="line">    UIDeviceOrientation or = [UIDevice currentDevice].orientation;</div><div class="line">    if (or == UIDeviceOrientationUnknown) &#123;</div><div class="line">        NSLog(@&quot;未知方向&quot;);</div><div class="line">    &#125;</div><div class="line">    if (or == UIInterfaceOrientationLandscapeLeft || or == UIInterfaceOrientationLandscapeRight) &#123;</div><div class="line">        //        横屏</div><div class="line">        NSLog(@&quot;viewWillTransitionToSize横屏&quot;);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;viewWillTransitionToSize竖屏&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<hr>
-<h2 id="trait-collection变化时调用willTransitionToTraitCollection"><a href="#trait-collection变化时调用willTransitionToTraitCollection" class="headerlink" title="trait collection变化时调用willTransitionToTraitCollection:**"></a>trait collection变化时调用<code>willTransitionToTraitCollection:**</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator</div><div class="line">&#123;</div><div class="line">    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];</div><div class="line">    if (newCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) &#123;</div><div class="line">        NSLog(@&quot;水平方向为compact&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;水平方向为regular&quot;);</div><div class="line">    &#125;</div><div class="line">    if (newCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) &#123;</div><div class="line">         NSLog(@&quot;竖直方向为regular&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;竖直方向为compact&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<hr>
-<p><code>所有.m文件代码</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">//  ViewController.m</div><div class="line">//  RoteDemo</div><div class="line">//</div><div class="line">//  Created by yachaocn on 16/3/8.</div><div class="line">//  Copyright © 2016年 NavchinaMacBook. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line">#import &quot;ViewController.h&quot;</div><div class="line"></div><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">-(void)viewWillAppear:(BOOL)animated</div><div class="line">&#123;</div><div class="line">    [super viewWillAppear:animated];</div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];</div><div class="line">    if (![[UIDevice currentDevice] isGeneratingDeviceOrientationNotifications]) &#123;</div><div class="line">        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)viewWillDisappear:(BOOL)animated</div><div class="line">&#123;</div><div class="line">    [super viewWillAppear:animated];</div><div class="line">    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];</div><div class="line">    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)deviceOrientationDidChanged:(NSNotification *)sender</div><div class="line">&#123;</div><div class="line">//   UIInterfaceOrientation or = [UIApplication sharedApplication].statusBarOrientation;</div><div class="line">//  获取应用程序显示方向 --- 上述方法第一次程序启动时获取的设备方向正确，在旋转时获得的值和实际值相反</div><div class="line">    </div><div class="line">//    此处我们采用设备的方向，</div><div class="line">   UIDeviceOrientation or = [UIDevice currentDevice].orientation;</div><div class="line">//    获取设备的方向</div><div class="line">    if (or == UIDeviceOrientationUnknown) &#123;</div><div class="line">        NSLog(@&quot;未知方向&quot;);</div><div class="line">    &#125;</div><div class="line">    if (or == UIInterfaceOrientationLandscapeLeft || or == UIInterfaceOrientationLandscapeRight) &#123;</div><div class="line">//        横屏</div><div class="line">        NSLog(@&quot;横屏&quot;);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;竖屏&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id&lt;UIViewControllerTransitionCoordinator&gt;)coordinator</div><div class="line">&#123;</div><div class="line">    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</div><div class="line">//    UIInterfaceOrientation or = [UIApplication sharedApplication].statusBarOrientation;</div><div class="line">    UIDeviceOrientation or = [UIDevice currentDevice].orientation;</div><div class="line">    if (or == UIDeviceOrientationUnknown) &#123;</div><div class="line">        NSLog(@&quot;未知方向&quot;);</div><div class="line">    &#125;</div><div class="line">    if (or == UIInterfaceOrientationLandscapeLeft || or == UIInterfaceOrientationLandscapeRight) &#123;</div><div class="line">        //        横屏</div><div class="line">        NSLog(@&quot;viewWillTransitionToSize横屏&quot;);</div><div class="line">    &#125;else &#123;</div><div class="line">        NSLog(@&quot;viewWillTransitionToSize竖屏&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator</div><div class="line">&#123;</div><div class="line">    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];</div><div class="line">    if (newCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) &#123;</div><div class="line">        NSLog(@&quot;水平方向为compact&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;水平方向为regular&quot;);</div><div class="line">    &#125;</div><div class="line">    if (newCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) &#123;</div><div class="line">         NSLog(@&quot;竖直方向为regular&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;竖直方向为compact&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">    // Dispose of any resources that can be recreated.</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/08/iOS设备旋转问题实践总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-申请iOS企业开发者账号" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/05/申请iOS企业开发者账号/">申请iOS企业开发者账号</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/05/申请iOS企业开发者账号/" class="archive-article-date">
-  	<time datetime="2016-03-05T01:59:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ios-apple企业账号申请流程"><a href="#ios-apple企业账号申请流程" class="headerlink" title="ios apple企业账号申请流程"></a>ios apple企业账号申请流程</h1><ul>
-<li>1.Apple开发者账号分三种，个人和公司账号（99刀） 和企业账号（299刀）</li>
-<li><p>2.企业账号的好处 </p>
-<ul>
-<li>1.在公司内部发布app。 </li>
-<li>2.在各个设备上使用  </li>
-<li>3.可以获得苹果代码级别的支持。</li>
-</ul>
-</li>
-<li><p>3.注册前必备，公司DUNS（邓白氏编码）</p>
-<ul>
-<li><a href="https://developer.apple.com/support/D-U-N-S/cn/" target="_blank" rel="external">邓白氏简介</a></li>
-<li><a href="https://developer.apple.com/program/enroll/dunsLookupForm.action" target="_blank" rel="external">邓白氏编码申请地址</a></li>
-</ul>
-</li>
-</ul>
-<p>按照提示如实填写即可，填完提交后很快收到邮件。剩下就等着<code>电话核实</code>了，注册完成后1到2个工作日会受到邮件，其中包含邓白氏编码数字，剩下就是等14个工作日后去交299刀了。苹果公司同步这些数据需要时间的.</p>
-<ul>
-<li><p>4.注册企业账号</p>
-<p> <a href="https://developer.apple.com/programs/enterprise/" target="_blank" rel="external">企业账号申请地址</a></p>
-<p>  等待邓白氏码同步到苹果公司的服务器后，把邓白氏码填进去了，Review&amp;submit完成了，然后就是等待苹果公司的电话确认信息了。他会问你：这企业账号主要用来干嘛？然后告诉你这个账号主要是给企业内部使用，不能外部使用，如果有专人陪同情况下可以给客户演示程序，再然后就是等待美国苹果公司来的电话，告诉你审核成功或者失败！</p>
-</li>
-<li>5.收到激活邮件，激活，账号可以使用了</li>
-</ul>
-<p> <code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/05/申请iOS企业开发者账号/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1289,11 +1221,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1373,7 +1305,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             </li>
           
             <li class="search-li">
-              <a href="https://zsisme.gitbooks.io/ios-/content/chapter5/3d-transform.html#" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
+              <a href="https://zsisme.gitbooks.io/ios-/content/index.html" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
             </li>
           
             <li class="search-li">

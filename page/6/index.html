@@ -183,6 +183,139 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-QLPreviewController解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/23/QLPreviewController解析/">QLPreviewController解析</a>
+    </h1>
+  
+
+        
+        <a href="/2016/02/23/QLPreviewController解析/" class="archive-article-date">
+  	<time datetime="2016-02-23T09:04:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="QLPreviewController预览功能"><a href="#QLPreviewController预览功能" class="headerlink" title="QLPreviewController预览功能"></a>QLPreviewController预览功能</h1><p>前言：今天有一个陌生的好友问我QLPreviewController怎么用，我并没有告诉他百度一下你就知道了，而是给他写了一个简单的例子，我相信知识贵在总结，虽然对于QLPreviewController的用法很简单，但是一些刚接触此门语言的童鞋们还是不会用，在这里就小小的总结一下吧，就算是对自己知识的一种巩固。</p>
+<hr>
+<p><strong>关于QLPreviewController能够预览的文件格式官方文档中这样描述：(看不懂的自行翻译，英语要每天练习哦)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">A Quick Look preview controller can display previews for the following items:</div><div class="line"></div><div class="line">iWork documents</div><div class="line"></div><div class="line">Microsoft Office documents (Office ‘97 and newer)</div><div class="line"></div><div class="line">Rich Text Format (RTF) documents</div><div class="line"></div><div class="line">PDF files</div><div class="line"></div><div class="line">Images</div><div class="line"></div><div class="line">Text files whose uniform type identifier (UTI) conforms to the public.text type (see Uniform Type Identifiers Reference)</div><div class="line"></div><div class="line">Comma-separated value (csv) files</div></pre></td></tr></table></figure>
+<p><code>QLPreviewController</code>主要是实现简单的文件预览功能的，比如mac里的空格键，按了之后会弹出一个预览视图一样。好下面介绍他的用法：</p>
+<h2 id="1-导入QuickLook-framework动态库"><a href="#1-导入QuickLook-framework动态库" class="headerlink" title="1.导入QuickLook.framework动态库"></a>1.导入QuickLook.framework动态库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Target &gt; Build Phase &gt; Link Binary whith libraries点击加号搜索后加入即可</div></pre></td></tr></table></figure>
+<h2 id="2-添加资源文件"><a href="#2-添加资源文件" class="headerlink" title="2.添加资源文件"></a>2.添加资源文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">在这里我选择了一张pdf，和一张图片，直接拖入项目中，选择copy items if needed和create groups</div><div class="line"></div><div class="line">    NSURL *fileUrl = [[NSBundle mainBundle] URLForResource:@&quot;roat&quot; withExtension:@&quot;pdf&quot;subdirectory:@&quot;&quot;];</div><div class="line">    </div><div class="line">    NSURL *imageUrl = [[NSBundle mainBundle] URLForResource:@&quot;1&quot; withExtension:@&quot;png&quot;subdirectory:@&quot;&quot;];</div><div class="line">    _array = @[fileUrl,imageUrl];</div></pre></td></tr></table></figure>
+<h2 id="3-创建QLPreviewController对象-并触发事件，此处我选择了点击button后触发。"><a href="#3-创建QLPreviewController对象-并触发事件，此处我选择了点击button后触发。" class="headerlink" title="3.创建QLPreviewController对象,并触发事件，此处我选择了点击button后触发。"></a>3.创建QLPreviewController对象,并触发事件，此处我选择了点击button后触发。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//需要导入头文件#import &lt;QuickLook/QLPreviewController.h&gt;并遵守代理QLPreviewControllerDataSource</div><div class="line">- (IBAction)preview:(id)sender &#123;</div><div class="line">    QLPreviewController *ql = [[QLPreviewController alloc]init];</div><div class="line">    ql.dataSource = self;</div><div class="line">    ql.currentPreviewItemIndex = 1;</div><div class="line">    [self presentViewController:ql animated:YES completion:nil];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>QLPreviewControllerDataSource</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#pragma mark - QLViewController data source</div><div class="line">- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller</div><div class="line">&#123;</div><div class="line">    return 2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (id &lt;QLPreviewItem&gt;)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index</div><div class="line">&#123;</div><div class="line">    return _array[index];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="具体的-m实现文件如下："><a href="#具体的-m实现文件如下：" class="headerlink" title="具体的.m实现文件如下："></a>具体的.m实现文件如下：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">//  ViewController.m</div><div class="line">//  QLDemo</div><div class="line">//</div><div class="line">//  Created by yachaocn on 16/2/23.</div><div class="line">//  Copyright © 2016年 NavchinaMacBook. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line">#import &quot;ViewController.h&quot;</div><div class="line">#import &lt;QuickLook/QLPreviewController.h&gt;</div><div class="line"></div><div class="line">@interface ViewController () &lt;QLPreviewControllerDataSource&gt;</div><div class="line"></div><div class="line"></div><div class="line">@property(nonatomic,strong) NSArray *array;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line">    NSURL *fileUrl = [[NSBundle mainBundle] URLForResource:@&quot;roat&quot; withExtension:@&quot;pdf&quot;subdirectory:@&quot;&quot;];</div><div class="line">    </div><div class="line">    NSURL *imageUrl = [[NSBundle mainBundle] URLForResource:@&quot;1&quot; withExtension:@&quot;png&quot;subdirectory:@&quot;&quot;];</div><div class="line">    _array = @[fileUrl,imageUrl];</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (IBAction)preview:(id)sender &#123;</div><div class="line">    QLPreviewController *ql = [[QLPreviewController alloc]init];</div><div class="line">    ql.dataSource = self;</div><div class="line">    ql.currentPreviewItemIndex = 1;</div><div class="line">    [self presentViewController:ql animated:YES completion:nil];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark - QLViewController data source</div><div class="line">- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller</div><div class="line">&#123;</div><div class="line">    return 2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (id &lt;QLPreviewItem&gt;)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index</div><div class="line">&#123;</div><div class="line">    return _array[index];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">    // Dispose of any resources that can be recreated.</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>试一下效果吧，棒棒哒！！！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/02/23/QLPreviewController解析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-NSEnum-struct定义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/22/NSEnum-struct定义/">NSEnum-struct定义</a>
+    </h1>
+  
+
+        
+        <a href="/2016/02/22/NSEnum-struct定义/" class="archive-article-date">
+  	<time datetime="2016-02-22T03:52:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="枚举值-结构体的定义总结"><a href="#枚举值-结构体的定义总结" class="headerlink" title="枚举值-结构体的定义总结"></a>枚举值-结构体的定义总结</h1><h2 id="结构体定义"><a href="#结构体定义" class="headerlink" title="结构体定义"></a>结构体定义</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">typedef struct Books</div><div class="line">&#123;</div><div class="line">   NSString *title;</div><div class="line">   NSString *author;</div><div class="line">   NSString *subject;</div><div class="line">   int book_id;</div><div class="line"></div><div class="line">&#125; Book;</div></pre></td></tr></table></figure>
+<h2 id="枚举值得定义"><a href="#枚举值得定义" class="headerlink" title="枚举值得定义"></a>枚举值得定义</h2><p>方式1.</p>
+<p><code>typedef enum {...}别名；</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">typedef enum &#123;</div><div class="line">    Circular,</div><div class="line">    Square,</div><div class="line">    Oval</div><div class="line">&#125;DestType;</div></pre></td></tr></table></figure>
+<p>方式2.<br><code>定义类型：typedef enum 别名 : 类型名 别名；</code><br><code>定义枚举值：enum 别名 : 类型名{...};</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">typedef enum HoseType : NSInteger HoseType;</div><div class="line">enum HoseType : NSInteger&#123;</div><div class="line">    A,</div><div class="line">    B,</div><div class="line">    C</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>方式3.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSInteger , WorldType) &#123;</div><div class="line">    Earth,</div><div class="line">    Sun</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上述由下面改写而来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">typedef enum WorldType : NSInterger WorldType;</div><div class="line">enum WorldType : NSInterger&#123;</div><div class="line">	A,</div><div class="line">	B,</div><div class="line">	C</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>方式5.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">typedef NS_OPTIONS(NSInteger, PhoneType) &#123;</div><div class="line">    iPhone4     = 0,</div><div class="line">    iPhone5     = 1 &lt;&lt; 0,</div><div class="line">    iPhone6     = 1 &lt;&lt; 1,</div><div class="line">    iPhone6s    = 1 &lt;&lt; 2,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<p><code>从枚举定义来看，NS_ENUM和NS_OPTIONS本质是一样的，仅仅从字面上来区分其用途。NS_ENUM是通用情况，NS_OPTIONS一般用来定义具有位移操作或特点的情况（bitmask)。</code></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/02/22/NSEnum-struct定义/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-The dynamic library plug-in" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -892,196 +1025,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-RSA非对称加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/24/RSA非对称加密/">RSA非对称加密</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/24/RSA非对称加密/" class="archive-article-date">
-  	<time datetime="2015-12-24T09:53:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#RSA非对称加密  -by yacaocn</p>
-<hr>
-<p>本文部分生成公钥和私钥部分参考了<a href="http://www.w2bc.com/article/62239" target="_blank" rel="external">http://www.w2bc.com/article/62239</a><br>另推荐一个项目<a href="https://github.com/reference/OpenSSLRSAWrapper" target="_blank" rel="external">https://github.com/reference/OpenSSLRSAWrapper</a></p>
-<p>####I.生成公钥和私钥</p>
-<ul>
-<li><p>1.终端输入openssl，进入openssl状态</p>
-</li>
-<li><p>2.生成一个1024位的私钥：genrsa -out private_key.pem 1024</p>
-</li>
-<li><p>3.利用私钥生成JAVA支持的PKCS8类型的私钥：pkcs8 -topk8 -inform PEM -in private_key.pem -outform PEM -nocrypt -out pkcs8_private_key.pem</p>
-<ul>
-<li><code>3补充：如果想要加密的PKCS8私钥：pkcs8 -topk8 -inform PEM -in rsa_private_key.pem -outform PEM –nocrypt 按提示输入密码，就会在终端中打印出加密后的pkcs8私钥</code></li>
-</ul>
-</li>
-<li>4.生成JAVA支持的PKCS8二进制类型的私钥：pkcs8 -topk8 -inform PEM -in private_key.pem -outform DER -nocrypt -out pkcs8_private_key.der</li>
-<li>5.生成公钥：rsa -in private_key.pem -pubout -out public_key.pem</li>
-<li>6.生成iOS支持的der证书，其间用到了证书请求和自签署根证书<ul>
-<li>6.1.创建证书请求：req -new -out cert.csr -key private_key.pem　　（其间会要求填写国家地区公司信息等，随便填写OR认真填写都不影响证书使用）</li>
-<li>6.2.创建X509的自签署跟证书（iOS支持X509，有效期3650天）：x509 -req -in cert.csr -out public_key.der -outform der -signkey private_key.pem -days 3650<br>完成了以上的步骤后应该在你所在的目录下生成了6个文件，其中pem的文件都是文本类型的，都可以使用文本编辑器或者cat命令查看。der的都是二进制的文件了，看不了。</li>
-</ul>
-</li>
-</ul>
-<p><code>OC与java交互示例：</code><a href="https://github.com/BabyDuncan/RSA_OC_JAVA" target="_blank" rel="external">https://github.com/BabyDuncan/RSA_OC_JAVA</a></p>
-<hr>
-<p>####II.运用openSSL加密库<br>1.下载openSSL库，这里我提供两种下载方式</p>
-<ul>
-<li>官网下载 :<a href="https://github.com/openssl/openssl" target="_blank" rel="external">下载openSSL</a></li>
-<li>便捷下载（包括openSSL使用的示例代码）<a href="https://github.com/x2on/OpenSSL-for-iPhone" target="_blank" rel="external">便捷下载openSSL</a><code>为什么成为便捷下载呢？请看下面</code></li>
-</ul>
-<p>2.编译openSSL静态库 ，这里我也提供两种方式</p>
-<ul>
-<li>人工逐步编译，网上特别多编译方法，例如<a href="http://blog.csdn.net/kmyhy/article/details/6534067" target="_blank" rel="external">http://blog.csdn.net/kmyhy/article/details/6534067</a></li>
-<li><p>自动编译 ， 自动编译需要便捷下载方式：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(1).打开终端cd到你下载的项目目录下。</div><div class="line">   (2).执行./build-libssl.sh</div><div class="line">   (3).去吃个苹果等待一下，此过程有点长大约10分钟。</div><div class="line">   (4).完成后打开下载的项目目录你会发现多了两个文件夹 include、lib，其中include中存放的是openSSL源码，lib中存放的就是自动编译好的静态库，其中存放了四个文件libcrypto-tvOS.a、libcrypto.a 、libssl-tvOS.a 、libssl.a</div></pre></td></tr></table></figure>
-<p>  <a href="http://pan.baidu.com/s/1c0Oczj6" target="_blank" rel="external">下载博主的openSSL库</a></p>
-</li>
-</ul>
-<p>3.添加openSSL到我们的项目中</p>
-<ul>
-<li>新建文件夹openSSL将include、lib两个文件夹copy到openSSL文件夹中。</li>
-<li>将openSSL文件夹、private_key.pem、public_key.pem拖拽到我们的工程中，拖拽后的工程目录结构如下:<img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-12-24%20%E4%B8%8B%E5%8D%885.22.49.png" alt=""></li>
-<li>添加头文件搜索路径：target》build setting》Header search Paths中添加$(PROJECT_DIR)/openSSL,将后面的non-recursive改为recursive <img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202015-12-24%20%E4%B8%8B%E5%8D%885.31.00.png" alt=""></li>
-<li>在项目中的ViewController中添加#include <openssl pem.h=""> #include <openssl rsa.h="">头文件测试是否添加成功</openssl></openssl></li>
-</ul>
-<p>####下面就把我们刚生成的private_key.pem和public_key.pem运用到项目中：</p>
-<p>具体示例代码如下：并附上本人工程代码:<a href="https://github.com/yachaocn/RSA_asymmetric_encryption" target="_blank" rel="external">下载作者代码</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;ViewController.h&quot;</div><div class="line">#include &lt;openssl/pem.h&gt;</div><div class="line">#include &lt;openssl/rsa.h&gt;</div><div class="line">#include &lt;openssl/md5.h&gt;</div><div class="line">//MD5生成</div><div class="line">#import &lt;CommonCrypto/CommonDigest.h&gt;</div><div class="line">#define FileHashDefaultChunkSizeForReadingData 1024*8</div><div class="line"></div><div class="line">#define kPublicKeyFile [[NSBundle mainBundle] pathForResource:@&quot;public_key&quot; ofType:@&quot;pem&quot;] //公钥路径</div><div class="line">#define kPrivateKeyFile [[NSBundle mainBundle] pathForResource:@&quot;private_key&quot; ofType:@&quot;pem&quot;] //私钥路径</div><div class="line"></div><div class="line">#define kContentTxt @&quot;kumadocs.com&quot;//需要加密数据</div><div class="line"></div><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line">    </div><div class="line">    //密文</div><div class="line">    unsigned char encrypted[1024];</div><div class="line">    bzero(encrypted, sizeof(encrypted));</div><div class="line">    </div><div class="line">    //明文</div><div class="line">    char decrypted[1024];</div><div class="line">    </div><div class="line">    //公钥和私钥文件</div><div class="line">    const char* pub_key = [kPublicKeyFile UTF8String];</div><div class="line">    const char* priv_key = [kPrivateKeyFile UTF8String];</div><div class="line">    </div><div class="line">    // -------------------------------------------------------</div><div class="line">    // 利用公钥加密明文的过程</div><div class="line">    // -------------------------------------------------------</div><div class="line">    RSA *rsa1 = NULL;</div><div class="line">    const char *contentChar = [kContentTxt UTF8String];</div><div class="line">    </div><div class="line">    FILE* pub_fp=fopen(pub_key,&quot;r&quot;);</div><div class="line">    if(pub_fp==NULL)&#123;</div><div class="line">        printf(&quot;Open Failed!! The Pub_Key File : %s!\n&quot;, pub_key);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 从文件中读取公钥</div><div class="line">    rsa1 = PEM_read_RSA_PUBKEY(pub_fp, NULL, NULL, NULL);</div><div class="line">    if(rsa1 == NULL)&#123;</div><div class="line">        printf(&quot;Pub_Key Read Failure!!\n&quot;);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if(strlen(contentChar) &gt;= RSA_size(rsa1)-41)&#123;</div><div class="line">        printf(&quot;Encrypt Failed!!\n&quot;);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    fclose(pub_fp);</div><div class="line">    </div><div class="line">    </div><div class="line">    // 用公钥加密 （如需私钥加密将如下函数换成RSA_private_encrypt即可）</div><div class="line">    int state = RSA_public_encrypt (strlen(contentChar), (const unsigned char*)contentChar, encrypted, rsa1, RSA_PKCS1_PADDING);</div><div class="line">    if( state == -1 )&#123;</div><div class="line">        printf(&quot;Encrypt Failed!!&quot;);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    // ---------------------------</div><div class="line">    // 输出加密后的密文</div><div class="line">    NSString *encryptedTxt = @&quot;&quot;;</div><div class="line">    for (int i = 0; i &lt; 128; i++) &#123;//注意128按需要的自行改</div><div class="line">        encryptedTxt = [encryptedTxt stringByAppendingFormat:@&quot;%02x&quot;,encrypted[i]];</div><div class="line">    &#125;</div><div class="line">    NSLog(@&quot;encryptedTxt == 》 \n\n%@\n\n&quot;,encryptedTxt);</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">    // -------------------------------------------------------</div><div class="line">    // 利用私钥解密密文的过程</div><div class="line">    // -------------------------------------------------------</div><div class="line">    </div><div class="line">    // 打开私钥文件</div><div class="line">    FILE* priv_fp=fopen(priv_key,&quot;r&quot;);</div><div class="line">    if(priv_fp==NULL)&#123;</div><div class="line">        printf(&quot;Open Failed!! The Priv_Key File :%s!\n&quot;, priv_key);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    // 从文件中读取私钥</div><div class="line">    RSA *rsa2 = PEM_read_RSAPrivateKey(priv_fp, NULL, NULL, NULL);</div><div class="line">    if(rsa2==NULL)&#123;</div><div class="line">        printf(&quot;Priv_Key Read Failure!!\n&quot;);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 用私钥解密 （如需公钥解密只需将如下函数改成RSA_public_decrypt即可）</div><div class="line">    state = RSA_private_decrypt(state, encrypted, decrypted, rsa2, RSA_PKCS1_PADDING);</div><div class="line">    if(state == -1)&#123;</div><div class="line">        printf(&quot;Decrypt Failed!!\n&quot;);</div><div class="line">        return ;</div><div class="line">    &#125;</div><div class="line">    fclose(priv_fp);</div><div class="line"></div><div class="line">    // 输出解密后的明文</div><div class="line">    decrypted[state]=0;</div><div class="line">    printf(&quot;decrypted == 》%s\n&quot;,decrypted);</div><div class="line">    </div><div class="line">    NSString *opensslMD5 = [self genaryMD5FromString:@&quot;12345&quot;];</div><div class="line">    NSLog(@&quot;openssl&gt;&gt;&gt;&gt;md5:%@&quot;,opensslMD5);</div><div class="line">    NSString *commonDigestMD5 = [ViewController md5HexDigest:@&quot;12345&quot;];</div><div class="line">    NSLog(@&quot;commonDigestMD5 &gt;&gt;&gt;:%@&quot;,commonDigestMD5);</div><div class="line">    </div><div class="line">    /**</div><div class="line">     *</div><div class="line">     * 打印出来的结果</div><div class="line">     */</div><div class="line">    /*</div><div class="line">     2015-12-22 10:25:43.241 RSA_pem公钥私钥加密[1804:89084] </div><div class="line">     encryptedTxt == 》8b4f003797194009716f7239bc336b8be80561ddc07bb0ce0498c6de0740244f4205c6cac19b49a461d0a1f927677507eb8c2261cc06eada177ea341008b559100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</div><div class="line">     </div><div class="line">     decrypted == 》kumadocs.com</div><div class="line">     </div><div class="line">     2015-12-22 10:25:43.253 RSA_pem公钥私钥加密[1804:89084] input string:12345</div><div class="line">     2015-12-22 10:25:43.253 RSA_pem公钥私钥加密[1804:89084] md5:                 827ccb0eea8a706c4c34a16891f84e7b</div><div class="line">     2015-12-22 10:25:43.254 RSA_pem公钥私钥加密[1804:89084] openssl&gt;&gt;&gt;&gt;md5:      827ccb0eea8a706c4c34a16891f84e7b</div><div class="line">     2015-12-22 10:25:43.254 RSA_pem公钥私钥加密[1804:89084] commonDigestMD5 &gt;&gt;&gt;: 827ccb0eea8a706c4c34a16891f84e7b</div><div class="line"></div><div class="line">     */</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">//openssl计算MD5</div><div class="line"></div><div class="line">-(NSString *)genaryMD5FromString:(NSString *)string</div><div class="line">&#123;</div><div class="line">    // 输入参数 1 ：要生成 md5 值的字符串， NSString--&gt;uchar*</div><div class="line">    </div><div class="line">    unsigned char *inStrg = ( unsigned char *)[[string dataUsingEncoding : NSASCIIStringEncoding ] bytes];</div><div class="line">    </div><div class="line">    // 输入参数 2 ：字符串长度</div><div class="line">    </div><div class="line">    unsigned long lngth = [string length ];</div><div class="line">    </div><div class="line">    // 输出参数 3 ：要返回的 md5 值， MD5_DIGEST_LENGTH 为 16bytes ， 128 bits</div><div class="line">    </div><div class="line">    unsigned char result[ MD5_DIGEST_LENGTH ];</div><div class="line">    </div><div class="line">    // 临时 NSString 变量，用于把 uchar* 组装成可以显示的字符串： 2 个字符一 byte 的 16 进制数</div><div class="line">    </div><div class="line">    NSMutableString *outStrg = [ NSMutableString string ];</div><div class="line">    </div><div class="line">    // 调用 OpenSSL 函数</div><div class="line">    </div><div class="line">    MD5 (inStrg, lngth, result);</div><div class="line">    </div><div class="line">    unsigned int i;</div><div class="line">    </div><div class="line">    for (i = 0; i &lt; MD5_DIGEST_LENGTH ; i++)</div><div class="line">        </div><div class="line">    &#123;</div><div class="line">        </div><div class="line">        [outStrg appendFormat : @&quot;%02x&quot; , result[i]];</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    NSLog ( @&quot;input string:%@&quot; ,string);</div><div class="line">    </div><div class="line">    NSLog ( @&quot;md5:%@&quot; ,outStrg);</div><div class="line">    return outStrg;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//系统函数计算MD5值如下</div><div class="line"></div><div class="line">+ (NSString *)md5HexDigest:(NSString*)password</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    const char *original_str = [password UTF8String];</div><div class="line">    </div><div class="line">    unsigned char result[CC_MD5_DIGEST_LENGTH];</div><div class="line">    </div><div class="line">    CC_MD5(original_str, strlen(original_str), result);</div><div class="line">    </div><div class="line">    NSMutableString *hash = [NSMutableString string];</div><div class="line">    </div><div class="line">    for (int i = 0; i &lt; 16; i++)&#123;</div><div class="line">        [hash appendFormat:@&quot;%02X&quot;, result[i]];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    NSString *mdfiveString = [hash lowercaseString];</div><div class="line">    </div><div class="line">    //    NSLog(@&quot;Encryption Result = %@&quot;,mdfiveString);</div><div class="line">    </div><div class="line">    return mdfiveString;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">//系统函数计算文件的MD5</div><div class="line"></div><div class="line">+(NSString*)getFileMD5WithPath:(NSString*)path</div><div class="line"></div><div class="line">&#123;</div><div class="line">    </div><div class="line">    return (__bridge_transfer NSString *)FileMD5HashCreateWithPath((__bridge CFStringRef)path, FileHashDefaultChunkSizeForReadingData);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">CFStringRef FileMD5HashCreateWithPath(CFStringRef filePath,size_t chunkSizeForReadingData) &#123;</div><div class="line">    </div><div class="line">    // Declare needed variables</div><div class="line">    </div><div class="line">    CFStringRef result = NULL;</div><div class="line">    </div><div class="line">    CFReadStreamRef readStream = NULL;</div><div class="line">    </div><div class="line">    // Get the file URL</div><div class="line">    </div><div class="line">    CFURLRef fileURL =</div><div class="line">    </div><div class="line">    CFURLCreateWithFileSystemPath(kCFAllocatorDefault,</div><div class="line">                                  </div><div class="line">                                  (CFStringRef)filePath,</div><div class="line">                                  </div><div class="line">                                  kCFURLPOSIXPathStyle,</div><div class="line">                                  </div><div class="line">                                  (Boolean)false);</div><div class="line">    </div><div class="line">    if (!fileURL) goto done;</div><div class="line">    </div><div class="line">    // Create and open the read stream</div><div class="line">    </div><div class="line">    readStream = CFReadStreamCreateWithFile(kCFAllocatorDefault,</div><div class="line">                                            </div><div class="line">                                            (CFURLRef)fileURL);</div><div class="line">    </div><div class="line">    if (!readStream) goto done;</div><div class="line">    </div><div class="line">    bool didSucceed = (bool)CFReadStreamOpen(readStream);</div><div class="line">    </div><div class="line">    if (!didSucceed) goto done;</div><div class="line">    </div><div class="line">    // Initialize the hash object</div><div class="line">    </div><div class="line">    CC_MD5_CTX hashObject;</div><div class="line">    </div><div class="line">    CC_MD5_Init(&amp;hashObject);</div><div class="line">    </div><div class="line">    // Make sure chunkSizeForReadingData is valid</div><div class="line">    </div><div class="line">    if (!chunkSizeForReadingData) &#123;</div><div class="line">        </div><div class="line">        chunkSizeForReadingData = FileHashDefaultChunkSizeForReadingData;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // Feed the data to the hash object</div><div class="line">    </div><div class="line">    bool hasMoreData = true;</div><div class="line">    </div><div class="line">    while (hasMoreData) &#123;</div><div class="line">        </div><div class="line">        uint8_t buffer[chunkSizeForReadingData];</div><div class="line">        </div><div class="line">        CFIndex readBytesCount = CFReadStreamRead(readStream,(UInt8 *)buffer,(CFIndex)sizeof(buffer));</div><div class="line">        </div><div class="line">        if (readBytesCount == -1) break;</div><div class="line">        </div><div class="line">        if (readBytesCount == 0) &#123;</div><div class="line">            </div><div class="line">            hasMoreData = false;</div><div class="line">            </div><div class="line">            continue;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        CC_MD5_Update(&amp;hashObject,(const void *)buffer,(CC_LONG)readBytesCount);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // Check if the read operation succeeded</div><div class="line">    </div><div class="line">    didSucceed = !hasMoreData;</div><div class="line">    </div><div class="line">    // Compute the hash digest</div><div class="line">    </div><div class="line">    unsigned char digest[CC_MD5_DIGEST_LENGTH];</div><div class="line">    </div><div class="line">    CC_MD5_Final(digest, &amp;hashObject);</div><div class="line">    </div><div class="line">    // Abort if the read operation failed</div><div class="line">    </div><div class="line">    if (!didSucceed) goto done;</div><div class="line">    </div><div class="line">    // Compute the string result</div><div class="line">    </div><div class="line">    char hash[2 * sizeof(digest) + 1];</div><div class="line">    </div><div class="line">    for (size_t i = 0; i &lt; sizeof(digest); ++i) &#123;</div><div class="line">        </div><div class="line">        snprintf(hash + (2 * i), 3, &quot;%02x&quot;, (int)(digest[i]));</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    result = CFStringCreateWithCString(kCFAllocatorDefault,(const char *)hash,kCFStringEncodingUTF8);</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">done:</div><div class="line">    </div><div class="line">    if (readStream) &#123;</div><div class="line">        </div><div class="line">        CFReadStreamClose(readStream);</div><div class="line">        </div><div class="line">        CFRelease(readStream);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (fileURL) &#123;</div><div class="line">        </div><div class="line">        CFRelease(fileURL);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return result;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/24/RSA非对称加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-3DTouch-Peek-Pop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/22/3DTouch-Peek-Pop/">3DTouch_Peek_Pop</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/22/3DTouch-Peek-Pop/" class="archive-article-date">
-  	<time datetime="2015-12-22T00:51:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Getting-Started-with-3D-Touch"><a href="#Getting-Started-with-3D-Touch" class="headerlink" title="Getting Started with 3D Touch"></a>Getting Started with 3D Touch</h1><hr>
-<p>详细信息请在在官方文档中搜索：Getting Started with 3D Touch</p>
-<ul>
-<li>Home screen quick action API:为你的app图标添加shortcuts(快捷方式),加快用户和你app的交互速度</li>
-<li>UIKit peek and pop API:在你的应用程序内提供简单的访问、添加额外的内容，同事保持用户的上下文（context），使用它能够提供一个按压功能替换你应用程序原来的触摸和保持操作</li>
-<li>UITouch force properties：可以提供一个自定义的压力，来响应用户的交互。</li>
-</ul>
-<h2 id="3Dtouch"><a href="#3Dtouch" class="headerlink" title="3Dtouch"></a>3Dtouch</h2><hr>
-<p><code>具体做法如下</code></p>
-<h5 id="1-在appdelegate中的didFinishLaunchingWithOptions-方法中判断是否能够相应3Dtouch"><a href="#1-在appdelegate中的didFinishLaunchingWithOptions-方法中判断是否能够相应3Dtouch" class="headerlink" title="1.在appdelegate中的didFinishLaunchingWithOptions:方法中判断是否能够相应3Dtouch"></a>1.在appdelegate中的didFinishLaunchingWithOptions:方法中判断是否能够相应3Dtouch</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] != nil) &#123;</div><div class="line">        return NO;//shortcutItem 不为空证明要加载shortcutitem，不启动应用程序。</div><div class="line">    &#125;else&#123;</div><div class="line">        return YES;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="静态quick-action："><a href="#静态quick-action：" class="headerlink" title="静态quick action："></a>静态quick action：</h3><p><code>验证3DTouch 是否可用（self的isa指向viewController实例）</code><strong>仅作检验使用</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) &#123;</div><div class="line">        NSLog(@&quot;3dtouch availabe&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;3dtouch not availabe&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h5 id="2-在plist中添加如下配置创建静态的shortcutItem："><a href="#2-在plist中添加如下配置创建静态的shortcutItem：" class="headerlink" title="2.在plist中添加如下配置创建静态的shortcutItem："></a>2.在plist中添加如下配置创建静态的shortcutItem：</h5><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-12-09%20下午3.01.07.png" alt=""><br>source code如下：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-12-09%20下午3.01.33.png" alt=""></p>
-<hr>
-<p>当用户点击了一个快速预览的按钮后：系统会启动（唤醒）你的app，UIKIT会调用app代理的application:performActionForShortcutItem:completionHandler:方法，在他的lanchOption中有UIApplicationLaunchOptionsShortcutItemKey，其中保存了UIApplicationShortcutItem这个对象。根据这些你可以做你自己的事情。</p>
-<hr>
-<h3 id="动态quick-action："><a href="#动态quick-action：" class="headerlink" title="动态quick action："></a>动态quick action：</h3><hr>
-<h5 id="2-在代码中动态创建shortcutItem"><a href="#2-在代码中动态创建shortcutItem" class="headerlink" title="2.在代码中动态创建shortcutItem"></a>2.在代码中动态创建shortcutItem</h5><ul>
-<li>动态的shortcutItem 用UIApplicationShortcutItem, UIMutableApplicationShortcutItem, and UIApplicationShortcutIcon 这些类创建</li>
-<li><p>用UIApplication 对象的shortcutItems属性，为你的app添加动态的quick actions。<br><strong>创建示例</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> -(void)createDynamicShortcutItem</div><div class="line">&#123;</div><div class="line">    //动态创建UIApplicationShortcutItem</div><div class="line">    </div><div class="line">    //1. 创建一个图标的icon</div><div class="line">    UIApplicationShortcutIcon *icon = [UIApplicationShortcutIcon iconWithTemplateImageName:@&quot;imageName&quot;];</div><div class="line">    //2.创建一个系统类型字符串</div><div class="line">    NSString *itemType = [NSString stringWithFormat:@&quot;%ld&quot;,(long)UIApplicationShortcutIconTypeSearch];</div><div class="line">    //3.创建一个item对象</div><div class="line">    UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc]initWithType:itemType localizedTitle:@&quot;搜索&quot; localizedSubtitle:@&quot;可以自定义搜索哦&quot; icon:icon userInfo:nil];</div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    NSArray *array = application.shortcutItems;</div><div class="line">    NSMutableArray *mutShortItems = [NSMutableArray arrayWithArray:array];</div><div class="line">    [mutShortItems addObject:item];</div><div class="line">    application.shortcutItems = mutShortItems;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="3-执行application-performActionForShortcutItem-completionHandler方法"><a href="#3-执行application-performActionForShortcutItem-completionHandler方法" class="headerlink" title="3.执行application:performActionForShortcutItem:completionHandler方法"></a>3.执行application:performActionForShortcutItem:completionHandler方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application performActionForShortcutItem:(nonnull UIApplicationShortcutItem *)shortcutItem completionHandler:(nonnull void (^)(BOOL))completionHandler</div><div class="line">&#123;</div><div class="line">    switch ([shortcutItem.type integerValue]) &#123;</div><div class="line">        case 5:</div><div class="line">            NSLog(@&quot;selected UIApplicationShortcutIconTypeSearch &quot;);</div><div class="line">            break;</div><div class="line">            </div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<hr>
-<h3 id="UIKit-Peek-and-Pop"><a href="#UIKit-Peek-and-Pop" class="headerlink" title="UIKit Peek and Pop"></a>UIKit Peek and Pop</h3><h5 id="1-注册一个peek-和-pop-控制器使其支持peek-and-pop，并使其遵守UIViewControllerPreviewingDelegate代理协议"><a href="#1-注册一个peek-和-pop-控制器使其支持peek-and-pop，并使其遵守UIViewControllerPreviewingDelegate代理协议" class="headerlink" title="1.注册一个peek 和 pop 控制器使其支持peek and pop，并使其遵守UIViewControllerPreviewingDelegate代理协议"></a>1.注册一个peek 和 pop 控制器使其支持peek and pop，并使其遵守UIViewControllerPreviewingDelegate代理协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self registerForPreviewingWithDelegate:self sourceView:self.view];</div></pre></td></tr></table></figure>
-<h5 id="2-实现UIViewControllerPreviewingDelegate的peek和pop代理方法"><a href="#2-实现UIViewControllerPreviewingDelegate的peek和pop代理方法" class="headerlink" title="2.实现UIViewControllerPreviewingDelegate的peek和pop代理方法"></a>2.实现UIViewControllerPreviewingDelegate的peek和pop代理方法</h5><ul>
-<li>新建一个MYPreviewController继承自UIViewController，用于弹出的视图</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (nullable UIViewController *)previewingContext:(id &lt;UIViewControllerPreviewing&gt;)previewingContext viewControllerForLocation:(CGPoint)location NS_AVAILABLE_IOS(9_0)</div><div class="line">&#123;</div><div class="line">//    peek</div><div class="line">    MYPreviewController *childVC = [[MYPreviewController alloc] init];</div><div class="line">    childVC.preferredContentSize = CGSizeMake(0.0,300);</div><div class="line">    </div><div class="line">    CGRect rect = CGRectMake(10, location.y - 10, self.view.frame.size.width - 20,20);</div><div class="line">    previewingContext.sourceRect = rect;</div><div class="line">    return childVC;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)previewingContext:(id &lt;UIViewControllerPreviewing&gt;)previewingContext commitViewController:(UIViewController *)viewControllerToCommit NS_AVAILABLE_IOS(9_0)</div><div class="line">&#123;</div><div class="line">//    pop</div><div class="line">    [self showViewController:viewControllerToCommit sender:self];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>解释：</strong></p>
-<ul>
-<li>sourceRect是peek触发时的高亮区域。这个区域内的View会高亮显示，其余的会模糊掉。</li>
-</ul>
-<hr>
-<p>效果解释：</p>
-<ul>
-<li>轻按压击屏幕后出现模糊的横条。</li>
-<li>重压屏幕后弹出黄色视图。</li>
-</ul>
-<hr>
-<p><strong>3.实现peek controller 上滑出现快捷按钮-peek quick action</strong></p>
-<ul>
-<li>在MYPreviewController中重写UIViewController的- (NSArray <id <uipreviewactionitem="">&gt; *)previewActionItems方法</id></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> #pragma mark peek quick action</div><div class="line">- (NSArray &lt;id &lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</div><div class="line">&#123;</div><div class="line">    UIPreviewAction *previewAction0 = [UIPreviewAction actionWithTitle:@&quot;回复0&quot; style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了0&quot;);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    UIPreviewAction *previewAction1 = [UIPreviewAction actionWithTitle:@&quot;回复1&quot; style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了1&quot;);</div><div class="line">    &#125;];</div><div class="line">    UIPreviewAction *previewAction2 = [UIPreviewAction actionWithTitle:@&quot;回复2&quot; style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了2&quot;);</div><div class="line">    &#125;];</div><div class="line">    NSArray *array = @[previewAction0,previewAction1,previewAction2];</div><div class="line">    return array;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 最后附本人代码：<a href="https://github.com/yachaocn/3DTouch-Peek-Pop" target="_blank" rel="external">下载代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/22/3DTouch-Peek-Pop/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1194,11 +1137,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1278,7 +1221,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             </li>
           
             <li class="search-li">
-              <a href="https://zsisme.gitbooks.io/ios-/content/chapter5/3d-transform.html#" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
+              <a href="https://zsisme.gitbooks.io/ios-/content/index.html" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>3D仿射变换</a>
             </li>
           
             <li class="search-li">
