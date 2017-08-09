@@ -183,6 +183,75 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-OC常用技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/28/OC常用技巧/">OC常用技巧</a>
+    </h1>
+  
+
+        
+        <a href="/2016/07/28/OC常用技巧/" class="archive-article-date">
+  	<time datetime="2016-07-28T09:40:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="OC常用技巧"><a href="#OC常用技巧" class="headerlink" title="OC常用技巧"></a>OC常用技巧</h1><p><strong>1.clang warning</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic push </div><div class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot; </div><div class="line">//code </div><div class="line">#pragma clang diagnostic pop</div></pre></td></tr></table></figure>
+<p>表示在这个区间里忽略一些特定的clang的编译警告，因为AFNetworking作为一个库被其他项目引用，所以不能全局忽略clang的一些警告，只能在有需要的时候局部这样做，作者喜欢用?:符号，所以经常见忽略-Wgnu警告的写法.<a href="http://nshipster.com/clang-diagnostics/" target="_blank" rel="external">详见这里</a></p>
+<p><strong>2.dispatch_once</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">static dispatch_queue_t url_request_operation_completion_queue() &#123; </div><div class="line">    static dispatch_queue_t af_url_request_operation_completion_queue; </div><div class="line">    static dispatch_once_t onceToken; </div><div class="line">    dispatch_once(&amp;onceToken, ^&#123; </div><div class="line">        af_url_request_operation_completion_queue = dispatch_queue_create(&quot;com.alamofire.networking.operation.queue&quot;,   DISPATCH_QUEUE_CONCURRENT ); </div><div class="line">    &#125;); </div><div class="line">    return af_url_request_operation_completion_queue; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为保证线程安全，所有单例都用dispatch_once生成，保证只执行一次，这也是iOS开发常用的技巧。</p>
+<p><strong>3.weak &amp; strong self</strong></p>
+<p>常看到一个 block 要使用 self，会处理成在外部声明一个 weak 变量指向 self，在 block 里又声明一个 strong 变量指向 weakSelf：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__weak __typeof(self)weakSelf = self; </div><div class="line">self.backgroundTaskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^&#123; </div><div class="line">    __strong __typeof(weakSelf)strongSelf = weakSelf; </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<p>weakSelf是为了block不持有self，避免循环引用，而再声明一个strongSelf是因为一旦进入block执行，就不允许self在这个执行过程中释放。block执行完后这个strongSelf会自动释放，没有循环引用问题。</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/07/28/OC常用技巧/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-图片处理之图片着色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1035,80 +1104,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="利用长按手势移动tableviewcell-利用长按手势移动tableviewcell" class="article article-type-利用长按手势移动tableviewcell  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/利用长按手势移动tableviewcell/">利用长按手势移动tableviewcell</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/利用长按手势移动tableviewcell/" class="archive-article-date">
-  	<time datetime="2016-03-17T03:01:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="利用长按手势移动Table-View-Cells"><a href="#利用长按手势移动Table-View-Cells" class="headerlink" title="利用长按手势移动Table View Cells"></a>利用长按手势移动Table View Cells</h1><p>废话少说直接上步骤：</p>
-<ul>
-<li>给table view添加长按手势</li>
-<li>获取长按的位置，并找出该位置对应的cell的indexPath，从而找到table view cell。</li>
-<li>在长按开始时，获取cell的一个snapshot并将其放大，通过改变snapshot的透明度实现渐变的效果，将cell的背景设置为黑色，以显示出cell浮动的感觉。</li>
-<li>在长按状态改变时，移动cell的位置。</li>
-<li>在长按取消或者结束时，还原snapshot，和table view 的背景，为了更形象的让用户感觉到时慢慢放下。</li>
-</ul>
-<p><strong>具体的代码如下：</strong></p>
-<p><code>在viewdidload中添加长按手势：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//    添加移动手势</div><div class="line">    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressTableView:)];</div><div class="line">    [_tableView addGestureRecognizer:longPress];</div></pre></td></tr></table></figure>
-<p><code>在长按事件中添加如下代码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">-(void)longPressTableView:(id)sender</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    UILongPressGestureRecognizer *longPressGes = (UILongPressGestureRecognizer *)sender;</div><div class="line">    UIGestureRecognizerState state = longPressGes.state;</div><div class="line">    </div><div class="line">    CGPoint location = [longPressGes locationInView:_tableView];</div><div class="line">    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:location];</div><div class="line"></div><div class="line">    static UIView *snapShot = nil;</div><div class="line">    static NSIndexPath *sourceIndexPath = nil;</div><div class="line">    switch (state) &#123;</div><div class="line">        case UIGestureRecognizerStateBegan:</div><div class="line">        &#123;</div><div class="line">            if (indexPath) &#123;</div><div class="line">                sourceIndexPath = indexPath;</div><div class="line">                UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];</div><div class="line">             </div><div class="line">                </div><div class="line">                snapShot = [self customeSnapShotFromView:cell];</div><div class="line">                </div><div class="line">               __block CGPoint center = cell.center;</div><div class="line">                snapShot.center = center;</div><div class="line">                snapShot.alpha = 0.0f;</div><div class="line">                [_tableView addSubview:snapShot];</div><div class="line">                </div><div class="line">                [UIView animateWithDuration:0.25 animations:^&#123;</div><div class="line">                    center = CGPointMake(center.x, location.y);</div><div class="line">                    snapShot.center = center;</div><div class="line">                    snapShot.transform = CGAffineTransformScale(snapShot.transform, 1.05, 1.05);</div><div class="line">                    snapShot.alpha = 0.98;</div><div class="line">                    cell.backgroundColor = [UIColor blackColor];</div><div class="line">                  </div><div class="line">                &#125;];</div><div class="line">                </div><div class="line">                </div><div class="line">                </div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        case UIGestureRecognizerStateChanged:</div><div class="line">        &#123;</div><div class="line">            CGPoint center = snapShot.center;</div><div class="line">            snapShot.center = CGPointMake(center.x, location.y);</div><div class="line">            if (indexPath &amp;&amp; ![indexPath isEqual:sourceIndexPath]) &#123;</div><div class="line">                </div><div class="line">                [saveAry exchangeObjectAtIndex:indexPath.row withObjectAtIndex:sourceIndexPath.row];</div><div class="line">                [_tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:indexPath];</div><div class="line">                sourceIndexPath = indexPath;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            </div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">        &#123;</div><div class="line">            UITableViewCell *cell = [_tableView cellForRowAtIndexPath:sourceIndexPath];</div><div class="line">            [UIView animateWithDuration:0.5 animations:^&#123;</div><div class="line">                snapShot.center = cell.center;</div><div class="line">                snapShot.transform = CGAffineTransformIdentity;</div><div class="line">                snapShot.alpha = 0.0f;</div><div class="line">                cell.backgroundColor = [UIColor whiteColor];</div><div class="line">                </div><div class="line">            &#125; completion:^(BOOL finished) &#123;</div><div class="line">                [snapShot removeFromSuperview];</div><div class="line">                snapShot = nil;</div><div class="line">                </div><div class="line">            &#125;];</div><div class="line">            sourceIndexPath = nil;</div><div class="line">        &#125;</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>获取截屏</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-(UIView *)customeSnapShotFromView:(UIView *)inputView</div><div class="line">&#123;</div><div class="line">    UIView *snapShotView = [inputView snapshotViewAfterScreenUpdates:YES];</div><div class="line">    snapShotView.layer.masksToBounds = NO;</div><div class="line">    snapShotView.layer.cornerRadius = 0.0f;</div><div class="line">    snapShotView.layer.shadowOffset = CGSizeMake(-0.5, 0);</div><div class="line">    snapShotView.layer.shadowRadius = 5.0f;</div><div class="line">    snapShotView.layer.shadowOpacity = 0.4;</div><div class="line">    return snapShotView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/17/利用长按手势移动tableviewcell/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1221,11 +1216,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">

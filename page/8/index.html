@@ -183,6 +183,56 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-PSPDFKIT-PDF上画线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/28/PSPDFKIT-PDF上画线/">PSPDFKIT-PDF上画线</a>
+    </h1>
+  
+
+        
+        <a href="/2015/09/28/PSPDFKIT-PDF上画线/" class="archive-article-date">
+  	<time datetime="2015-09-28T01:11:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-09-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.PDF添加polayLine</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[subclassingSection addContent:[PSContent contentWithTitle:@&quot;Programmatically add a PolyLine annotation&quot; block:^UIViewController *&#123;</div><div class="line">        PSPDFDocument *document = [PSPDFDocument documentWithURL:hackerMagURL];</div><div class="line">        document.annotationSaveMode = PSPDFAnnotationSaveModeDisabled; // don&apos;t confuse other examples</div><div class="line">        // add shape annotation if there isn&apos;t one already.</div><div class="line">        NSUInteger targetPage = 0;</div><div class="line">        if ([document annotationsForPage:targetPage type:PSPDFAnnotationTypePolyLine].count == 0) &#123;</div><div class="line">            PSPDFPolyLineAnnotation *polyline = [PSPDFPolyLineAnnotation new];</div><div class="line">            polyline.points = @[[NSValue valueWithCGPoint:CGPointMake(52, 633)], [NSValue valueWithCGPoint:CGPointMake(67, 672)], [NSValue valueWithCGPoint:CGPointMake(131, 685)], [NSValue valueWithCGPoint:CGPointMake(178, 654)], [NSValue valueWithCGPoint:CGPointMake(115, 622)]];</div><div class="line">            polyline.color = [UIColor colorWithRed:0.0 green:1.f blue:0.f alpha:1.f];</div><div class="line">            polyline.fillColor = UIColor.yellowColor;</div><div class="line">            polyline.lineEnd2 = PSPDFLineEndTypeClosedArrow;</div><div class="line">            polyline.lineWidth = 5.f;</div><div class="line">            polyline.page = targetPage;</div><div class="line">            [document addAnnotations:@[polyline]];</div><div class="line">        &#125;</div><div class="line">        PSPDFViewController *controller = [[PSPDFViewController alloc] initWithDocument:document];</div><div class="line">        controller.rightBarButtonItems = @[controller.searchButtonItem, controller.openInButtonItem, controller.viewModeButtonItem];</div><div class="line">        return controller;</div><div class="line">    &#125;]];</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/09/28/PSPDFKIT-PDF上画线/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-UISearchViewController总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -652,11 +702,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">

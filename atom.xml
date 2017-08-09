@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-07-20T07:13:34.000Z</updated>
+  <updated>2017-08-09T09:06:30.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UIImagePickerController旋转问题</title>
+    <link href="https://devchao.com/2017/08/09/UIImagePickerController%E6%97%8B%E8%BD%AC%E9%97%AE%E9%A2%98/"/>
+    <id>https://devchao.com/2017/08/09/UIImagePickerController旋转问题/</id>
+    <published>2017-08-09T09:05:46.000Z</published>
+    <updated>2017-08-09T09:06:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>UIImagePickerController旋转问题</p>
+<p>问题：通过UIImagePickerController获取系统相册时，控制器方向只支持竖屏，不支持横屏的问题</p>
+<p>解决方案：</p>
+<p>1.app delegate中<code>-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window</code>返回<code>UIInterfaceOrientationMaskAll</code>,以支持所有方向</p>
+<p>2.info.plist中添加如下键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;UISupportedInterfaceOrientations~ipad&lt;/key&gt;</div><div class="line">	&lt;array&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationPortrait&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationPortraitUpsideDown&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationLandscapeLeft&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationLandscapeRight&lt;/string&gt;</div><div class="line">	&lt;/array&gt;</div></pre></td></tr></table></figure>
+<p>2.创建一个UIImagePickerController的类别,并重写<code>-(UIInterfaceOrientationMask)supportedInterfaceOrientations</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(UIInterfaceOrientationMask)supportedInterfaceOrientations</div><div class="line">&#123;</div><div class="line">    return UIInterfaceOrientationMaskAll;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：<br>每次调用一个视图控制器的时候，都会调用指定支持屏幕的方法 - (UIInterfaceOrientationMask)application:(UIApplication <em>)application supportedInterfaceOrientationsForWindow:(UIWindow </em>)window                                       同时在一个视图控制器显示的时候，会调用自己的 支持屏幕方向 supportedInterfaceOrientations 的方法，所以才能在 UIImagePickerController 显示的时候通过指定支持方向来改变 其在用户面前展现的方向</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;UIImagePickerController旋转问题&lt;/p&gt;
+&lt;p&gt;问题：通过UIImagePickerController获取系统相册时，控制器方向只支持竖屏，不支持横屏的问题&lt;/p&gt;
+&lt;p&gt;解决方案：&lt;/p&gt;
+&lt;p&gt;1.app delegate中&lt;code&gt;-(UII
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS调节显示器参数之将屏幕亮度降低至系统亮度以下</title>
@@ -971,47 +1004,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>BackgroundFetch</title>
-    <link href="https://devchao.com/2017/01/20/BackgroundFetch/"/>
-    <id>https://devchao.com/2017/01/20/BackgroundFetch/</id>
-    <published>2017-01-20T04:48:10.000Z</published>
-    <updated>2017-01-20T04:50:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Background-Fetch"><a href="#Background-Fetch" class="headerlink" title="Background Fetch"></a>Background Fetch</h1><hr>
-<p>###开启Background Fetch</p>
-<p>1.在XCode-&gt;TARGETS-&gt;Capabilities-&gt;Background Modes打开并添加Background Fetch.<br>2.在- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions方法中加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</div></pre></td></tr></table></figure>
-<p>MinimumBackgroundFetchInterval参数值是两次Fetch时间间隔，不能保证每隔这个时间间隔都会调用。这里设置为UIApplicationBackgroundFetchIntervalMinimum，意思是尽可能频繁的调用我们的Fetch方法。</p>
-<p>###调用Fetch方法<br>1.每次系统Fetch时都会调用如下方法，我们可以在该方法中做刷新数据等操作，操作执行完成以后需要要调用completionHandlerblock()例如：completionHandler(UIBackgroundFetchResultNewData),此回调会告诉系统可以挂起你的APP，并且系统会预估Fetch的耗电情况，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;&#125;;</div></pre></td></tr></table></figure>
-<p>completionHandler有三个参数:</p>
-<ul>
-<li>UIBackgroundFetchResultNewData 成功拉取数据</li>
-<li>UIBackgroundFetchResultNoData 没有新数据</li>
-<li>UIBackgroundFetchResultFailed 拉取数据失败或者超时</li>
-</ul>
-<p>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;</div><div class="line">    </div><div class="line">    // Call or write any code necessary to get new data, process it and update the UI.</div><div class="line">    </div><div class="line">     // The logic for informing iOS about the fetch results in plain language:</div><div class="line">    if (/** NEW DATA EXISTS AND WAS SUCCESSFULLY PROCESSED **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** NO NEW DATA EXISTS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** ANY ERROR OCCURS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultFailed);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.如果应用程式能够快速下载少量内容，并准确反映出他们有内容下载的时间，就会比需要长时间下载内容的APP更可能收到执行时间，所以尽可能地缩短你的任务执行时间。</p>
-<p>###调试BackGround fetch</p>
-<p>1.Debug &gt; Simulate Background Fetch.</p>
-<p>2.debug模式下，选中Product &gt; Scheme &gt; Edit Scheme ，打开Options,勾选Launch due to a background fetch event. command＋R运行。</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Background-Fetch&quot;&gt;&lt;a href=&quot;#Background-Fetch&quot; class=&quot;headerlink&quot; title=&quot;Background Fetch&quot;&gt;&lt;/a&gt;Background Fetch&lt;/h1&gt;&lt;hr&gt;
-&lt;p&gt;###开启Back
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
     
   </entry>
   

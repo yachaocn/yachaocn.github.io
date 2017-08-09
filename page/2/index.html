@@ -183,6 +183,78 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Apache服务配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/15/Apache服务配置/">Apache服务配置</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/15/Apache服务配置/" class="archive-article-date">
+  	<time datetime="2017-04-15T02:04:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Mac-OS-Apache-服务配置"><a href="#Mac-OS-Apache-服务配置" class="headerlink" title="Mac OS Apache 服务配置"></a>Mac OS Apache 服务配置</h1><p><strong>Apache 所在位置</strong>:<code>/etc/apache2</code></p>
+<p><strong>Apache 配置文件所在位置</strong>:<code>/etc/apache2/httpd.conf</code></p>
+<p>###apache下部署web资源</p>
+<p>跟windows不一样，它的部署包不是放在htdocs(windows下的存放目录),而是放在 “/资源库/WebServer/Documents/”下面,我们的静态资源就可以丢到这个目录.这个目录是apache的默认目录，有时候为了方便操作，可能需要指向特定的文件夹，该如何修改apache的配置呢？</p>
+<p>###修改默认部署路径</p>
+<p>找到Apache配置文件中的<code>DocumentRoot</code>,将其配置目录改为制定路径即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DocumentRoot /Library/WebServer/Documents</div></pre></td></tr></table></figure>
+<p>###修改apache默认端口<br>找到Apache配置文件中<code>Listen</code>,更改为想要的端口即可。 </p>
+<p>###启动停用apache</p>
+<p>启用apache的命令：<code>sudo apachectl start/restart</code></p>
+<p>在浏览器中输入localhost或者127.0.0.1即可看到“It works!”的提示。那么，apache就启动成功了！</p>
+<p>停止apache的命令：<code>sudo apachectl stop</code></p>
+<p>apache的用法还有非常多，比如 转发配置、ssl配置、日志配置，以后慢慢补充～</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/15/Apache服务配置/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-内敛函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1006,84 +1078,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
 
 
   
-    <article id="post-BackgroundFetch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/20/BackgroundFetch/">BackgroundFetch</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/20/BackgroundFetch/" class="archive-article-date">
-  	<time datetime="2017-01-20T04:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Background-Fetch"><a href="#Background-Fetch" class="headerlink" title="Background Fetch"></a>Background Fetch</h1><hr>
-<p>###开启Background Fetch</p>
-<p>1.在XCode-&gt;TARGETS-&gt;Capabilities-&gt;Background Modes打开并添加Background Fetch.<br>2.在- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions方法中加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</div></pre></td></tr></table></figure>
-<p>MinimumBackgroundFetchInterval参数值是两次Fetch时间间隔，不能保证每隔这个时间间隔都会调用。这里设置为UIApplicationBackgroundFetchIntervalMinimum，意思是尽可能频繁的调用我们的Fetch方法。</p>
-<p>###调用Fetch方法<br>1.每次系统Fetch时都会调用如下方法，我们可以在该方法中做刷新数据等操作，操作执行完成以后需要要调用completionHandlerblock()例如：completionHandler(UIBackgroundFetchResultNewData),此回调会告诉系统可以挂起你的APP，并且系统会预估Fetch的耗电情况，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;&#125;;</div></pre></td></tr></table></figure>
-<p>completionHandler有三个参数:</p>
-<ul>
-<li>UIBackgroundFetchResultNewData 成功拉取数据</li>
-<li>UIBackgroundFetchResultNoData 没有新数据</li>
-<li>UIBackgroundFetchResultFailed 拉取数据失败或者超时</li>
-</ul>
-<p>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;</div><div class="line">    </div><div class="line">    // Call or write any code necessary to get new data, process it and update the UI.</div><div class="line">    </div><div class="line">     // The logic for informing iOS about the fetch results in plain language:</div><div class="line">    if (/** NEW DATA EXISTS AND WAS SUCCESSFULLY PROCESSED **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** NO NEW DATA EXISTS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** ANY ERROR OCCURS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultFailed);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.如果应用程式能够快速下载少量内容，并准确反映出他们有内容下载的时间，就会比需要长时间下载内容的APP更可能收到执行时间，所以尽可能地缩短你的任务执行时间。</p>
-<p>###调试BackGround fetch</p>
-<p>1.Debug &gt; Simulate Background Fetch.</p>
-<p>2.debug模式下，选中Product &gt; Scheme &gt; Edit Scheme ，打开Options,勾选Launch due to a background fetch event. command＋R运行。</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/20/BackgroundFetch/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1196,11 +1190,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">

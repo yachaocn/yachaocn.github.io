@@ -183,6 +183,84 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BackgroundFetch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/20/BackgroundFetch/">BackgroundFetch</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/20/BackgroundFetch/" class="archive-article-date">
+  	<time datetime="2017-01-20T04:48:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Background-Fetch"><a href="#Background-Fetch" class="headerlink" title="Background Fetch"></a>Background Fetch</h1><hr>
+<p>###开启Background Fetch</p>
+<p>1.在XCode-&gt;TARGETS-&gt;Capabilities-&gt;Background Modes打开并添加Background Fetch.<br>2.在- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions方法中加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];</div></pre></td></tr></table></figure>
+<p>MinimumBackgroundFetchInterval参数值是两次Fetch时间间隔，不能保证每隔这个时间间隔都会调用。这里设置为UIApplicationBackgroundFetchIntervalMinimum，意思是尽可能频繁的调用我们的Fetch方法。</p>
+<p>###调用Fetch方法<br>1.每次系统Fetch时都会调用如下方法，我们可以在该方法中做刷新数据等操作，操作执行完成以后需要要调用completionHandlerblock()例如：completionHandler(UIBackgroundFetchResultNewData),此回调会告诉系统可以挂起你的APP，并且系统会预估Fetch的耗电情况，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;&#125;;</div></pre></td></tr></table></figure>
+<p>completionHandler有三个参数:</p>
+<ul>
+<li>UIBackgroundFetchResultNewData 成功拉取数据</li>
+<li>UIBackgroundFetchResultNoData 没有新数据</li>
+<li>UIBackgroundFetchResultFailed 拉取数据失败或者超时</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler&#123;</div><div class="line">    </div><div class="line">    // Call or write any code necessary to get new data, process it and update the UI.</div><div class="line">    </div><div class="line">     // The logic for informing iOS about the fetch results in plain language:</div><div class="line">    if (/** NEW DATA EXISTS AND WAS SUCCESSFULLY PROCESSED **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** NO NEW DATA EXISTS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultNewData);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (/** ANY ERROR OCCURS **/) &#123;</div><div class="line">        completionHandler(UIBackgroundFetchResultFailed);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.如果应用程式能够快速下载少量内容，并准确反映出他们有内容下载的时间，就会比需要长时间下载内容的APP更可能收到执行时间，所以尽可能地缩短你的任务执行时间。</p>
+<p>###调试BackGround fetch</p>
+<p>1.Debug &gt; Simulate Background Fetch.</p>
+<p>2.debug模式下，选中Product &gt; Scheme &gt; Edit Scheme ，打开Options,勾选Launch due to a background fetch event. command＋R运行。</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/20/BackgroundFetch/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-关于应用程序启动到后台" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -833,75 +911,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-OC常用技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/28/OC常用技巧/">OC常用技巧</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/28/OC常用技巧/" class="archive-article-date">
-  	<time datetime="2016-07-28T09:40:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="OC常用技巧"><a href="#OC常用技巧" class="headerlink" title="OC常用技巧"></a>OC常用技巧</h1><p><strong>1.clang warning</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic push </div><div class="line">#pragma clang diagnostic ignored &quot;-Wgnu&quot; </div><div class="line">//code </div><div class="line">#pragma clang diagnostic pop</div></pre></td></tr></table></figure>
-<p>表示在这个区间里忽略一些特定的clang的编译警告，因为AFNetworking作为一个库被其他项目引用，所以不能全局忽略clang的一些警告，只能在有需要的时候局部这样做，作者喜欢用?:符号，所以经常见忽略-Wgnu警告的写法.<a href="http://nshipster.com/clang-diagnostics/" target="_blank" rel="external">详见这里</a></p>
-<p><strong>2.dispatch_once</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">static dispatch_queue_t url_request_operation_completion_queue() &#123; </div><div class="line">    static dispatch_queue_t af_url_request_operation_completion_queue; </div><div class="line">    static dispatch_once_t onceToken; </div><div class="line">    dispatch_once(&amp;onceToken, ^&#123; </div><div class="line">        af_url_request_operation_completion_queue = dispatch_queue_create(&quot;com.alamofire.networking.operation.queue&quot;,   DISPATCH_QUEUE_CONCURRENT ); </div><div class="line">    &#125;); </div><div class="line">    return af_url_request_operation_completion_queue; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>为保证线程安全，所有单例都用dispatch_once生成，保证只执行一次，这也是iOS开发常用的技巧。</p>
-<p><strong>3.weak &amp; strong self</strong></p>
-<p>常看到一个 block 要使用 self，会处理成在外部声明一个 weak 变量指向 self，在 block 里又声明一个 strong 变量指向 weakSelf：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__weak __typeof(self)weakSelf = self; </div><div class="line">self.backgroundTaskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^&#123; </div><div class="line">    __strong __typeof(weakSelf)strongSelf = weakSelf; </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>weakSelf是为了block不持有self，避免循环引用，而再声明一个strongSelf是因为一旦进入block执行，就不允许self在这个执行过程中释放。block执行完后这个strongSelf会自动释放，没有循环引用问题。</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/07/28/OC常用技巧/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1014,11 +1023,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">

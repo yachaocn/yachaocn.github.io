@@ -183,6 +183,74 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-UIImagePickerController旋转问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/09/UIImagePickerController旋转问题/">UIImagePickerController旋转问题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/09/UIImagePickerController旋转问题/" class="archive-article-date">
+  	<time datetime="2017-08-09T09:05:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>UIImagePickerController旋转问题</p>
+<p>问题：通过UIImagePickerController获取系统相册时，控制器方向只支持竖屏，不支持横屏的问题</p>
+<p>解决方案：</p>
+<p>1.app delegate中<code>-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window</code>返回<code>UIInterfaceOrientationMaskAll</code>,以支持所有方向</p>
+<p>2.info.plist中添加如下键值对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;UISupportedInterfaceOrientations~ipad&lt;/key&gt;</div><div class="line">	&lt;array&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationPortrait&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationPortraitUpsideDown&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationLandscapeLeft&lt;/string&gt;</div><div class="line">		&lt;string&gt;UIInterfaceOrientationLandscapeRight&lt;/string&gt;</div><div class="line">	&lt;/array&gt;</div></pre></td></tr></table></figure>
+<p>2.创建一个UIImagePickerController的类别,并重写<code>-(UIInterfaceOrientationMask)supportedInterfaceOrientations</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(UIInterfaceOrientationMask)supportedInterfaceOrientations</div><div class="line">&#123;</div><div class="line">    return UIInterfaceOrientationMaskAll;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总结：<br>每次调用一个视图控制器的时候，都会调用指定支持屏幕的方法 - (UIInterfaceOrientationMask)application:(UIApplication <em>)application supportedInterfaceOrientationsForWindow:(UIWindow </em>)window                                       同时在一个视图控制器显示的时候，会调用自己的 支持屏幕方向 supportedInterfaceOrientations 的方法，所以才能在 UIImagePickerController 显示的时候通过指定支持方向来改变 其在用户面前展现的方向</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/09/UIImagePickerController旋转问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS调节显示器参数之将屏幕亮度降低至系统亮度以下" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -939,78 +1007,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-Apache服务配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/15/Apache服务配置/">Apache服务配置</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/15/Apache服务配置/" class="archive-article-date">
-  	<time datetime="2017-04-15T02:04:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Mac-OS-Apache-服务配置"><a href="#Mac-OS-Apache-服务配置" class="headerlink" title="Mac OS Apache 服务配置"></a>Mac OS Apache 服务配置</h1><p><strong>Apache 所在位置</strong>:<code>/etc/apache2</code></p>
-<p><strong>Apache 配置文件所在位置</strong>:<code>/etc/apache2/httpd.conf</code></p>
-<p>###apache下部署web资源</p>
-<p>跟windows不一样，它的部署包不是放在htdocs(windows下的存放目录),而是放在 “/资源库/WebServer/Documents/”下面,我们的静态资源就可以丢到这个目录.这个目录是apache的默认目录，有时候为了方便操作，可能需要指向特定的文件夹，该如何修改apache的配置呢？</p>
-<p>###修改默认部署路径</p>
-<p>找到Apache配置文件中的<code>DocumentRoot</code>,将其配置目录改为制定路径即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DocumentRoot /Library/WebServer/Documents</div></pre></td></tr></table></figure>
-<p>###修改apache默认端口<br>找到Apache配置文件中<code>Listen</code>,更改为想要的端口即可。 </p>
-<p>###启动停用apache</p>
-<p>启用apache的命令：<code>sudo apachectl start/restart</code></p>
-<p>在浏览器中输入localhost或者127.0.0.1即可看到“It works!”的提示。那么，apache就启动成功了！</p>
-<p>停止apache的命令：<code>sudo apachectl stop</code></p>
-<p>apache的用法还有非常多，比如 转发配置、ssl配置、日志配置，以后慢慢补充～</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/15/Apache服务配置/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1123,11 +1119,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
