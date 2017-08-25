@@ -183,6 +183,76 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BLE 4.0 技术学习（一）core bluetooth 概述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/12/BLE 4.0 技术学习（一）core bluetooth 概述/">BLE 4.0 技术学习（一）core bluetooth 概述</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/12/BLE 4.0 技术学习（一）core bluetooth 概述/" class="archive-article-date">
+  	<time datetime="2016-04-12T01:14:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="BLE-4-0-技术学习（一）"><a href="#BLE-4-0-技术学习（一）" class="headerlink" title="BLE 4.0 技术学习（一）"></a>BLE 4.0 技术学习（一）</h1><hr>
+<p>###core bluetooth 概述</p>
+<p>Core Bluetooth framework能够实现iOS 或者 Mac app与蓝牙低耗能设备交互。你的app能够和蓝牙低耗能，甚至是与其他iOS设备发现，探索，交互，例如心率监视器，数字恒温器。</p>
+<p>蓝牙4.0规范的框架是一个抽象与低能耗设备使用。它隐藏了很多的低层细节规范,从而使它更容易为你开发与蓝牙低耗能设备交互的应用程序。因为框架是基于规范,一些概念和术语的规范已经采用了。本章向您介绍关键术语和概念,你需要知道开始开发应用程序使用蓝牙核心框架。</p>
+<h2 id="I-中央（Central）和外围设备（Peripheral）和他们在蓝牙通信担任的角色"><a href="#I-中央（Central）和外围设备（Peripheral）和他们在蓝牙通信担任的角色" class="headerlink" title="I.中央（Central）和外围设备（Peripheral）和他们在蓝牙通信担任的角色"></a>I.中央（Central）和外围设备（Peripheral）和他们在蓝牙通信担任的角色</h2><p>在蓝牙低耗能交互中有两个主要的参与者：central和peripheral，基于传统的客户机-服务器体系结构,外围通常有数据所需的其他设备。中央通常使用外围设备提供的信息来完成一些特定的任务。如图1 - 1所示,例如,一个心率监视器可能有用的信息,你的Mac或iOS应用程序可能需要为了以用户友好的方式显示用户的心率。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-1.png" alt="图1-1"></p>
+<p>###Central发现并连接正在广播的Peripheral</p>
+<p>外围设备发出一些广播的数据与他们的广告包。广告包是一个相对较小的包的数据，可能包含关于一个外围的信息,如外围的名称和主要功能。例如,数码恒温器可能只广播,它提供了当前房间的温度。对于蓝牙低能耗，外围设备的“广播”把他们展现的淋漓尽致。,另一方面,中央可以扫描和监听任何外围设备感兴趣的广告信息,如图1 - 2所示。中央可以要求连接到任何外围,发现广播。如图：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-2.png" alt="1-2"></p>
+<p>###Peripheral 的外围数据结构形式</p>
+<p>连接到外围的目的是开始探索和与它提供的数据交互。</p>
+<p>外围设备可能包含一个或多个服务或关于他们的连接信号强度提供有用的信息。服务是一个集合的数据和相关行为完成一个功能或特性的设备(或部分设备)。例如心率监测器,一个服务可能是公开的心率数据监测心率的传感器。<br>服务本身是由一个或者多个特征组成的。一个特征对周边的服务提供了更多的详情。例如,刚刚描述的心率服务可能包含一个身体位置的特征和一个传输心率数据的另一个特征。图1 - 3显示了一个可能的心率监测器的服务的结构和特点。如图：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-3.png" alt="1-3"></p>
+<p>###Central探索并与外设数据交互</p>
+<p>之后，中央已成功建立到外设的连接，它可以发现全方位的服务和特色的外设所提供的（广告数据可能只包含可用服务的一小部分）。</p>
+<p>中央还可以与外设的服务，通过读取或写入该服务的特性值交互。例如，应用程式可从数字恒温请求当前室温，或者它可以提供与在其上设置的房间的温度的值的恒温器。</p>
+<h2 id="II-Central-Peripheral和Peripheral的数据表示"><a href="#II-Central-Peripheral和Peripheral的数据表示" class="headerlink" title="II.Central Peripheral和Peripheral的数据表示"></a>II.Central Peripheral和Peripheral的数据表示</h2><p><strong><code>在Central这边：</code></strong></p>
+<p><strong>本地的Central，远端的Peripheral</strong></p>
+<p>在中心侧，本地中央装置是由一个CBCentralManager对象表示。使用这些对象来管理发现或远程连接外围设备（由CBPeripheral对象表示），其中包括扫描，发现和连接到广告外设。图1-4显示切牙和远程外设如何在本地核心蓝牙框架的代表。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-4.png" alt=""></p>
+<p><strong>远端外设的数据由CBService和CBCharacteristic对象表示</strong></p>
+<p>当你在和远程外围设备（由CBPeripheral对象表示）交互服务和特性数据时，一个远程外设的服务由CBService对象表示。同样，一个远程外设的服务的特性由CBCharacteristic对象表示。图1-5示出了一个远程外设的服务和特征的基本结构。如图：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-5.png" alt="1-5"></p>
+<p><strong><code>在Peripheral这边</code></strong></p>
+<p><strong>本地的Peripheral和远端的Central</strong></p>
+<p>在外围侧，本地外围装置由CBPeripheralManager对象表示。这些对象用于服务和特征的本地外围设备的数据库中管理发布的服务和宣传这些服务，以远程中央设备（由CBCentral对象表示）。外围对象还用于响应读写这些远程CENTR来的请求。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-6.png" alt=""><br><strong>一个本地外围的数据由CBMutableService和CBMutableCharacteristic对象表示</strong></p>
+<p>当您在用本地外围设备（由CBPeripheralManager对象表示）与远程中心设备进行数据的交互，您正在处理的服务和特性可变版本。在核心蓝牙框架中，一个本地外围的服务由CBMutableService对象表示。类似地，本地外设的服务的特性由CBMutableCharacteristic对象表示。图1-7示出的本地外设的服务和特征的基本结构。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-7.png" alt=""></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/04/12/BLE 4.0 技术学习（一）core bluetooth 概述/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="利用长按手势移动tableviewcell-利用长按手势移动tableviewcell" class="article article-type-利用长按手势移动tableviewcell  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1061,69 +1131,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/03/01/关于HTTP请求的HTTPHeaderField的Content-Type的浅析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-Xcode7-网络请求报错" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/29/Xcode7-网络请求报错/">Xcode7 网络请求报错</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/29/Xcode7-网络请求报错/" class="archive-article-date">
-  	<time datetime="2016-02-29T01:07:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Xcode7-网络请求报错：The-resource-could-not-be-loaded-because-the-App-Transport-Security-policy-requires-the-use-of-a-sec"><a href="#Xcode7-网络请求报错：The-resource-could-not-be-loaded-because-the-App-Transport-Security-policy-requires-the-use-of-a-sec" class="headerlink" title="Xcode7 网络请求报错：The resource could not be loaded because the App Transport Security policy requires the use of a sec"></a>Xcode7 网络请求报错：The resource could not be loaded because the App Transport Security policy requires the use of a sec</h1><p>问题：iOS9引入了新特性App Transport Security (ATS)。详情：<a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-DontLinkElementID_13" target="_blank" rel="external">App Transport Security (ATS)</a></p>
-<p>新特性要求App内访问的网络必须使用HTTPS协议。<br>但是现在公司的项目使用的是HTTP协议，使用私有加密方式保证数据安全。现在也不能马上改成HTTPS协议传输。</p>
-<hr>
-<p>解决方案：</p>
-<p>在Info.plist文件中添加”App Transport SecuritySettings”, Type为”Dictionary”,再添加”Allow Arbitray Loads”, Type 为”Boolean”，“Value”为“YES”即可。<br><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/02/29/Xcode7-网络请求报错/">展开全文 >></a>
         </p>
       
 

@@ -183,6 +183,69 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Xcode7-网络请求报错" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/29/Xcode7-网络请求报错/">Xcode7 网络请求报错</a>
+    </h1>
+  
+
+        
+        <a href="/2016/02/29/Xcode7-网络请求报错/" class="archive-article-date">
+  	<time datetime="2016-02-29T01:07:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Xcode7-网络请求报错：The-resource-could-not-be-loaded-because-the-App-Transport-Security-policy-requires-the-use-of-a-sec"><a href="#Xcode7-网络请求报错：The-resource-could-not-be-loaded-because-the-App-Transport-Security-policy-requires-the-use-of-a-sec" class="headerlink" title="Xcode7 网络请求报错：The resource could not be loaded because the App Transport Security policy requires the use of a sec"></a>Xcode7 网络请求报错：The resource could not be loaded because the App Transport Security policy requires the use of a sec</h1><p>问题：iOS9引入了新特性App Transport Security (ATS)。详情：<a href="https://developer.apple.com/library/prerelease/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-DontLinkElementID_13" target="_blank" rel="external">App Transport Security (ATS)</a></p>
+<p>新特性要求App内访问的网络必须使用HTTPS协议。<br>但是现在公司的项目使用的是HTTP协议，使用私有加密方式保证数据安全。现在也不能马上改成HTTPS协议传输。</p>
+<hr>
+<p>解决方案：</p>
+<p>在Info.plist文件中添加”App Transport SecuritySettings”, Type为”Dictionary”,再添加”Allow Arbitray Loads”, Type 为”Boolean”，“Value”为“YES”即可。<br><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/02/29/Xcode7-网络请求报错/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-第一个随笔" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -902,83 +965,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/01/19/便捷生成二维码条形码/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS生成二维码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/08/iOS生成二维码/">iOS生成二维码</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/08/iOS生成二维码/" class="archive-article-date">
-  	<time datetime="2016-01-08T03:19:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#ios生成二维码</p>
-<hr>
-<ul>
-<li><p>1.引入<a href="https://github.com/fukuchi/libqrencode" target="_blank" rel="external">libqrencode</a></p>
-</li>
-<li><p>2.导入QRCodeGenerator.h、QRCodeGenerator.m 源码如下：</p>
-</li>
-</ul>
-<p><code>QRCodeGenerator.h</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line">@interface QRCodeGenerator : NSObject</div><div class="line"></div><div class="line">+ (UIImage *)qrImageForString:(NSString *)string imageSize:(CGFloat)size;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>QRCodeGenerator.m</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">// QR Code Generator - generates UIImage from NSString</div><div class="line">//</div><div class="line">// Copyright (C) 2012 http://moqod.com Andrew Kopanev &lt;andrew@moqod.com&gt;</div><div class="line">//</div><div class="line">// Permission is hereby granted, free of charge, to any person obtaining a copy </div><div class="line">// of this software and associated documentation files (the &quot;Software&quot;), to deal </div><div class="line">// in the Software without restriction, including without limitation the rights </div><div class="line">// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies </div><div class="line">// of the Software, and to permit persons to whom the Software is furnished to do so, </div><div class="line">// subject to the following conditions:</div><div class="line">//</div><div class="line">// The above copyright notice and this permission notice shall be included in all </div><div class="line">// copies or substantial portions of the Software.</div><div class="line">//</div><div class="line">// THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, </div><div class="line">// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR </div><div class="line">// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE</div><div class="line">// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR </div><div class="line">// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER </div><div class="line">// DEALINGS IN THE SOFTWARE.</div><div class="line">//</div><div class="line"></div><div class="line">#import &quot;QRCodeGenerator.h&quot;</div><div class="line">#import &quot;qrencode.h&quot;</div><div class="line"></div><div class="line">enum &#123;</div><div class="line">	qr_margin = 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">@implementation QRCodeGenerator</div><div class="line"></div><div class="line">+ (void)drawQRCode:(QRcode *)code context:(CGContextRef)ctx size:(CGFloat)size &#123;</div><div class="line">	unsigned char *data = 0;</div><div class="line">	int width;</div><div class="line">	data = code-&gt;data;</div><div class="line">	width = code-&gt;width;</div><div class="line">	float zoom = (double)size / (code-&gt;width + 2.0 * qr_margin);</div><div class="line">	CGRect rectDraw = CGRectMake(0, 0, zoom, zoom);</div><div class="line">	</div><div class="line">	// draw</div><div class="line">	CGContextSetFillColor(ctx, CGColorGetComponents([UIColor blackColor].CGColor));</div><div class="line">	for(int i = 0; i &lt; width; ++i) &#123;</div><div class="line">		for(int j = 0; j &lt; width; ++j) &#123;</div><div class="line">			if(*data &amp; 1) &#123;</div><div class="line">				rectDraw.origin = CGPointMake((j + qr_margin) * zoom,(i + qr_margin) * zoom);</div><div class="line">				CGContextAddRect(ctx, rectDraw);</div><div class="line">			&#125;</div><div class="line">			++data;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	CGContextFillPath(ctx);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (UIImage *)qrImageForString:(NSString *)string imageSize:(CGFloat)size &#123;</div><div class="line">	if (![string length]) &#123;</div><div class="line">		return nil;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	QRcode *code = QRcode_encodeString([string UTF8String], 0, QR_ECLEVEL_L, QR_MODE_8, 1);</div><div class="line">	if (!code) &#123;</div><div class="line">		return nil;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	// create context</div><div class="line">	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</div><div class="line">	CGContextRef ctx = CGBitmapContextCreate(0, size, size, 8, size * 4, colorSpace, kCGImageAlphaPremultipliedLast);</div><div class="line">	</div><div class="line">	CGAffineTransform translateTransform = CGAffineTransformMakeTranslation(0, -size);</div><div class="line">	CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1, -1);</div><div class="line">	CGContextConcatCTM(ctx, CGAffineTransformConcat(translateTransform, scaleTransform));</div><div class="line">	</div><div class="line">	// draw QR on this context	</div><div class="line">	[QRCodeGenerator drawQRCode:code context:ctx size:size];</div><div class="line">	</div><div class="line">	// get image</div><div class="line">	CGImageRef qrCGImage = CGBitmapContextCreateImage(ctx);</div><div class="line">	UIImage * qrImage = [UIImage imageWithCGImage:qrCGImage];</div><div class="line">	</div><div class="line">	// some releases</div><div class="line">	CGContextRelease(ctx);</div><div class="line">	CGImageRelease(qrCGImage);</div><div class="line">	CGColorSpaceRelease(colorSpace);</div><div class="line">	QRcode_free(code);</div><div class="line">	</div><div class="line">	return qrImage;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<ul>
-<li><p>3.实现代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> - (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line">    UIImage *q = [QRCodeGenerator qrImageForString:@&quot;http://yachaocn.com&quot; imageSize:400];</div><div class="line">    UIImageView *view = [[UIImageView alloc]initWithImage:q];</div><div class="line">    view.frame = CGRectMake(100, 100, 400, 400);</div><div class="line">    [self.view addSubview:view];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://github.com/yachaocn/ios_generate_Qr_code" target="_blank" rel="external">附博主代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/08/iOS生成二维码/">展开全文 >></a>
         </p>
       
 

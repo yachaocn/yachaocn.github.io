@@ -183,6 +183,87 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Silent-Remote-Notification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/24/Silent-Remote-Notification/">Silent-Remote-Notification</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/24/Silent-Remote-Notification/" class="archive-article-date">
+  	<time datetime="2017-04-24T04:59:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="iOS-Silent-Remote-Notification"><a href="#iOS-Silent-Remote-Notification" class="headerlink" title="iOS Silent Remote Notification"></a>iOS Silent Remote Notification</h1><p>###官方是这么概述的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Silent notifications improve the user experience by helping you keep your app up-to-date, even when it is not running. When apps do not run for extended periods of time, their data can become outdated. When the user finally launches the app again, the outdated data must be replaced, which can cause a delay in using the app. Silent notifications give you a way to wake up your app periodically so that it can refresh its data in the background.</div></pre></td></tr></table></figure>
+<p>大概意思是说：当app处于前台、后台、甚至不再运行时，静默通知都可以实时更新你的APP，以此来提高用户的体验。当app很长一段时间不再运行时，他的数据就回变旧，此时当用户进入你的app中时，旧的数据需要被替换掉，这会让用户等待，降低了用户体验。怎么解决这个问题呢？静默通知可以解决。静默通知可以定期唤醒你的app,以便与可以在后台刷新数据。</p>
+<p><code>IMPORTANT:静音通知并不意味着可以保持您的应用在后台醒来后一直处于后台，也不用于高优先级更新。 APN将无声通知视为低优先级，并且如果总数变得过多，则可以完全抑制它们的传送。实际的限制是动态的，可以根据条件改变，但尽量不要每小时发送多个通知</code></p>
+<p>发送静默通知需要对通知的有效内容进行特殊配置。如果您payload(后台推送内容)未正确配置，通知可能会显示给用户，而不是在后台传递到您的应用程序。payload配置如下：</p>
+<ul>
+<li>payload的<code>aps</code>字典必须包含<code>content-available</code>键，并且其值必须为1；</li>
+<li>payload的<code>aps</code>字典禁止包含alert, sound,活着 badge键</li>
+</ul>
+<p><strong>静默通知payload实例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;aps&quot; : &#123;</div><div class="line">        &quot;content-available&quot; : 1</div><div class="line">    &#125;,</div><div class="line">    &quot;acme1&quot; : &quot;bar&quot;,</div><div class="line">    &quot;acme2&quot; : 42</div><div class="line">&#125;</div><div class="line">``` </div><div class="line">**正常通知payload实例**</div></pre></td></tr></table></figure>
+<p>{<br>    “aps” : {<br>        “alert” : {<br>            “title” : “Game Request”,<br>            “body” : “Bob wants to play poker”,<br>            “action-loc-key” : “PLAY”<br>        },<br>        “badge” : 5<br>    },<br>    “acme1” : “bar”,<br>    “acme2” : [ “bang”,  “whiz” ]<br>}</p>
+<p>或：</p>
+<p>{<br>    “aps” : {<br>        “alert” : “You got your emails.”,<br>        “badge” : 9,<br>        “sound” : “bingbong.aiff”<br>    },<br>    “acme1” : “bar”,<br>    “acme2” : 42<br>}</p>
+<p>```</p>
+<p>当静默通知被传送给app后，iOS会在后台唤醒你的app，并给出30秒时间去运行，在iOS系统中，系统将会通过app代理调用<code>application:didReceiveRemoteNotification:fetchCompletionHandler:</code>来传送静默通知，使用该方法启动获取新数据所需的一些下载操作。在后台处理远程通知需要您向应用程序添加适当的后台模式。</p>
+<p>####将应用配置为在后台处理无提示通知</p>
+<p>1.在Project Navigator中选中你的项目。</p>
+<p>2.在editor中选中你的target。</p>
+<p>3.选中Capabilities。</p>
+<p>4.打开Background Modes开关。</p>
+<p>5.勾选Remote notifications复选框。</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/24/Silent-Remote-Notification/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Apache服务配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1015,55 +1096,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/16/init和initialize区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-installApp-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/11/installApp-md/">installApp.md</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/11/installApp-md/" class="archive-article-date">
-  	<time datetime="2017-03-11T12:36:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="itms-services://?action=download-manifest&url=https://github.com/yachaocn/APPInstall/blob/master/manifest.plist" target="_blank" rel="external">Install App</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/11/installApp-md/">展开全文 >></a>
         </p>
       
 

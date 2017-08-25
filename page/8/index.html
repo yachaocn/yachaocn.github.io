@@ -183,6 +183,87 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS-app分屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/26/iOS-app分屏/">iOS_app分屏</a>
+    </h1>
+  
+
+        
+        <a href="/2015/11/26/iOS-app分屏/" class="archive-article-date">
+  	<time datetime="2015-11-26T07:15:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Slide Over and Split View Quick Start</p>
+<hr>
+<p>####前言<br>当你用xcode7新建工程时，默认是支持Slide Over and Split View的，如果你用老的工程在xocde7上面运行时是不支持分屏的，你需要做以下配置：</p>
+<h5 id="设置Base-SDK-为-“Latest-iOS”。"><a href="#设置Base-SDK-为-“Latest-iOS”。" class="headerlink" title="- 设置Base SDK 为 “Latest iOS”。"></a>- 设置Base SDK 为 “Latest iOS”。</h5><h5 id="提供一个LaunchScreen-storyboard文件（-Creating-a-Launch-Screen-File-in-App-Distribution-Guide-）"><a href="#提供一个LaunchScreen-storyboard文件（-Creating-a-Launch-Screen-File-in-App-Distribution-Guide-）" class="headerlink" title="- 提供一个LaunchScreen.storyboard文件（ Creating a Launch Screen File in App Distribution Guide.）"></a>- 提供一个LaunchScreen.storyboard文件（ <a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/ConfiguringYourApp/ConfiguringYourApp.html#//apple_ref/doc/uid/TP40012582-CH28-SW4" target="_blank" rel="external">Creating a Launch Screen File</a> in <a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40012582" target="_blank" rel="external">App Distribution Guide</a>.）</h5><h5 id="在工程的Info-plist文件中Supported-interface-orientations-iPad-键数组中加入支持四个方向的旋转"><a href="#在工程的Info-plist文件中Supported-interface-orientations-iPad-键数组中加入支持四个方向的旋转" class="headerlink" title="- 在工程的Info.plist文件中Supported interface orientations (iPad)键数组中加入支持四个方向的旋转"></a>- 在工程的Info.plist文件中Supported interface orientations (iPad)键数组中加入支持四个方向的旋转</h5><p>如图：<img src="http://7xiwr4.com1.z0.glb.clouddn.com/ipad屏幕旋转.png" alt="image"></p>
+<hr>
+<p>######<code>note:</code>如果你不需要Slide Over and Split View 则在Info.plist中把UIRequiresFullScreen键设置为yes</p>
+<p>#####<code>提示:</code>如果你所有的都设置正确了，还是不能Slide Over and Split View，你学要去设置&gt;通用&gt;多任务中查看设置</p>
+<hr>
+<p>以下是在分屏过程中可能遇到的屏幕类别如图：<img src="http://7xiwr4.com1.z0.glb.clouddn.com/R_C.png" alt="screen"></p>
+<p>####前提</p>
+<ul>
+<li>你必须使用autolayout和sizeclass类布局你的app。</li>
+<li>LaunchScreen.storyboard文件必须使用autolayout布局，用xcode7创建的app模板都会自动生成一个LaunchScreen.storyboard文件。</li>
+<li>实现UITraitEnvironment 和 UIContentContainer 协议，用来实现屏幕特质和大小变化时，需要实现的自定义方法。</li>
+<li>响应应用程序状态转换的委托方法（）。</li>
+</ul>
+<p>####下面介绍一些分屏过程中的状态</p>
+<ul>
+<li>当用户移动分割器时，应用程序会调用applicationWillResignActive: 方法；当用户放开分割器时，系统会重新设定你app的大小，并获得一个快照，用来提供一个平滑的用户体验的过度。这是因为在用户放开分割器时你的app大小使不可知的，复杂的是用户可能在移动分割器的时候旋转屏幕。</li>
+<li>用户一直移动分割器知道你的app消失，系统将会调用applicationDidEnterBackground: 方法。</li>
+</ul>
+<p>##最后提供给大家我的一个分屏代码示例<a href="https://github.com/yachaocn/ios_split_view" target="_blank" rel="external">点击获取代码</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/11/26/iOS-app分屏/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-PSPDFKIT-PDF上画线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

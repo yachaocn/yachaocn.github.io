@@ -183,6 +183,55 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-installApp-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/11/installApp-md/">installApp.md</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/11/installApp-md/" class="archive-article-date">
+  	<time datetime="2017-03-11T12:36:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="itms-services://?action=download-manifest&url=https://github.com/yachaocn/APPInstall/blob/master/manifest.plist" target="_blank" rel="external">Install App</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/11/installApp-md/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-BackgroundFetch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -814,89 +863,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/09/01/NSTimer内存释放问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-仿苹果安装软件进度条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/10/仿苹果安装软件进度条/">仿苹果安装软件进度条</a>
-    </h1>
-  
-
-        
-        <a href="/2016/08/10/仿苹果安装软件进度条/" class="archive-article-date">
-  	<time datetime="2016-08-10T07:25:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>苹果安装软件进度条特点分析：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-10%20%E4%B8%8A%E5%8D%889.47.40.png" alt=""></p>
-<ol>
-<li>由黑色半透明视图覆盖。</li>
-<li>中间有个完全透明的圆环。</li>
-<li>中间进度由圆饼状图形构成，且当前已完成进度为完全透明，未完成进度为黑色半透明。</li>
-<li>完成后完全透明视图向外扩散。</li>
-<li>暂停后出现暂停图标，继续时回复原状。</li>
-<li>暂停和继续均有扩散动画。(跟4动画相似)</li>
-</ol>
-<p>技术实现分析：为实现半透明视图覆盖＋自定义完全透明区域，考虑用Quartz 2D绘制图像实现。</p>
-<p><strong>1. command + N 新建类CircleProgressView 继承自UIControl(考虑到要添加相应事件)，定义常量。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#define YCColorMaker(r, g, b, a) [UIColor colorWithRed:((r)/255) green:((g)/255) blue:((b)/255) alpha:(a)]</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;CircleProgressView.h&quot;</div><div class="line">@interface CircleProgressView ()</div><div class="line"></div><div class="line">@property(nonatomic) BOOL beginCompletedAnimation;</div><div class="line">@property(nonatomic) CGFloat margin;//两个圆半径差</div><div class="line">@property(nonatomic) CGFloat R1;//大圆半径</div><div class="line">@property(nonatomic) CGFloat R2;//小圆半径</div><div class="line">@property(nonatomic)CGFloat pauseR;//暂停时添加的小圆半径</div><div class="line">@property(nonatomic) CGFloat MaxR;//进度完成后最大的扩散半径,（斜对角线的一半）</div><div class="line">//扩散动画的定时器</div><div class="line">@property(nonatomic,strong) CADisplayLink *timer;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><strong>2.添加初始化方法，初始化常量</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">-(instancetype)initWithFrame:(CGRect)frame</div><div class="line">&#123;</div><div class="line">    if (self = [super initWithFrame:frame]) &#123;</div><div class="line">        self.backgroundColor = [UIColor clearColor];</div><div class="line">      </div><div class="line">        _pauseR = 18;</div><div class="line">        self.progress = 0.0001;</div><div class="line">        _margin = 4.0f;</div><div class="line">        _R2 = 25;</div><div class="line">        _R1 = _R2 + _margin;</div><div class="line">        </div><div class="line">        CGFloat width = frame.size.width;</div><div class="line">        CGFloat height = frame.size.height;</div><div class="line">        CGFloat MaxR = sqrt(pow(width, 2) + pow(height, 2));</div><div class="line">        _MaxR = MaxR;</div><div class="line">        </div><div class="line">        self.userInteractionEnabled = YES;</div><div class="line">        [self addTarget:self action:@selector(clickedProgressView:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">        self.selected = NO;</div><div class="line">        self.layer.shouldRasterize = YES;</div><div class="line">        self.layer.rasterizationScale = [UIScreen mainScreen].scale;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>3. 暂停事件</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//点击暂停－开始</div><div class="line">-(void)clickedProgressView:(UIControl *)control</div><div class="line">&#123;</div><div class="line">	if (!self.delegate) &#123;</div><div class="line">	        return;</div><div class="line">	    &#125;</div><div class="line">    self.selected = !control.selected;</div><div class="line">   if (self.selected) &#123;</div><div class="line">        [self.delegate pause:self.progress];</div><div class="line">    &#125;else&#123;</div><div class="line">        [self.delegate active:self.progress];</div><div class="line">    &#125;</div><div class="line">     [self setNeedsDisplay];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>4. 进度条set方法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//Progress set modth</div><div class="line">-(void)setProgress:(CGFloat)progress</div><div class="line">&#123;</div><div class="line">    if (_progress != progress) &#123;</div><div class="line">        _progress = MIN(1.0, fabs(progress));</div><div class="line">        [self setNeedsDisplay];</div><div class="line">    &#125;</div><div class="line">//    开始扩散动画</div><div class="line">    if (_progress == 1.0) &#123;</div><div class="line">        static dispatch_once_t onceToken;</div><div class="line">        dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">          </div><div class="line">            [self performAnimation];</div><div class="line"></div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>5. 启动定时器，绘制扩散动画</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">//启动定时器，绘制扩散动画。</div><div class="line">-(void)performAnimation</div><div class="line">&#123;</div><div class="line">    if (_R1 &gt; _MaxR) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">      _timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(animate:)];</div><div class="line">    [_timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</div><div class="line">    [_timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:UITrackingRunLoopMode];</div><div class="line">    </div><div class="line">    /* PS</div><div class="line">     NSDefaultRunLoopMode - 标准优先级</div><div class="line">     NSRunLoopCommonModes - 高优先级</div><div class="line">     UITrackingRunLoopMode - 用于UIScrollView和别的控件的动画</div><div class="line">     </div><div class="line">     在我们的例子中，我们是用了NSDefaultRunLoopMode，但是不能保证动画平滑的运行，所以就可以用NSRunLoopCommonModes来替代。但是要小心，因为如果动画在一个高帧率情况下运行，你会发现一些别的类似于定时器的任务或者类似于滑动的其他iOS动画会暂停，直到动画结束。</div><div class="line">     </div><div class="line">     同样可以同时对CADisplayLink指定多个run loop模式，于是我们可以同时加入NSDefaultRunLoopMode和UITrackingRunLoopMode来保证它不会被滑动打断，也不会被其他UIKit控件动画影响性能</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">-(void)animate:(NSTimer *)sender</div><div class="line">&#123;</div><div class="line">    if (_R1 &lt;= _MaxR) &#123;</div><div class="line">        [self setNeedsDisplay];</div><div class="line">    &#125;else&#123;</div><div class="line">        [_timer invalidate];</div><div class="line">        _timer =nil;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>6. 重写-(void)drawRect:(CGRect)rect，开始绘制。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">-(void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">//    得到视图的宽度</div><div class="line">    CGFloat width = rect.size.width;</div><div class="line">//    得到视图的高度</div><div class="line">    CGFloat height = rect.size.height;</div><div class="line">//    计算圆心</div><div class="line">    CGFloat centerX = width/2;</div><div class="line">    CGFloat centerY = height/2;</div><div class="line">//    得到绘图上下文</div><div class="line">    CGContextRef context =  UIGraphicsGetCurrentContext();</div><div class="line">//    设置颜色</div><div class="line">    CGContextSetRGBFillColor(context, 0, 0, 0, 0.5);</div><div class="line">    </div><div class="line">//    绘制矩形</div><div class="line">    CGContextMoveToPoint(context, 0, 0);</div><div class="line">    CGContextAddRect(context, rect);</div><div class="line">//    绘制大圆</div><div class="line">    CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">    if (self.progress &lt; 1.0) &#123;</div><div class="line">        CGContextAddArc(context, centerX, centerY, _R1, -M_PI_2, -M_PI_2 + M_PI*2, 0);</div><div class="line">    &#125;else&#123;</div><div class="line">        _R1 +=1;</div><div class="line">        CGContextAddArc(context, centerX, centerY, _R1, -M_PI_2, -M_PI_2 + M_PI*2, 0);</div><div class="line">    &#125;</div><div class="line">//    绘制小圆</div><div class="line">    CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">//    参数一：绘图上下文；参数二：绘图圆心；参数三：起始角度；参数四，结束角度；参数五：绘制方向（1:顺时针，0:逆时针）</div><div class="line">    CGContextAddArc(context, centerX, centerY, _R2, -M_PI_2, -M_PI_2 + M_PI*2*self.progress, 1);</div><div class="line"></div><div class="line">    //暂停</div><div class="line">    if (self.isSelected) &#123;</div><div class="line">    </div><div class="line">         CGContextMoveToPoint(context, centerX, centerY);</div><div class="line">        CGContextAddArc(context, centerX, centerY, _pauseR, -M_PI_2 +self.progress *M_PI*2, -M_PI_2, 1);</div><div class="line">//        暂停开始点1</div><div class="line">        CGFloat pasueX1 = centerX - _pauseR/4 - 2;</div><div class="line">        CGFloat pasueY1 = centerY - _pauseR/4;</div><div class="line">        CGRect pasueFrame1 = CGRectMake(pasueX1, pasueY1, 4, 12);</div><div class="line">//        暂停开始点2</div><div class="line">        CGFloat pasueX2 = centerX + _pauseR/4 - 2;</div><div class="line">        CGFloat pasueY2 = pasueY1;</div><div class="line">        CGRect pasueFrame2 = CGRectMake(pasueX2, pasueY2, 4, 12);</div><div class="line">        </div><div class="line">        CGContextMoveToPoint(context, pasueX1 , pasueY1);</div><div class="line">        CGContextAddRect(context, pasueFrame1);</div><div class="line">        CGContextMoveToPoint(context, pasueX2, pasueY2);</div><div class="line">        CGContextAddRect(context, pasueFrame2);</div><div class="line">    &#125;</div><div class="line">//    填充样式：奇偶填充（默认为非零绕束规则填充，）</div><div class="line">     CGContextEOFillPath(context);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>代码地址：</strong><a href="https://github.com/yachaocn/apple-install-app-progress" target="_blank" rel="external">https://github.com/yachaocn/apple-install-app-progress</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/08/10/仿苹果安装软件进度条/">展开全文 >></a>
         </p>
       
 
