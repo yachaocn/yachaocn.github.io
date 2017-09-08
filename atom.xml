@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-09-08T07:20:44.000Z</updated>
+  <updated>2017-09-08T07:33:51.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://devchao.com/2017/09/08/%E5%90%AF%E7%94%A8Mac%E8%87%AA%E5%B8%A6%E7%9A%84php/"/>
     <id>https://devchao.com/2017/09/08/启用Mac自带的php/</id>
     <published>2017-09-08T07:20:18.000Z</published>
-    <updated>2017-09-08T07:20:44.000Z</updated>
+    <updated>2017-09-08T07:33:51.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="启用Mac自带的php"><a href="#启用Mac自带的php" class="headerlink" title="启用Mac自带的php"></a>启用Mac自带的php</h2><p>PHP的启动只需要在Apache服务中进行一下配置即可直接使用</p>
 <p>首先,在/private/etc/apache2目录下找到并打开httpd.conf文件</p>
@@ -52,6 +52,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 修改前:</div><div class="line">$cfg[&apos;Servers&apos;][$i][&apos;host&apos;] = &apos;localhost&apos;;</div><div class="line"></div><div class="line">// 修改后:</div><div class="line">$cfg[&apos;Servers&apos;][$i][&apos;host&apos;] = &apos;127.0.0.1&apos;;</div></pre></td></tr></table></figure>
 <p>最后,在浏览器中输入如下网址进行登录即可直接对MySQL进行可视化管理</p>
 <p><a href="http://localhost/phpmyadmin/" target="_blank" rel="external">http://localhost/phpmyadmin/</a></p>
+<p><code>注: 默认用户名为root</code></p>
+<p>摘录自<a href="http://www.cnblogs.com/henusyj-1314/p/6485182.html" target="_blank" rel="external">http://www.cnblogs.com/henusyj-1314/p/6485182.html</a></p>
 ]]></content>
     
     <summary type="html">

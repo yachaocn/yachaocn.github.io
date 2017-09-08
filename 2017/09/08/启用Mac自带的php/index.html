@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
 <meta property="og:description" content="启用Mac自带的phpPHP的启动只需要在Apache服务中进行一下配置即可直接使用 首先,在/private/etc/apache2目录下找到并打开httpd.conf文件 其次,搜索#LoadModule php5_module libexec/apache2/libphp5.so,将前方的#删除 再次,重启Apache服务即可 最后,WebServer路径下新建一个info.php测试程序试">
 <meta property="og:image" content="http://img.blog.csdn.net/20160924161706718">
-<meta property="og:updated_time" content="2017-09-08T07:20:44.000Z">
+<meta property="og:updated_time" content="2017-09-08T07:33:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="启用Mac自带的php">
 <meta name="twitter:description" content="启用Mac自带的phpPHP的启动只需要在Apache服务中进行一下配置即可直接使用 首先,在/private/etc/apache2目录下找到并打开httpd.conf文件 其次,搜索#LoadModule php5_module libexec/apache2/libphp5.so,将前方的#删除 再次,重启Apache服务即可 最后,WebServer路径下新建一个info.php测试程序试">
@@ -235,6 +235,8 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 修改前:</div><div class="line">$cfg[&apos;Servers&apos;][$i][&apos;host&apos;] = &apos;localhost&apos;;</div><div class="line"></div><div class="line">// 修改后:</div><div class="line">$cfg[&apos;Servers&apos;][$i][&apos;host&apos;] = &apos;127.0.0.1&apos;;</div></pre></td></tr></table></figure>
 <p>最后,在浏览器中输入如下网址进行登录即可直接对MySQL进行可视化管理</p>
 <p><a href="http://localhost/phpmyadmin/" target="_blank" rel="external">http://localhost/phpmyadmin/</a></p>
+<p><code>注: 默认用户名为root</code></p>
+<p>摘录自<a href="http://www.cnblogs.com/henusyj-1314/p/6485182.html" target="_blank" rel="external">http://www.cnblogs.com/henusyj-1314/p/6485182.html</a></p>
 
       
 
