@@ -183,6 +183,88 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-init和initialize区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/16/init和initialize区别/">init和initialize区别</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/16/init和initialize区别/" class="archive-article-date">
+  	<time datetime="2017-03-16T08:09:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Objective-C中-init-initialize与load区别"><a href="#Objective-C中-init-initialize与load区别" class="headerlink" title="Objective-C中 init initialize与load区别"></a>Objective-C中 init initialize与load区别</h1><p><code>init和initialize</code></p>
+<ul>
+<li><p>init是“-”开头的方法</p>
+</li>
+<li><p>initialize是“+”开头的类方法</p>
+</li>
+<li><p>init在类实例化（new）的时候就会调用一次：[ClassName new]相当于[[class alloc]init],我们对init应该是很熟悉的，大多数时候我们不使用new来实例化，而是直接定义自己的init方法通过[[ClassName alloc]initWithXXX]这样来做。</p>
+</li>
+<li><p>initialize在向类发送消息的时候调用一次：什么是发送消息？实例化一个对象[ClassName new]是发送消息，调用一个类方法[ClassName method]也是向这个类发送消息。</p>
+</li>
+<li><p>在new的时候，initialize方法会在init之前先调用</p>
+</li>
+<li><p>只要new一次，init就会调用一次，new多少次，init就调用多少次，但initialize只会调用一次。</p>
+</li>
+<li><p>如果子类没有实现initialize的重写，在子类收到消息的时候，会调用两次initialize,一次是父类调用的，一次是子类调用的</p>
+</li>
+</ul>
+<hr>
+<p><code>+ (void)load</code></p>
+<ul>
+<li>+ (void)load 会在类或者类的分类添加到 Objective-c runtime 时调用，该调用发生在 application:willFinishLaunchingWithOptions: 调用之前调用。</li>
+<li>父类的 +load 方法先于子类的 +load 方法调用，类本身的 +load 方法调用先于分类的 +load 方法调用。</li>
+</ul>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/16/init和initialize区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-installApp-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -812,71 +894,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-NSTimer内存释放问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/01/NSTimer内存释放问题/">NSTimer内存释放问题</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/01/NSTimer内存释放问题/" class="archive-article-date">
-  	<time datetime="2016-09-01T07:52:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NSTimer-内存释放问题"><a href="#NSTimer-内存释放问题" class="headerlink" title="NSTimer 内存释放问题"></a>NSTimer 内存释放问题</h1><p>当我们在某个对象中使用定时器时，如果在对象释放前没有对定时器合理的释放（从runloop中移除），你将发现，即使你将对象置为nil，该对象也不会被释放，原因是定时器的RunLoop中仍然持有该对象。</p>
-<hr>
-<p>那么如何合理的释放定时器呢？</p>
-<p><strong>PS</strong>.在对象释放前，调用 [timer invalidate]，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (timer.isValid) &#123;</div><div class="line">        [timer invalidate];</div><div class="line">    &#125;</div><div class="line">    timer=nil;</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div></pre></td></tr></table></figure>
-<p><code>如果你直接调用[self dismissViewControllerAnimated:YES completion:nil]，那么模态呈现的控制器并不会被释放掉..</code></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/09/01/NSTimer内存释放问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -989,11 +1006,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1014,6 +1031,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ios部署</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">

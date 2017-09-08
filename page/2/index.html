@@ -183,6 +183,86 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CADisplayLink" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/03/CADisplayLink/">CADisplayLink</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/03/CADisplayLink/" class="archive-article-date">
+  	<time datetime="2017-05-03T05:59:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CADisplayLink"><a href="#CADisplayLink" class="headerlink" title="CADisplayLink"></a>CADisplayLink</h1><hr>
+<p>##什么是CADisplayLink</p>
+<p><code>CADisplayLink</code>是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。我们在应用中创建一个新的 <code>CADisplayLink</code> 对象，把它添加到一个<code>runloop</code>中，并给它提供一个 <code>target</code> 和<code>selector</code> 在屏幕刷新的时候调用。</p>
+<p>一但 <code>CADisplayLink</code> 以特定的模式注册到<code>runloop</code>之后，每当屏幕需要刷新的时候，<code>runloop</code>就会调用<code>CADisplayLink</code>绑定的<code>target</code>上的<code>selector</code>，这时<code>target</code>可以读到 <code>CADisplayLink</code> 的每次调用的时间戳，用来准备下一帧显示需要的数据。例如一个视频应用使用时间戳来计算下一帧要显示的视频数据。在UI做动画的过程中，需要通过时间戳来计算UI对象在动画的下一帧要更新的大小等等。</p>
+<p>在添加进<code>runloop</code>的时候我们应该选用高一些的优先级，来保证动画的平滑。可以设想一下，我们在动画的过程中，<code>runloop</code>被添加进来了一个高优先级的任务，那么，下一次的调用就会被暂停转而先去执行高优先级的任务，然后在接着执行<code>CADisplayLink</code>的调用，从而造成动画过程的卡顿，使动画不流畅。</p>
+<p><code>duration</code>属性提供了每帧之间的时间，也就是屏幕每次刷新之间的的时间。我们可以使用这个时间来计算出下一帧要显示的UI的数值。但是<code>duration</code>只是个大概的时间，如果CPU忙于其它计算，就没法保证以相同的频率执行屏幕的绘制操作，这样会跳过几次调用回调方法的机会。</p>
+<p><code>frameInterval</code>属性是可读可写的<code>NSInteger</code>型值，标识间隔多少帧调用一次<code>selector</code> 方法，默认值是<code>1</code>，即每帧都调用一次。如果每帧都调用一次的话，对于iOS设备来说那刷新频率就是60HZ也就是每秒60次，如果将 <code>frameInterval</code> 设为2 那么就会两帧调用一次，也就是变成了每秒刷新30次。<br>我们通过<code>pause</code>属性开控制<code>CADisplayLink</code>的运行。当我们想结束一个<code>CADisplayLink</code>的时候，应该调用<code>-(void)invalidate</code><br>从<code>runloop</code>中删除并删除之前绑定的 <code>target</code>跟<code>selector</code><br>另外<code>CADisplayLink</code> 不能被继承。</p>
+<p>##CADisplayLink 与 NSTimer 有什么不同</p>
+<p>iOS设备的屏幕刷新频率是固定的，CADisplayLink在正常情况下会在每次刷新结束都被调用，精确度相当高。</p>
+<p><code>NSTimer</code>的精确度就显得低了点，比如<code>NSTimer</code>的触发时间到的时候，<code>runloop</code>如果在阻塞状态，触发时间就会推迟到下一个<code>runloop</code>周期。并且 <code>NSTimer</code>新增了<code>tolerance</code>属性，让用户可以设置可以容忍的触发的时间的延迟范围。</p>
+<p><code>CADisplayLink</code>使用场合相对专一，适合做UI的不停重绘，比如自定义动画引擎或者视频播放的渲染。NSTimer的使用范围要广泛的多，各种需要单次或者循环定时处理的任务都可以使用。在UI相关的动画或者显示内容使用 <code>CADisplayLink</code>比起用<code>NSTimer</code>的好处就是我们不需要在格外关心屏幕的刷新频率了，因为它本身就是跟屏幕刷新同步的。</p>
+<p>##CADisplayLink使用的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTextColor)];</div><div class="line">self.displayLink.paused = YES;</div><div class="line">[self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];</div><div class="line">-(void)updateTextColor&#123;&#125;</div><div class="line">- (void)startAnimation&#123;</div><div class="line">   self.beginTime = CACurrentMediaTime();</div><div class="line">   self.displayLink.paused = NO;</div><div class="line">&#125;</div><div class="line">- (void)stopAnimation&#123;</div><div class="line">  self.displayLink.paused = YES;</div><div class="line">  [self.displayLink invalidate];</div><div class="line">  self.displayLink = nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##给非UI对象添加动画效果</p>
+<p>我们知道动画效果就是一个属性的线性变化，比如UIView 动画的 EasyIn EasyOut 。通过数值按照不同速率的变化我们能生成更接近真实世界的动画效果。我们也可以利用这个特性来使一些其他属性按照我们期望的曲线变化。比如当播放视频时关掉视频的声音我可以通过CADisplayLink来实现一个 EasyOut的渐出效果：先快速的降低音量，在慢慢的渐变到静音。</p>
+<p>##注意</p>
+<p>通常来讲：iOS设备的刷新频率事60HZ也就是每秒60次。那么每一次刷新的时间就是1/60秒 大概16.7毫秒。当我们的frameInterval值为1的时候我们需要保证的是 CADisplayLink调用的｀target｀的函数计算时间不应该大于 16.7否则就会出现严重的丢帧现象。</p>
+<p>在mac应用中我们使用的不是CADisplayLink而是 CVDisplayLink它是基于C接口的用起来配置有些麻烦但是用起来还是很简单的。</p>
+<p><a href="https://developer.apple.com/library/ios/samplecode/AVBasicVideoOutput/Introduction/Intro.html#//apple_ref/doc/uid/DTS40013109" target="_blank" rel="external">apple官方DEMO</a></p>
+<p><a href="https://developer.apple.com/library/ios/documentation/QuartzCore/Reference/CADisplayLink_ClassRef/index.html" target="_blank" rel="external">CADisplayLink Class Reference</a></p>
+<p><a href="https://github.com/zipme/RQShineLabel" target="_blank" rel="external">一个文字渐变效果的动画开源库</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/03/CADisplayLink/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Silent-Remote-Notification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1028,88 +1108,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
 
 
   
-    <article id="post-init和initialize区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/16/init和initialize区别/">init和initialize区别</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/16/init和initialize区别/" class="archive-article-date">
-  	<time datetime="2017-03-16T08:09:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Objective-C中-init-initialize与load区别"><a href="#Objective-C中-init-initialize与load区别" class="headerlink" title="Objective-C中 init initialize与load区别"></a>Objective-C中 init initialize与load区别</h1><p><code>init和initialize</code></p>
-<ul>
-<li><p>init是“-”开头的方法</p>
-</li>
-<li><p>initialize是“+”开头的类方法</p>
-</li>
-<li><p>init在类实例化（new）的时候就会调用一次：[ClassName new]相当于[[class alloc]init],我们对init应该是很熟悉的，大多数时候我们不使用new来实例化，而是直接定义自己的init方法通过[[ClassName alloc]initWithXXX]这样来做。</p>
-</li>
-<li><p>initialize在向类发送消息的时候调用一次：什么是发送消息？实例化一个对象[ClassName new]是发送消息，调用一个类方法[ClassName method]也是向这个类发送消息。</p>
-</li>
-<li><p>在new的时候，initialize方法会在init之前先调用</p>
-</li>
-<li><p>只要new一次，init就会调用一次，new多少次，init就调用多少次，但initialize只会调用一次。</p>
-</li>
-<li><p>如果子类没有实现initialize的重写，在子类收到消息的时候，会调用两次initialize,一次是父类调用的，一次是子类调用的</p>
-</li>
-</ul>
-<hr>
-<p><code>+ (void)load</code></p>
-<ul>
-<li>+ (void)load 会在类或者类的分类添加到 Objective-c runtime 时调用，该调用发生在 application:willFinishLaunchingWithOptions: 调用之前调用。</li>
-<li>父类的 +load 方法先于子类的 +load 方法调用，类本身的 +load 方法调用先于分类的 +load 方法调用。</li>
-</ul>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/16/init和initialize区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1222,11 +1220,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1247,6 +1245,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ios部署</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">

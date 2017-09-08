@@ -183,6 +183,71 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-NSTimer内存释放问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/01/NSTimer内存释放问题/">NSTimer内存释放问题</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/01/NSTimer内存释放问题/" class="archive-article-date">
+  	<time datetime="2016-09-01T07:52:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="NSTimer-内存释放问题"><a href="#NSTimer-内存释放问题" class="headerlink" title="NSTimer 内存释放问题"></a>NSTimer 内存释放问题</h1><p>当我们在某个对象中使用定时器时，如果在对象释放前没有对定时器合理的释放（从runloop中移除），你将发现，即使你将对象置为nil，该对象也不会被释放，原因是定时器的RunLoop中仍然持有该对象。</p>
+<hr>
+<p>那么如何合理的释放定时器呢？</p>
+<p><strong>PS</strong>.在对象释放前，调用 [timer invalidate]，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (timer.isValid) &#123;</div><div class="line">        [timer invalidate];</div><div class="line">    &#125;</div><div class="line">    timer=nil;</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div></pre></td></tr></table></figure>
+<p><code>如果你直接调用[self dismissViewControllerAnimated:YES completion:nil]，那么模态呈现的控制器并不会被释放掉..</code></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/09/01/NSTimer内存释放问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-仿苹果安装软件进度条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1011,112 +1076,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-BLE 4.0 技术学习（二）中心角色Central" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/12/BLE 4.0 技术学习（二）中心角色Central/">BLE 4.0 技术学习（二）中心角色Central</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/12/BLE 4.0 技术学习（二）中心角色Central/" class="archive-article-date">
-  	<time datetime="2016-04-12T01:19:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="BLE-4-0-技术学习（二）中心Central"><a href="#BLE-4-0-技术学习（二）中心Central" class="headerlink" title="BLE 4.0 技术学习（二）中心Central"></a>BLE 4.0 技术学习（二）中心Central</h1><hr>
-<p><code>本章介绍以Central为本地端，以Peripheral为远端</code></p>
-<h2 id="执行常见的中心角色任务"><a href="#执行常见的中心角色任务" class="headerlink" title="执行常见的中心角色任务"></a>执行常见的中心角色任务</h2><p>实现在蓝牙低功耗通信的核心作用的设备执行许多常见任务，例如，发现和连接可用外设，探索并与外围设备所提供的数据进行交互。相反，实施外围角色的设备执行一些共同的，但不同的任务，例如，出版和广告服务，并响应读，写和从连接切牙订阅请求。</p>
-<p>在本章中，您将学习如何使用蓝牙核心架构从中央侧执行最常见的蓝牙低耗能的任务。下面将帮助您开发的应用程序基于代码的例子来实现您的本地设备上的核心作用。具体来说，您将学习如何去做：</p>
-<ul>
-<li>启动中央管理器对象</li>
-<li>发现并连接到是广告外围设备</li>
-<li>探索外围设备上的数据您已经连接到后</li>
-<li>送读取和写入请求到一个外设的服务的特性值</li>
-<li><p>订阅特征的价值，当它被更新为被通知</p>
-<p>在下一章中，您将学习如何开发你的应用程序来实现您的本地设备上的外围设备的作用。</p>
-</li>
-</ul>
-<h2 id="初始化一个中央管理器"><a href="#初始化一个中央管理器" class="headerlink" title="初始化一个中央管理器"></a>初始化一个中央管理器</h2><p>由于CBCentralManager对象是本地中心设备的蓝牙核心的面向对象的代表性，必须分配和初始化一个中央管理器实例，然后才能执行任何蓝牙低能量交易。用CBCentralManager 的实例方法，这样你就可以通过调用initWithDelegate启动你的中央管理器，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">myCentralManager =</div><div class="line">        [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];</div></pre></td></tr></table></figure>
-<p>当你创建了central manager后，central manager就会掉用 centralManagerDidUpdateState:方法，</p>
-<h2 id="发现正在广播的外设"><a href="#发现正在广播的外设" class="headerlink" title="发现正在广播的外设"></a>发现正在广播的外设</h2><p>你可依通过以下方法扫描发现广播的外设:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[myCentralManager scanForPeripheralsWithServices:nil options:nil];</div></pre></td></tr></table></figure>
-<p><code>注意：如果您的第一个参数指定为零，中央管理器返回所有发现的外设，不管他们支持的服务。在实际的应用程序，你可能会指定CBUUID对象，其中每一个代表一个外设广告服务的通用唯一标识符（UUID）的数组。当您指定服务的UUID的数组，中央管理器只返回宣传这些服务的外设，让您扫描只为您可能感兴趣的设备的UUID，以及CBUUID对象代表他们，更详细地在服务讨论和特性由UUID的识别。</code></p>
-<p>当你调用 scanForPeripheralsWithServices:options:方法来发现哪些外设可用时，每次一个外设被发现后，central manager 调用centralManager：didDiscoverPeripheral：advertisementData：RSSI：，被发现的任何外设返回为一个CBPeripheral对象。如下面所示，您可以实现此委托方法列出发现任何外围设备：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)centralManager:(CBCentralManager *)central</div><div class="line"> didDiscoverPeripheral:(CBPeripheral *)peripheral</div><div class="line">     advertisementData:(NSDictionary *)advertisementData</div><div class="line">                  RSSI:(NSNumber *)RSSI &#123;</div><div class="line"> </div><div class="line">    NSLog(@&quot;Discovered %@&quot;, peripheral.name);</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<p>当你发现你感兴趣的连接外围设备，以节省电源停止扫描其他设备。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[myCentralManager stopScan];</div><div class="line">    NSLog(@&quot;Scanning stopped&quot;);</div></pre></td></tr></table></figure>
-<h2 id="连接已经发现的外围设备"><a href="#连接已经发现的外围设备" class="headerlink" title="连接已经发现的外围设备"></a>连接已经发现的外围设备</h2><p>通过向CBCentralManager对象发送connectPeripheral:peripheral消息连接已经发现的外设。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[myCentralManager connectPeripheral:peripheral options:nil];</div></pre></td></tr></table></figure>
-<p>连接成功后central manager代理会调用centralManager:didConnectPeripheral: 代理</p>
-<p><code>你开始与周边的互动之前，您应该设置外围的委托，以确保它得到适当的回调，就像这样：一般在连接建立之后</code>一般和[peripheral discoverServices:nil]一起放在建立连接之后。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">peripheral.delegate = self;</div></pre></td></tr></table></figure>
-<h2 id="发现已连接的外设的服务"><a href="#发现已连接的外设的服务" class="headerlink" title="发现已连接的外设的服务"></a>发现已连接的外设的服务</h2><p>一个外设能以提供很多服务，一个服务可以包含许多Characteristic，发现已经连接的外设的服务用以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[peripheral discoverServices:nil];</div></pre></td></tr></table></figure>
-<p><code>注意：在真正的应用程序，你最好不要以nil作为参数传递，因为这样做会返回一个外围设备上的所有可用的服务。由于外围可能包含更多的服务包括了你感兴趣的，发现所有的人都可能浪费电池寿命并且浪费时间。更有可能的是，你会指定你已经知道并且你有兴趣的服务的UUID，智慧地探索外设的数据。</code></p>
-<p>当发现服务后将会掉用peripheral的peripheral:didDiscoverServices: 代理方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)peripheral:(CBPeripheral *)peripheral</div><div class="line">didDiscoverServices:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    for (CBService *service in peripheral.services) &#123;</div><div class="line">        NSLog(@&quot;Discovered service %@&quot;, service);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<p>发现服务的特征</p>
-<p>假设你已经找到了一个服务，你有兴趣，那么掉用如下方法用与发现服务所包含的特征</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSLog(@&quot;Discovering characteristics for service %@&quot;, interestingService);</div><div class="line">   [peripheral discoverCharacteristics:nil forService:interestingService];</div></pre></td></tr></table></figure>
-<p><code>PS:在真正的app中第一个参数不可能作为nil传递进去，因为这样做会返回一个外设的服务的的所有的特性。由于外设的服务包括很多的特性，其中可能包括你感兴趣的服务，发现所有的特征可能降低电池的使用寿命并且浪费不必要的搜索服务时间，所以一般都会指定你感兴趣的特征的UUID。</code></p>
-<p>发现特征后将会调用代理的peripheral:didDiscoverCharacteristicsForService:error:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)peripheral:(CBPeripheral *)peripheral</div><div class="line">didDiscoverCharacteristicsForService:(CBService *)service</div><div class="line">             error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    for (CBCharacteristic *characteristic in service.characteristics) &#123;</div><div class="line">        NSLog(@&quot;Discovered characteristic %@&quot;, characteristic);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<h2 id="检索特征的值"><a href="#检索特征的值" class="headerlink" title="检索特征的值"></a>检索特征的值</h2><p>在发现特征后，可以掉用如下方法来读去特征的值</p>
-<p><strong>读取特征的值</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSLog(@&quot;Reading value for characteristic %@&quot;, interestingCharacteristic);</div><div class="line">    [peripheral readValueForCharacteristic:interestingCharacteristic];</div></pre></td></tr></table></figure>
-<p>读取到值后会掉用peripheral:didUpdateValueForCharacteristic:error: 方法，你可以通过这个方法获取特征中的值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)peripheral:(CBPeripheral *)peripheral</div><div class="line">didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic</div><div class="line">             error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    NSData *data = characteristic.value;</div><div class="line">    // parse the data as needed</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<p><code>PS:并非所有的特征的值都是可读的，所以判断改特征的类型是否是CBCharacteristicPropertyRead，如果不是，则peripheral:didUpdateValueForCharacteristic:error中的error将返回一个错误</code></p>
-<h2 id="订阅一个特征的值"><a href="#订阅一个特征的值" class="headerlink" title="订阅一个特征的值"></a>订阅一个特征的值</h2><p><code>PS:只有具有CBCharacteristicPropertyNotify属性的特征，在被订阅时会通知远程外设</code></p>
-<p>虽然readValueForCharacteristic:能够读去特征的值，但是它并不会监测到它值的变化，当你订阅了之后你就会收到来自外围的值得更改通知。你可以用过掉用CBPeripheral类的setNotifyValue:forCharacteristic:方法订阅你感兴趣的特征的值的变化。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[peripheral setNotifyValue:YES forCharacteristic:interestingCharacteristic];</div></pre></td></tr></table></figure>
-<p>当你试图去订阅或者取消订阅特征的值时，peripheral会掉用他的代理的peripheral:didUpdateNotificationStateForCharacteristic:error:方法，如果申请请求出错时，error将返回错误信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)peripheral:(CBPeripheral *)peripheral</div><div class="line">didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic</div><div class="line">             error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    if (error) &#123;</div><div class="line">        NSLog(@&quot;Error changing notification state: %@&quot;,</div><div class="line">           [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<p><code>PS:并不是所有的特征的值都允许你去订阅的，你可以在Characteristic Properties中设置它们</code></p>
-<p>在你成功订阅特征的值后，在值发生改变后，Peripheral将会通知你的app，peripheral会掉用它的代理的peripheral:didUpdateValueForCharacteristic:error:方法</p>
-<h2 id="写特征的值"><a href="#写特征的值" class="headerlink" title="写特征的值"></a>写特征的值</h2><p>在一些情况下，比如与蓝牙低功耗数字温度调控器交互时，你可能需要设置房间的温度，如果特征的值时可写的你可以通过掉用CBPeripheral的writeValue:forCharacteristic:type:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSLog(@&quot;Writing value for characteristic %@&quot;, interestingCharacteristic);</div><div class="line">    [peripheral writeValue:dataToWrite forCharacteristic:interestingCharacteristic</div><div class="line">        type:CBCharacteristicWriteWithResponse];</div></pre></td></tr></table></figure>
-<p>当你尝试去写一个特征的值时，需要指定写的类型，在上面的例子中，被指定为CBCharacteristicWriteWithResponse，这指示外围设备让你的app知道写入是否成功。设置为CBCharacteristicWriteWithResponse时Peripheral的代理将会掉用peripheral:didWriteValueForCharacteristic:error:方法，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)peripheral:(CBPeripheral *)peripheral</div><div class="line">didWriteValueForCharacteristic:(CBCharacteristic *)characteristic</div><div class="line">             error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    if (error) &#123;</div><div class="line">        NSLog(@&quot;Error writing characteristic value: %@&quot;,</div><div class="line">            [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
-<p><code>PS:Characteristics可能只允许某些类型的写操作！</code>有关定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef enum &#123;</div><div class="line">   CBCharacteristicPropertyBroadcast = 0x01,</div><div class="line">   CBCharacteristicPropertyRead = 0x02,</div><div class="line">   CBCharacteristicPropertyWriteWithoutResponse = 0x04,</div><div class="line">   CBCharacteristicPropertyWrite = 0x08,</div><div class="line">   CBCharacteristicPropertyNotify = 0x10,</div><div class="line">   CBCharacteristicPropertyIndicate = 0x20,</div><div class="line">   CBCharacteristicPropertyAuthenticatedSignedWrites = 0x40,</div><div class="line">   CBCharacteristicPropertyExtendedProperties = 0x80,</div><div class="line">   CBCharacteristicPropertyNotifyEncryptionRequired = 0x100,</div><div class="line">   CBCharacteristicPropertyIndicateEncryptionRequired = 0x200,</div><div class="line">&#125; CBCharacteristicProperties;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/04/12/BLE 4.0 技术学习（二）中心角色Central/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1229,11 +1188,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1254,6 +1213,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ios部署</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">

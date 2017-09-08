@@ -183,6 +183,78 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS指纹验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/26/iOS指纹验证/">ios指纹验证</a>
+    </h1>
+  
+
+        
+        <a href="/2015/11/26/iOS指纹验证/" class="archive-article-date">
+  	<time datetime="2015-11-26T07:22:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ios指纹验证"><a href="#ios指纹验证" class="headerlink" title="##ios指纹验证"></a>##ios指纹验证</h2><p>####前言<br>  突然想研究一下苹果的指纹验证，想装逼一下，正好今天没事儿，于是心血来潮，捣鼓了一下，本来想找个指纹验证的算法的，找了半天无果，所以就乖乖的用苹果自带的吧。</p>
+<hr>
+<p>  <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午10.16.57.png" alt="image"></p>
+<p>#####废话少说开始了：<br>1.在link Binary with libraries中添加LocalAuthentication.framework.库</p>
+<p>2.在你的工程文件中导入头文件#import <localauthentication localauthentication.h=""></localauthentication></p>
+<p>3.验证方法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">-(void)authenticateUser</div><div class="line">&#123;</div><div class="line">    LAContext *context = [[LAContext alloc]init];</div><div class="line">    context.localizedFallbackTitle = @&quot;输入密码&quot;;</div><div class="line">//    context.maxBiometryFailures = @(4);</div><div class="line">    NSString *localizedReason = @&quot;Authentication is needed to access your note!&quot;;</div><div class="line">    NSError *error;</div><div class="line">    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&amp;error]) &#123;</div><div class="line">        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:localizedReason reply:^(BOOL success, NSError *error) &#123;</div><div class="line">            if (success) &#123;</div><div class="line">                NSLog(@&quot;指纹验证成功！&quot;);</div><div class="line">                </div><div class="line">            &#125;else&#123;</div><div class="line">                </div><div class="line">                NSLog(@&quot;%@&quot;,error.localizedDescription);</div><div class="line">                switch (error.code) &#123;</div><div class="line">                    case LAErrorSystemCancel:</div><div class="line">                        NSLog(@&quot;Authentication was canceled by system&quot;);</div><div class="line">                        break;</div><div class="line">                    case LAErrorAuthenticationFailed:</div><div class="line">                        NSLog(@&quot;Authentication was not successful, because user failed to provide valid credentials.&quot;);</div><div class="line"></div><div class="line">                        break;</div><div class="line">                      </div><div class="line">                    case LAErrorUserCancel:</div><div class="line">                    &#123;</div><div class="line">                        NSLog(@&quot;Authentication was canceled by user&quot;);</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                        break;</div><div class="line">                    case LAErrorUserFallback:</div><div class="line">                    &#123;</div><div class="line">                        NSLog(@&quot;Authentication was canceled, because the user tapped the fallback button (Enter Password&quot;);</div><div class="line"></div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                        break;</div><div class="line">                    default:</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">           </div><div class="line">        &#125;];</div><div class="line">        </div><div class="line">    &#125;else&#123;</div><div class="line">        if (error) &#123;</div><div class="line">            [self authenticateUser];</div><div class="line">            NSLog(@&quot;%@&quot;,error.localizedDescription);</div><div class="line">            switch (error.code) &#123;</div><div class="line">                case LAErrorTouchIDNotEnrolled:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because Touch ID has no enrolled fingers.&quot;);</div><div class="line">                    break;</div><div class="line">                case LAErrorPasscodeNotSet:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because passcode is not set on the device&quot;);</div><div class="line">                case LAErrorTouchIDNotAvailable:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because Touch ID is not available on the device&quot;);</div><div class="line">                default:</div><div class="line">                    NSLog(@&quot;TouchID not available&quot;);</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####注释：</p>
+<ul>
+<li><p>AuthenticationFailed: 在用户没有提供正确验证的情况下返回该错误类型，例如使用一个错误的手指。</p>
+</li>
+<li><p>UserCancel:在用户有意终止验证的时候返回该类型。</p>
+</li>
+<li><p>UserFallback：在用户有意不使用TouchID验证并且回到自定义的输入验证方式时返回。</p>
+</li>
+<li><p>SystemCancel：在这种情况下，系统终止验证处理，因为另一个应用被激活了。</p>
+</li>
+<li><p>PasscodeNotSet：当用户没有在设备Settings中设定密码时返回。</p>
+</li>
+<li><p>TouchIDNotAvailable：设备不支持TouchID。</p>
+</li>
+<li><p>TouchIDNotEnrolled：在设备支持TouchID但没有录入指纹的时候返回。<br>其他的就不多介绍了，不懂的直接翻译nslog打印的字符串吧！钦此。</p>
+</li>
+</ul>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/11/26/iOS指纹验证/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS-app分屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -783,11 +855,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -808,6 +880,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ios部署</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">

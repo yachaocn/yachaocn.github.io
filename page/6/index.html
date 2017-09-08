@@ -183,6 +183,118 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-关于HTTP请求的HTTPHeaderField的Content-Type的浅析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/01/关于HTTP请求的HTTPHeaderField的Content-Type的浅析/">关于HTTP请求的HTTPHeaderField的Content-Type的浅析</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/01/关于HTTP请求的HTTPHeaderField的Content-Type的浅析/" class="archive-article-date">
+  	<time datetime="2016-03-01T07:44:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于HTTP请求的HTTPHeaderField的Content-Type的浅析"><a href="#关于HTTP请求的HTTPHeaderField的Content-Type的浅析" class="headerlink" title="关于HTTP请求的HTTPHeaderField的Content-Type的浅析"></a>关于HTTP请求的HTTPHeaderField的Content-Type的浅析</h1><p><code>常识：</code></p>
+<ul>
+<li><p>ContentType 内容类型，属性指定响应的 HTTP内容类型。如果未指定 ContentType，默认为TEXT/HTML。一般是指网页中存在的Content-Type，用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件，这就是经常看到一些Asp网页点击的结果却是下载到的一个文件或一张图片的原因。</p>
+</li>
+<li><p>MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式</p>
+</li>
+</ul>
+<hr>
+<p><strong>content-type: 编码属性</strong>此属性指定将数据回发到服务器时浏览器使用的编码类型。</p>
+<ul>
+<li>application/x-www-form-urlencoded： 说明窗体数据被编码为名称/值对。这是标准的编码格式。 </li>
+<li>multipart/form-data： 窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分</li>
+<li>text/plain： 窗体数据以纯文本形式进行编码，其中不含任何控件或格式字符。</li>
+</ul>
+<p>Content-Type是返回消息中非常重要的内容，表示后面的文档属于什么MIME类型。<code>MIME定义在RFC-2046 MIME Part 2: Media Types</code>, Content-Type: [type]/[subtype]; parameter。例如最常见的就是text/html，它的意思是说返回的内容是文本类型，这个文本又是HTML格式的。原则上浏览器会根据Content-Type来决定如何显示返回的消息体内容。 </p>
+<p>type有下面的形式:</p>
+<p>Text：用于标准化地表示的文本信息，文本消息可以是多种字符集和或者多种格式的； </p>
+<p>Multipart：用于连接消息体的多个部分构成一个消息，这些部分可以是不同类型的数据； </p>
+<p>Application：用于传输应用程序数据或者二进制数据； </p>
+<p>Message：用于包装一个E-mail消息； </p>
+<p>Image：用于传输静态图片数据； </p>
+<p>Audio：用于传输音频或者音声数据； </p>
+<p>Video：用于传输动态影像数据，可以是与音频编辑在一起的视频数据格式。</p>
+<hr>
+<p><code>常见的MIME类型(通用型)：</code></p>
+<ul>
+<li>超文本标记语言文本 .html text/html</li>
+<li>xml文档 .xml text/xml</li>
+<li>XHTML文档 .xhtml application/xhtml+xml</li>
+<li>普通文本 .txt text/plain</li>
+<li>RTF文本 .rtf application/rtf</li>
+<li>PDF文档 .pdf application/pdf</li>
+<li>Microsoft Word文件 .word application/msword</li>
+<li>PNG图像 .png image/png</li>
+<li>GIF图形 .gif image/gif</li>
+<li>JPEG图形 .jpeg,.jpg image/jpeg</li>
+<li>au声音文件 .au audio/basic</li>
+<li>MIDI音乐文件 mid,.midi audio/midi,audio/x-midi</li>
+<li>RealAudio音乐文件 .ra, .ram audio/x-pn-realaudio</li>
+<li>MPEG文件 .mpg,.mpeg video/mpeg</li>
+<li>AVI文件 .avi video/x-msvideo</li>
+<li>GZIP文件 .gz application/x-gzip</li>
+<li>TAR文件 .tar application/x-tar</li>
+<li>任意的二进制数据 application/octet-stream</li>
+</ul>
+<hr>
+<p><code>在Form元素的语法中:</code></p>
+<ul>
+<li><p>form的enctype属性为编码方式，常用有两种：application/x-www-form-urlencoded和multipart/form-data，默认为application/x-www-form-urlencoded。 当action为get时候，浏览器用x-www-form-urlencoded的编码方式把form数据转换成一个字串（name1=value1&amp;name2=value2…），然后把这个字串append到url后面，用?分割，加载这个新的url。</p>
+</li>
+<li><p>当action为post时候，浏览器把form数据封装到http body中，然后发送到server。 如果没有type=file的控件，用默认的application/x-www-form-urlencoded就可以了。 但是如果有type=file的话，就要用到multipart/form-data了。</p>
+</li>
+</ul>
+<p><code>浏览器会把整个表单以控件为单位分割，并为每个部分加上Content-Disposition(form-data或者file),Content-Type(默认为text/plain),name(控件name)等信息，并加上分割符(boundary)。</code><br><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/01/关于HTTP请求的HTTPHeaderField的Content-Type的浅析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Xcode7-网络请求报错" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -909,76 +1021,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-便捷生成二维码条形码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/19/便捷生成二维码条形码/">便捷生成二维码条形码</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/19/便捷生成二维码条形码/" class="archive-article-date">
-  	<time datetime="2016-01-19T09:15:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="便捷生成二维码条形码-by-yachaocn"><a href="#便捷生成二维码条形码-by-yachaocn" class="headerlink" title="便捷生成二维码条形码 - by yachaocn"></a>便捷生成二维码条形码 - by yachaocn</h1><hr>
-<p><strong>前言</strong>先前我找到了一个生成二维码的c语言库，感觉生成二维码非常的简单，后来我在官方文档里找到了，更便捷的生成方法，在这里奉献给各位大神，当然了–我叫雷锋。</p>
-<ul>
-<li>参考<a href="https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html" target="_blank" rel="external">https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html</a></li>
-</ul>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p><code>直接将下面的方法复制到你项目.m文件中，直接调用即可。</code></p>
-<hr>
-<p><code>生成二维码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//生成二维码</div><div class="line">// 参考文档</div><div class="line">// https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html</div><div class="line"></div><div class="line">- (UIImage *)generateQRCode:(NSString *)code width:(CGFloat)width height:(CGFloat)height &#123;</div><div class="line">    </div><div class="line">    // 生成二维码图片</div><div class="line">    CIImage *qrcodeImage;</div><div class="line">    NSData *data = [_code dataUsingEncoding:NSISOLatin1StringEncoding allowLossyConversion:false];</div><div class="line">    CIFilter *filter = [CIFilter filterWithName:@&quot;CIQRCodeGenerator&quot;];</div><div class="line">    </div><div class="line">    [filter setValue:data forKey:@&quot;inputMessage&quot;];</div><div class="line">    [filter setValue:@&quot;H&quot; forKey:@&quot;inputCorrectionLevel&quot;];</div><div class="line">    qrcodeImage = [filter outputImage];</div><div class="line">    </div><div class="line">    // 消除模糊</div><div class="line">    CGFloat scaleX = width / qrcodeImage.extent.size.width; // extent 返回图片的frame</div><div class="line">    CGFloat scaleY = height / qrcodeImage.extent.size.height;</div><div class="line">    CIImage *transformedImage = [qrcodeImage imageByApplyingTransform:CGAffineTransformScale(CGAffineTransformIdentity, scaleX, scaleY)];</div><div class="line">    </div><div class="line">    return [UIImage imageWithCIImage:transformedImage];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>生成条形码：</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//生成条形码</div><div class="line">- (UIImage *)generateBarCode:(NSString *)code width:(CGFloat)width height:(CGFloat)height &#123;</div><div class="line">    // 生成二维码图片</div><div class="line">    CIImage *barcodeImage;</div><div class="line">    NSData *data = [_code dataUsingEncoding:NSISOLatin1StringEncoding allowLossyConversion:false];</div><div class="line">    CIFilter *filter = [CIFilter filterWithName:@&quot;CICode128BarcodeGenerator&quot;];</div><div class="line">    </div><div class="line">    [filter setValue:data forKey:@&quot;inputMessage&quot;];</div><div class="line">    barcodeImage = [filter outputImage];</div><div class="line">    </div><div class="line">    // 消除模糊</div><div class="line">    CGFloat scaleX = width / barcodeImage.extent.size.width; // extent 返回图片的frame</div><div class="line">    CGFloat scaleY = height / barcodeImage.extent.size.height;</div><div class="line">    CIImage *transformedImage = [barcodeImage imageByApplyingTransform:CGAffineTransformScale(CGAffineTransformIdentity, scaleX, scaleY)];</div><div class="line">    </div><div class="line">    return [UIImage imageWithCIImage:transformedImage];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/19/便捷生成二维码条形码/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1091,11 +1133,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,6 +1158,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">ios部署</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
