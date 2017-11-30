@@ -183,6 +183,75 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS9网络请求之NSURLSession" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/02/iOS9网络请求之NSURLSession/">iOS9网络请求之NSURLSession</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/02/iOS9网络请求之NSURLSession/" class="archive-article-date">
+  	<time datetime="2016-03-02T05:43:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> NSURL NSURLConnection NSURLRequest NSMutbaleURLRequest NSURLSession NSURLSessionDataTask 用法总结</p>
+<hr>
+<p><code>1.NSURLSessionDataTask</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//    http://yachaocn.com/</div><div class="line">    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;http://yachaocn.com/&quot;]</div><div class="line">                                              cachePolicy:NSURLRequestUseProtocolCachePolicy</div><div class="line">                                          timeoutInterval:10.0];  </div><div class="line">    NSURLSession *section = [NSURLSession sharedSession];</div><div class="line">    NSURLSessionDataTask *dataTaskSection = [section dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</div><div class="line">//        text/plain</div><div class="line">        [self.webView loadData:data MIMEType:@&quot;text/html&quot; textEncodingName:@&quot;utf-8&quot; baseURL:nil];</div><div class="line">        NSLog(@&quot;success...&quot;);</div><div class="line">    &#125;];</div><div class="line">    [dataTaskSection resume];</div></pre></td></tr></table></figure>
+<p><code>2.NSURLSessionUploadTask</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">NSURL *URL = [NSURL URLWithString:@&quot;http://example.com/upload&quot;];</div><div class="line">   NSURLRequest *request = [NSURLRequest requestWithURL:URL];</div><div class="line">   NSData *data = ...;</div><div class="line"></div><div class="line">   NSURLSession *session = [NSURLSession sharedSession];</div><div class="line">   NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request</div><div class="line">                                                              fromData:data</div><div class="line">                                                     completionHandler:</div><div class="line">                                         ^(NSData *data, NSURLResponse *response, NSError *error) &#123;</div><div class="line">                                             // ...</div><div class="line">                                         &#125;];</div><div class="line">     </div><div class="line">   [uploadTask resume];</div></pre></td></tr></table></figure>
+<p><code>3.NSURLSessionDownloadTask</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">NSURL *URL = [NSURL URLWithString:@&quot;http://b.hiphotos.baidu.com/image/w%3D2048/sign=6be5fc5f718da9774e2f812b8469f919/8b13632762d0f703b0faaab00afa513d2697c515.jpg&quot;];  </div><div class="line">   NSURLRequest *request = [NSURLRequest requestWithURL:URL];  </div><div class="line">   NSURLSession *session = [NSURLSession sharedSession];  </div><div class="line">   NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request  </div><div class="line">                                                           completionHandler:  </div><div class="line">                                             ^(NSURL *location, NSURLResponse *response, NSError *error) &#123;  </div><div class="line">                                                 [self showResponseCode:response];  </div><div class="line">                                                   </div><div class="line">                                                 // 输出下载文件原来的存放目录  </div><div class="line">                                                 NSLog(@&quot;%@&quot;, location);  </div><div class="line">                                                   </div><div class="line">                                                 // 设置文件的存放目标路径  </div><div class="line">                                                 NSString *documentsPath = [self getDocumentsPath];  </div><div class="line">                                                 NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];  </div><div class="line">                                                 NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:[[response URL] lastPathComponent]];  </div><div class="line">                                                   </div><div class="line">                                                 // 如果该路径下文件已经存在，就要先将其移除，在移动文件  </div><div class="line">                                                 NSFileManager *fileManager = [NSFileManager defaultManager];  </div><div class="line">                                                 if ([fileManager fileExistsAtPath:[fileURL path] isDirectory:NULL]) &#123;  </div><div class="line">                                                     [fileManager removeItemAtURL:fileURL error:NULL];  </div><div class="line">                                                 &#125;  </div><div class="line">                                                 [fileManager moveItemAtURL:location toURL:fileURL error:NULL];  </div><div class="line">                                                   </div><div class="line">                                                 // 在webView中加载图片文件  </div><div class="line">                                                 NSURLRequest *showImage_request = [NSURLRequest requestWithURL:fileURL];  </div><div class="line">                                                 [self.webView loadRequest:showImage_request];  </div><div class="line">                                                   </div><div class="line">                                                 [self.spinner stopAnimating];  </div><div class="line">                                             &#125;];  </div><div class="line">     </div><div class="line">   [downloadTask resume];</div></pre></td></tr></table></figure>
+<p><code>4.NSURLConnection</code>在ios9被弃用,<code>NSURLSessionDataTask断电续传+NSMutbaleURLRequest</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  NSString *params = @&quot;xqsort=5&amp;jcsort=3&amp;chaxun=查询空闲教室&quot;;</div><div class="line">    </div><div class="line">    NSData *bodyData = [params dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    NSMutableURLRequest *mutURlRequest = [[NSMutableURLRequest alloc]init];</div><div class="line">//    [mutURlRequest setValue:cookie forHTTPHeaderField:@&quot;Cookie&quot;];</div><div class="line">    [mutURlRequest setURL:[NSURL URLWithString:@&quot;http://192.168.10.220:18080/data/1.jsp&quot;]];</div><div class="line">    [mutURlRequest setHTTPMethod:@&quot;POST&quot;];</div><div class="line">    [mutURlRequest setValue:@&quot;application/x-www-form-urlencoded&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</div><div class="line">    [mutURlRequest setHTTPBody:bodyData];</div><div class="line"></div><div class="line">    NSURLSession *session = [NSURLSession sharedSession];</div><div class="line">    </div><div class="line">//    断点续传用</div><div class="line">//    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@&quot;任意写&quot;];</div><div class="line">//    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]];</div><div class="line">//    继续下载</div><div class="line">//    [session downloadTaskWithResumeData:&lt;#(nonnull NSData *)#&gt;];</div><div class="line">    </div><div class="line">    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:mutURlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">//    开始下载</div><div class="line">    [dataTask resume];</div><div class="line">//    暂停下载</div><div class="line">//    [dataTask suspend];</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/02/iOS9网络请求之NSURLSession/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-关于HTTP请求的HTTPHeaderField的Content-Type的浅析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -953,60 +1022,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/01/30/iOS-7添加pch全局引用文件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS开发问题解决kcfstreamnetworkservicetypevoip被弃用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/28/iOS开发问题解决kcfstreamnetworkservicetypevoip被弃用/">ios开发问题解决kcfstreamnetworkservicetypevoip被弃用</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/28/iOS开发问题解决kcfstreamnetworkservicetypevoip被弃用/" class="archive-article-date">
-  	<time datetime="2016-01-28T03:46:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="ios开发问题解决kCFStreamNetworkServiceTypeVoIP’-is-deprecated-in-iOS9"><a href="#ios开发问题解决kCFStreamNetworkServiceTypeVoIP’-is-deprecated-in-iOS9" class="headerlink" title="##ios开发问题解决kCFStreamNetworkServiceTypeVoIP’ is deprecated in iOS9"></a>##ios开发问题解决kCFStreamNetworkServiceTypeVoIP’ is deprecated in iOS9</h2><p>xcode提出警告：<code>kCFStreamNetworkServiceTypeVoIP&#39; is deprecated: first deprecated in iOS 9.0 - use PushKit for VoIP control purposes</code></p>
-<p>解决办法：</p>
-<ul>
-<li>导入import<pushkit pushkit.h=""></pushkit></li>
-<li>将kCFStreamNetworkServiceTypeVoIP 改为PKPushTypeVoIP</li>
-</ul>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/01/28/iOS开发问题解决kcfstreamnetworkservicetypevoip被弃用/">展开全文 >></a>
         </p>
       
 

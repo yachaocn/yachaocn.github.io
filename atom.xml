@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-09-08T07:33:51.000Z</updated>
+  <updated>2017-11-30T05:40:10.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS修改系统时间颜色</title>
+    <link href="https://devchao.com/2017/11/30/iOS%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E9%A2%9C%E8%89%B2/"/>
+    <id>https://devchao.com/2017/11/30/iOS修改系统时间颜色/</id>
+    <published>2017-11-30T05:39:41.000Z</published>
+    <updated>2017-11-30T05:40:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="iOS-修改系统时间颜色"><a href="#iOS-修改系统时间颜色" class="headerlink" title="iOS 修改系统时间颜色"></a>iOS 修改系统时间颜色</h1><p><strong>做法</strong></p>
+<p>在info-plist 中加入View controller-based status bar appearance键值对</p>
+<blockquote>
+<p>NO: 意思是由系统控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle = **</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>YES: statusBar的控制权交给了各自的控制器</p>
+<p>在控制器中实现preferredStatusBarStyle方法，直接返回需要的状态栏设置</p>
+</blockquote>
+<p><strong>代码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle =UIStatusBarStyleLightContent;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(UIStatusBarStyle)preferredStatusBarStyle&#123;</div><div class="line">    return UIStatusBarStyleLightContent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;iOS-修改系统时间颜色&quot;&gt;&lt;a href=&quot;#iOS-修改系统时间颜色&quot; class=&quot;headerlink&quot; title=&quot;iOS 修改系统时间颜色&quot;&gt;&lt;/a&gt;iOS 修改系统时间颜色&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;做法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在in
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title>启用Mac自带的php</title>
@@ -983,169 +1017,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git操作</title>
-    <link href="https://devchao.com/2017/03/23/git%E6%93%8D%E4%BD%9C/"/>
-    <id>https://devchao.com/2017/03/23/git操作/</id>
-    <published>2017-03-23T03:18:12.000Z</published>
-    <updated>2017-03-23T03:21:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Git操作-By-亚超"><a href="#Git操作-By-亚超" class="headerlink" title="Git操作    - By 亚超"></a>Git操作    - By 亚超</h1><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ol>
-<li><p>初始化仓库</p>
-<ul>
-<li>git init</li>
-</ul>
-</li>
-<li><p>配置作者信息</p>
-<ul>
-<li>git config –global user.email “youremail@corp.com”</li>
-<li>git config –global user.name “yourname”</li>
-</ul>
-</li>
-<li><p>添加文件到暂存区</p>
-<ul>
-<li>git add \<filename\> </filename\></li>
-<li>git add * (添加所有文件到暂存区)</li>
-</ul>
-</li>
-<li>移除文件<ul>
-<li>git rm \<filename\></filename\></li>
-</ul>
-</li>
-<li>重命名一个文件<ul>
-<li>git mv \<oldfilename\> \<newfilename\></newfilename\></oldfilename\></li>
-</ul>
-</li>
-<li><p>提交暂存区</p>
-<p> <code>git commit只会提交暂存区（staged）里面的文件</code></p>
-<ul>
-<li>git commit -m “message”    </li>
-</ul>
-</li>
-<li>查看工作目录的状态<ul>
-<li>git status</li>
-</ul>
-</li>
-<li>查看提交历史记录<ul>
-<li>git log</li>
-</ul>
-</li>
-<li>查看文件改变<ul>
-<li>git diff</li>
-</ul>
-</li>
-</ol>
-<hr>
-<p>##撤销操作</p>
-<ol>
-<li>撤销加入暂存区的操作<ul>
-<li>git reset HEAD \<file\></file\></li>
-</ul>
-</li>
-<li>撤销修改的操作 <ul>
-<li>git checkout – \<file\></file\></li>
-</ul>
-</li>
-<li>将本地的修改放进回收站<ul>
-<li>git stash</li>
-</ul>
-</li>
-<li>从回收站中恢复本地的修改<ul>
-<li>git stash apply</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="Tag操作"><a href="#Tag操作" class="headerlink" title="Tag操作"></a>Tag操作</h2><ol>
-<li>查看tag<ul>
-<li>git tag</li>
-</ul>
-</li>
-<li>创建tag<ul>
-<li>git tag -a v1.0 -m “my version 1.0”</li>
-</ul>
-</li>
-<li>显示tag信息<ul>
-<li>git show v1.0</li>
-</ul>
-</li>
-<li>对之前的提交打tag<ul>
-<li>git tag -a v0.1 -m “version 0.1”</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><ol>
-<li>查看分支<ul>
-<li>git branch</li>
-</ul>
-</li>
-<li>创建分支<ul>
-<li>git branch \<branchname\></branchname\></li>
-</ul>
-</li>
-<li>删除分支<ul>
-<li>git branch -d \<branchname\></branchname\></li>
-</ul>
-</li>
-<li>切换分支<ul>
-<li>git checkout \<branchname\></branchname\></li>
-</ul>
-</li>
-<li>合并分支<ul>
-<li>git merge \<branchname\></branchname\></li>
-</ul>
-</li>
-<li>rebase操作<ul>
-<li>git rebase \<basebranch\> \<newbranch\></newbranch\></basebranch\></li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="远端仓库操作"><a href="#远端仓库操作" class="headerlink" title="远端仓库操作"></a>远端仓库操作</h2><ol>
-<li>克隆一个远端仓库<ul>
-<li>git clone <em>URL</em></li>
-</ul>
-</li>
-<li>添加远端仓库<ul>
-<li>git remote add \<name\> \<url\></url\></name\></li>
-</ul>
-</li>
-<li>更新远端仓库的分支和数据<ul>
-<li>git fetch \<name\> </name\></li>
-</ul>
-</li>
-<li>获取并合并远端仓库的分支到当前分支<ul>
-<li>git pull \<reponame\> \<branchname\></branchname\></reponame\></li>
-<li>eg: <code>git pull origin master</code></li>
-</ul>
-</li>
-<li>上传本地分支和数据到远端仓库<ul>
-<li>git push \<reponame\> \<branchname\></branchname\></reponame\></li>
-<li>eg: <code>git push origin master</code> </li>
-</ul>
-</li>
-<li>跟踪远端仓库上的分支<ul>
-<li>git checkout –track origin/testbranch</li>
-<li>git checkout -b test origin/testbranch</li>
-</ul>
-</li>
-</ol>
-<hr>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Git操作-By-亚超&quot;&gt;&lt;a href=&quot;#Git操作-By-亚超&quot; class=&quot;headerlink&quot; title=&quot;Git操作    - By 亚超&quot;&gt;&lt;/a&gt;Git操作    - By 亚超&lt;/h1&gt;&lt;h2 id=&quot;基本操作&quot;&gt;&lt;a href=&quot;#基本操
-    
-    </summary>
-    
-    
-      <category term="Git" scheme="https://devchao.com/tags/Git/"/>
     
   </entry>
   

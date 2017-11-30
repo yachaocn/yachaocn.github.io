@@ -183,6 +183,77 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS修改系统时间颜色" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/30/iOS修改系统时间颜色/">iOS修改系统时间颜色</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/30/iOS修改系统时间颜色/" class="archive-article-date">
+  	<time datetime="2017-11-30T05:39:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="iOS-修改系统时间颜色"><a href="#iOS-修改系统时间颜色" class="headerlink" title="iOS 修改系统时间颜色"></a>iOS 修改系统时间颜色</h1><p><strong>做法</strong></p>
+<p>在info-plist 中加入View controller-based status bar appearance键值对</p>
+<blockquote>
+<p>NO: 意思是由系统控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle = **</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>YES: statusBar的控制权交给了各自的控制器</p>
+<p>在控制器中实现preferredStatusBarStyle方法，直接返回需要的状态栏设置</p>
+</blockquote>
+<p><strong>代码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle =UIStatusBarStyleLightContent;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(UIStatusBarStyle)preferredStatusBarStyle&#123;</div><div class="line">    return UIStatusBarStyleLightContent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/30/iOS修改系统时间颜色/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-启用Mac自带的php" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1029,90 +1100,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/05/20/Hexo自定义网站升级为https/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-change-app-icon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/15/change-app-icon/">change-app-icon</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/15/change-app-icon/" class="archive-article-date">
-  	<time datetime="2017-05-15T05:39:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="change-app-icon"><a href="#change-app-icon" class="headerlink" title="change app icon"></a>change app icon</h1><p>本文教成将会一步步教你如何改变app图标，以下面两张图标(newicon2.png <code>120px X 120px</code> , newicon@2x.png <code>180px X 180px</code>)为例。</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/newicon2.png" alt="newicon2"></p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/newicon@2x.png" alt="newicon"></p>
-<hr>
-<p><strong>1.设置plist:在info-plsit中的Source Code中添加如下键值对。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;CFBundleIcons&lt;/key&gt;</div><div class="line">	&lt;dict&gt;</div><div class="line">		&lt;key&gt;CFBundleAlternateIcons&lt;/key&gt;</div><div class="line">		&lt;dict&gt;</div><div class="line">			&lt;key&gt;newicon&lt;/key&gt;</div><div class="line">			&lt;dict&gt;</div><div class="line">				&lt;key&gt;CFBundleIconFiles&lt;/key&gt;</div><div class="line">				&lt;array&gt;</div><div class="line">					&lt;string&gt;newicon&lt;/string&gt;</div><div class="line">				&lt;/array&gt;</div><div class="line">				&lt;key&gt;UIPrerenderedIcon&lt;/key&gt;</div><div class="line">				&lt;false/&gt;</div><div class="line">			&lt;/dict&gt;</div><div class="line">			&lt;key&gt;newicon2&lt;/key&gt;</div><div class="line">			&lt;dict&gt;</div><div class="line">				&lt;key&gt;CFBundleIconFiles&lt;/key&gt;</div><div class="line">				&lt;array&gt;</div><div class="line">					&lt;string&gt;newicon2&lt;/string&gt;</div><div class="line">				&lt;/array&gt;</div><div class="line">				&lt;key&gt;UIPrerenderedIcon&lt;/key&gt;</div><div class="line">				&lt;false/&gt;</div><div class="line">			&lt;/dict&gt;</div><div class="line">		&lt;/dict&gt;</div><div class="line">		&lt;key&gt;CFBundlePrimaryIcon&lt;/key&gt;</div><div class="line">		&lt;dict&gt;</div><div class="line">			&lt;key&gt;CFBundleIconFiles&lt;/key&gt;</div><div class="line">			&lt;array&gt;</div><div class="line">				&lt;string&gt;&lt;/string&gt;</div><div class="line">			&lt;/array&gt;</div><div class="line">			&lt;key&gt;UIPrerenderedIcon&lt;/key&gt;</div><div class="line">			&lt;false/&gt;</div><div class="line">		&lt;/dict&gt;</div><div class="line">	&lt;/dict&gt;</div></pre></td></tr></table></figure>
-<p>配置好的Property plsit如下图:</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/changeAppIconPlist.png" alt="plist"></p>
-<p><code>解释</code></p>
-<ul>
-<li>CFBundleAlternateIcons 代表要修改的图标键，是一个字典类型，其中的每一个字典代表一个item的描述。<code>并且这个字典的key必须是图片的名字，还要和CFBundleIconFiles的内容一样</code></li>
-<li>UIPrerenderedIcon：指定应用程序的图标是否包含闪光效果（shine effect）,如果icon已经有这个效果，就把这个属性设置为YES来防止系统再次添加相同效果。如果设置为NO（默认值），iOS系统会自动添加这个效果。然而，并没有什么效果!!</li>
-<li>CFBundleIcons 配置app的图标。如果你要适配ipad需要在plist中再次加入CFBundleIcons~ipad键，其他配置同上。</li>
-</ul>
-<p>我配置好的plist如下所示：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/yachaocn-plist-appicon-ipad.png" alt="iapd-plist"></p>
-<p><strong>2.调用Apple的API</strong></p>
-<p>新建一个Single view application,在ViewController的View上添加一个Button添加一个事件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">- (IBAction)changeAppIcon:(id)sender &#123;</div><div class="line">    UIButton *button = (UIButton *)sender;</div><div class="line">    button.selected = !button.selected;</div><div class="line">    if (![self checkSuportChangeAppIcon]) &#123;//检查设备系统版本是否是iOS 10.3之后的</div><div class="line">        [self alertMessage:@&quot;Your system version was lower iOS 10.3.0,don&apos;t surport change app icon.&quot;];</div><div class="line">    &#125;</div><div class="line">    if (![UIApplication sharedApplication].supportsAlternateIcons) &#123;//检查app是否支持改变app icon</div><div class="line">         [self alertMessage:@&quot;Your application don&apos;t surport change app icon.&quot;];</div><div class="line">    &#125;</div><div class="line">    NSString *icon = button.selected ? @&quot;newicon&quot; : @&quot;newicon2&quot;;</div><div class="line">    </div><div class="line">    [self changeToIcon:icon];//该变app icon</div><div class="line">    </div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">-(BOOL)checkSuportChangeAppIcon</div><div class="line">&#123;</div><div class="line">    NSString * systemVersion = [UIDevice currentDevice].systemVersion;</div><div class="line">    if ([systemVersion floatValue] &gt;= 10.3f) &#123;</div><div class="line">        return YES;</div><div class="line">    &#125;</div><div class="line">    return NO;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> 改变app icon</div><div class="line"></div><div class="line"> @param icon iconName</div><div class="line"> */</div><div class="line">-(void)changeToIcon:(NSString *)icon</div><div class="line">&#123;</div><div class="line">    [[UIApplication sharedApplication] setAlternateIconName:icon completionHandler:^(NSError * _Nullable error) &#123;</div><div class="line">        if (error) &#123;</div><div class="line">            [self alertMessage:error.description];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)alertMessage:(NSString *)message</div><div class="line">&#123;</div><div class="line">    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@&quot;提示&quot; message:message preferredStyle:UIAlertControllerStyleAlert];</div><div class="line">    UIAlertAction *action = [UIAlertAction actionWithTitle:@&quot;好的&quot; style:UIAlertActionStyleDefault handler:nil];</div><div class="line">    [alertVC addAction:action];</div><div class="line">    [self presentViewController:alertVC animated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="http://7xiwr4.com1.z0.glb.clouddn.com/ModifyAppIcons.zip" target="_blank" rel="external">下载代码</a></p>
-<p>参考:</p>
-<ul>
-<li><a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/TP40009249-SW13" target="_blank" rel="external">官方文档</a></li>
-<li><a href="http://www.cocoachina.com/ios/20170502/19152.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20170502/19152.html</a></li>
-</ul>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/15/change-app-icon/">展开全文 >></a>
         </p>
       
 

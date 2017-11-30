@@ -183,6 +183,118 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BLE 4.0 技术学习（三）外设Peripheral" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/12/BLE 4.0 技术学习（三）外设Peripheral/">BLE 4.0 技术学习（三）外设Peripheral</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/12/BLE 4.0 技术学习（三）外设Peripheral/" class="archive-article-date">
+  	<time datetime="2016-04-12T07:24:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="BLE-4-0-学习（三）外设Peripheral"><a href="#BLE-4-0-学习（三）外设Peripheral" class="headerlink" title="BLE 4.0 学习（三）外设Peripheral"></a>BLE 4.0 学习（三）外设Peripheral</h1><hr>
+<p><code>以Peripheral作为本地端，以Central作为远端。</code></p>
+<h2 id="执行常见的外设角色任务"><a href="#执行常见的外设角色任务" class="headerlink" title="执行常见的外设角色任务"></a>执行常见的外设角色任务</h2><p>前言：在上一章节中我们学习了如何在Central那侧如何进行蓝牙低耗能进行数据的交互，这一节我们将学习使用Core blueTooth框架实现以Peripheral作为本地端的数据交互。以下我将以简单的代码帮助你开发以Peripherial为本地端与远程Central之间的交互，主要有以下步骤：</p>
+<ul>
+<li>启动外围设备管理器对象</li>
+<li>在本地周边设置服务和特征</li>
+<li>发布您的设备的本地数据De服务和特征</li>
+<li>广播你的服务</li>
+<li>响应中央（Central）的读写请求</li>
+<li>给订阅特征的远程中心（Central）发送更新的特征（Charateristic）</li>
+</ul>
+<p>###I.创建Peripher管理对象**</p>
+<p>创建CBPeripheralManager对象，第二个参数为nil代表在主线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">myPeripheralManager =</div><div class="line">        [[CBPeripheralManager alloc] initWithDelegate:self queue:nil options:nil];</div></pre></td></tr></table></figure>
+<p>当你创建了CBPeripheralManager对象后，它的代理方法 peripheralManagerDidUpdateState:将会被掉用，你必须实现这个代理方法以确保BLe是被支持并且可用的。</p>
+<p>###II.设置你的服务和特征</p>
+<p>正如下图所示组织你的服务和特征以便于远端Central识别你的服务与特征。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/1-7.png" alt=""></p>
+<p><strong>1.用UUID区分不同的服务和特征</strong></p>
+<p>周边的服务和特征是由128位的CBUUID代表在蓝牙核心框架对象。你可以使用下面方法创建一个CBUUID对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CBUUID *myCustomServiceUUID =</div><div class="line">        [CBUUID UUIDWithString:@&quot;71DA3FD1-7E10-41C1-B16F-4430B506CDE7&quot;];</div></pre></td></tr></table></figure>
+<p><strong>2.创建服务和特征树形结构</strong></p>
+<p>服务和特征有了CBUUID后，用以下方法创建可变的服务和特征,创建可变的特征如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">myCharacteristic =</div><div class="line">        [[CBMutableCharacteristic alloc] initWithType:myCharacteristicUUID</div><div class="line">         properties:CBCharacteristicPropertyRead</div><div class="line">         value:myValue permissions:CBAttributePermissionsReadable];</div></pre></td></tr></table></figure>
+<p>其中的properties和permissions:两个参数，properties代表了characteristic是可读的还是可写的,如果是<code>CBCharacteristicPropertyNotify ｜CBCharacteristicPropertyRead 时表它可以被Central订阅</code>，permissions代表了连接的Central是否可以订阅此characteristic特征值。</p>
+<p><code>PS:如果你的value参数设置了值，这个值将被缓存起来，并且properties和permissions:两个参数必须为只读的，如果你想在characteristic的生命周期中改变value的值，那么value的参数应该设置为nil！</code></p>
+<p>有了CBMutableCharacteristic之后我们需要创建一个CBMutableService如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">myService = [[CBMutableService alloc] initWithType:myServiceUUID primary:YES];</div></pre></td></tr></table></figure>
+<p>primary:YES参数表明服务是主相对于次的。一个主要的服务描述的装置的主要功能。例如，心脏监测仪的主要服务可以是从显示器的心脏速率传感器暴露心脏速率数据，而次要业务可以是，以暴露传感器的电池的数据。</p>
+<p>然后我们需要将CBMutableCharacteristic的对象加到CBMutableService上去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">myService.characteristics = @[myCharacteristic];</div></pre></td></tr></table></figure>
+<p>###发布你的服务和特征</p>
+<p>在你创建了服务和特征树形结构后，需要将服务添加到本地的Peripheral上去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[myPeripheralManager addService:myService];</div></pre></td></tr></table></figure>
+<p> 添加后，PeriPherial manager的代理方法peripheralManager:didAddService:error:将会被调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)peripheralManager:(CBPeripheralManager *)peripheral</div><div class="line">            didAddService:(CBService *)service</div><div class="line">                    error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    if (error) &#123;</div><div class="line">        NSLog(@&quot;Error publishing service: %@&quot;, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p><code>Note: After you publish a service and any of its associated characteristics to the peripheral’s database, the service is cached and you can no longer make changes to it.</code></p>
+<p>###广播你的服务</p>
+<p>当你将你的服务和特征发布到设备的服务和特征数据库中后，你需要向监听你的所有远端Central广播你的服务和特征，如下你可以使用CBPeripheralManager 的方法startAdvertising: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[myPeripheralManager startAdvertising:@&#123; CBAdvertisementDataServiceUUIDsKey :</div><div class="line">        @[myFirstService.UUID, mySecondService.UUID] &#125;];</div></pre></td></tr></table></figure>
+<p>后面的字典参数中，CBAdvertisementDataServiceUUIDsKey代表了你想要广播的服务的UUID，在PeripheralManager中只有两个键是有用的： CBAdvertisementDataLocalNameKey and CBAdvertisementDataServiceUUIDsKey.</p>
+<p>当你开始在本地Peripheral上广播时，Peripgeral的代理方法peripheralManagerDidStartAdvertising:error:将会被掉用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral</div><div class="line">                                       error:(NSError *)error &#123;</div><div class="line"> </div><div class="line">    if (error) &#123;</div><div class="line">        NSLog(@&quot;Error advertising: %@&quot;, [error localizedDescription]);</div><div class="line">    &#125;</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p><code>PS:当你的app进入后台时，广播还是有效的，这部分将在下一章节中讨论：关于BLE 4.0 后台进程</code></p>
+<p>###从Central响应读或者写请求</p>
+<p>当你连接到一个或多个远端Central时，你将会从它Central收到读或者写请求，此时你需要以合适的方式响应这些请求！下面的例子说明如何处理这样的请求。</p>
+<p>当一个连接的远端Central请求读去一个Charateristic的值时，Peripheral Manager的代理方法peripheralManager:didReceiveReadRequest: 将会被调用，代理方法中将会以一个CBATTRequest对象方式把请求传递给你，其中有一系列的参数，你可以用它来完成请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (void)peripheralManager:(CBPeripheralManager *)peripheral</div><div class="line">    didReceiveReadRequest:(CBATTRequest *)request &#123;</div><div class="line"> </div><div class="line">    if ([request.characteristic.UUID isEqual:myCharacteristic.UUID]) &#123;</div><div class="line">        ...</div></pre></td></tr></table></figure>
+<p>如果该特征’的UUID匹配，则下一个步骤是确保该读请求是不是要求从这是你的特征的值的范围外的索引位置读取。如下面的例子显示，你可以使用一个CBATTRequest对象的偏移属性，以确保读请求不试图适当的范围之外阅读：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (request.offset &gt; myCharacteristic.value.length) &#123;</div><div class="line">      [myPeripheralManager respondToRequest:request</div><div class="line">          withResult:CBATTErrorInvalidOffset];</div><div class="line">      return;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>假设请求的偏移得到验证，现在设置请求的特征属性的值（默认其值为nil）为偏移量以后的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">request.value = [myCharacteristic.value</div><div class="line">       subdataWithRange:NSMakeRange(request.offset,</div><div class="line">       myCharacteristic.value.length - request.offset)];</div></pre></td></tr></table></figure>
+<p>设置了值之后，回复远端Central请求已经成功完成，通过调用CBPeripheralManager类的respondToRequest:withResult:方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[myPeripheralManager respondToRequest:request withResult:CBATTErrorSuccess];</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><code>如果characteristics的UUID不匹配或者因为其它的原因不能完成读请求，相反你需要调用e respondToRequest:withResult: 并给出错误的原因</code></p>
+<p>当远程Central一个或者多个Characteristics的发送写请求时，Peripheral Manager的代理方法peripheralManager:didReceiveWriteRequests:将会被调用，此时代理方法，将把这些请求放在包含CBATTRequest对象的数组里传递给Peripheral，当你确定这些请求可以背满足时，用以下方法将数据写入characteristic的值中，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">myCharacteristic.value = request.value;</div></pre></td></tr></table></figure>
+<p><code>PS:当收到多个请求时，如果其中任何一个不能得到满足，那就不应该满足其中的任何一个请求，然后调用respondToRequest:withResult返回一个错误信息</code></p>
+<p>###给订阅了的远程Central发送更新的Characteristic值</p>
+<p>当连接的远端Central订阅了characteristics的值后，peripheral manager的代理方法会调用peripheralManager:central:didSubscribeToCharacteristic:方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)peripheralManager:(CBPeripheralManager *)peripheral</div><div class="line">                  central:(CBCentral *)central</div><div class="line">didSubscribeToCharacteristic:(CBCharacteristic *)characteristic &#123;</div><div class="line"> </div><div class="line">    NSLog(@&quot;Central subscribed to characteristic %@&quot;, characteristic);</div><div class="line">    ...</div></pre></td></tr></table></figure>
+<p>使用上述委托方法作为一个线索开始发送中央更新的值.接着，得到characteristic更新的值，然后通过调用CBPeripheralManager类的updateValue:forCharacteristic:onSubscribedCentrals:方法向远端central发送数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSData *updatedValue = // fetch the characteristic&apos;s new value</div><div class="line">  BOOL didSendValue = [myPeripheralManager updateValue:updatedValue</div><div class="line">      forCharacteristic:characteristic onSubscribedCentrals:nil];</div></pre></td></tr></table></figure>
+<p>onSubscribedCentrals为nil代表给所有订阅的远端Central发送更新数据，当然你可以指定特定的Central。didSendValue返回是否发送成功，如果用于发送更新值底层队列是满的，则该方法返回NO，然后peripheral manager的代理会调用peripheralManagerIsReadyToUpdateSubscribers:方法，知道发送队列中有足够的空间时，你可以使用它的updateValue:forCharacteristic:onSubscribedCentrals: method方法重新发送更新的值。</p>
+<p><code>PS:当使用通知给已经订阅的远端Central发送一个单一的数据包时，你需要发送所有的更新的数据。介于characteristic值大小的限制，并不是所有的数据都可以通过通知的方式发送，所以在远端Central可以使用 CBPeripheral类的readValueForCharacteristic:方法读取改变的值</code></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/04/12/BLE 4.0 技术学习（三）外设Peripheral/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-BLE 4.0 技术学习（二）中心角色Central" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1056,75 +1168,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/03/03/Sqlite3数据库加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS9网络请求之NSURLSession" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/02/iOS9网络请求之NSURLSession/">iOS9网络请求之NSURLSession</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/02/iOS9网络请求之NSURLSession/" class="archive-article-date">
-  	<time datetime="2016-03-02T05:43:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> NSURL NSURLConnection NSURLRequest NSMutbaleURLRequest NSURLSession NSURLSessionDataTask 用法总结</p>
-<hr>
-<p><code>1.NSURLSessionDataTask</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//    http://yachaocn.com/</div><div class="line">    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;http://yachaocn.com/&quot;]</div><div class="line">                                              cachePolicy:NSURLRequestUseProtocolCachePolicy</div><div class="line">                                          timeoutInterval:10.0];  </div><div class="line">    NSURLSession *section = [NSURLSession sharedSession];</div><div class="line">    NSURLSessionDataTask *dataTaskSection = [section dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</div><div class="line">//        text/plain</div><div class="line">        [self.webView loadData:data MIMEType:@&quot;text/html&quot; textEncodingName:@&quot;utf-8&quot; baseURL:nil];</div><div class="line">        NSLog(@&quot;success...&quot;);</div><div class="line">    &#125;];</div><div class="line">    [dataTaskSection resume];</div></pre></td></tr></table></figure>
-<p><code>2.NSURLSessionUploadTask</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">NSURL *URL = [NSURL URLWithString:@&quot;http://example.com/upload&quot;];</div><div class="line">   NSURLRequest *request = [NSURLRequest requestWithURL:URL];</div><div class="line">   NSData *data = ...;</div><div class="line"></div><div class="line">   NSURLSession *session = [NSURLSession sharedSession];</div><div class="line">   NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request</div><div class="line">                                                              fromData:data</div><div class="line">                                                     completionHandler:</div><div class="line">                                         ^(NSData *data, NSURLResponse *response, NSError *error) &#123;</div><div class="line">                                             // ...</div><div class="line">                                         &#125;];</div><div class="line">     </div><div class="line">   [uploadTask resume];</div></pre></td></tr></table></figure>
-<p><code>3.NSURLSessionDownloadTask</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">NSURL *URL = [NSURL URLWithString:@&quot;http://b.hiphotos.baidu.com/image/w%3D2048/sign=6be5fc5f718da9774e2f812b8469f919/8b13632762d0f703b0faaab00afa513d2697c515.jpg&quot;];  </div><div class="line">   NSURLRequest *request = [NSURLRequest requestWithURL:URL];  </div><div class="line">   NSURLSession *session = [NSURLSession sharedSession];  </div><div class="line">   NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request  </div><div class="line">                                                           completionHandler:  </div><div class="line">                                             ^(NSURL *location, NSURLResponse *response, NSError *error) &#123;  </div><div class="line">                                                 [self showResponseCode:response];  </div><div class="line">                                                   </div><div class="line">                                                 // 输出下载文件原来的存放目录  </div><div class="line">                                                 NSLog(@&quot;%@&quot;, location);  </div><div class="line">                                                   </div><div class="line">                                                 // 设置文件的存放目标路径  </div><div class="line">                                                 NSString *documentsPath = [self getDocumentsPath];  </div><div class="line">                                                 NSURL *documentsDirectoryURL = [NSURL fileURLWithPath:documentsPath];  </div><div class="line">                                                 NSURL *fileURL = [documentsDirectoryURL URLByAppendingPathComponent:[[response URL] lastPathComponent]];  </div><div class="line">                                                   </div><div class="line">                                                 // 如果该路径下文件已经存在，就要先将其移除，在移动文件  </div><div class="line">                                                 NSFileManager *fileManager = [NSFileManager defaultManager];  </div><div class="line">                                                 if ([fileManager fileExistsAtPath:[fileURL path] isDirectory:NULL]) &#123;  </div><div class="line">                                                     [fileManager removeItemAtURL:fileURL error:NULL];  </div><div class="line">                                                 &#125;  </div><div class="line">                                                 [fileManager moveItemAtURL:location toURL:fileURL error:NULL];  </div><div class="line">                                                   </div><div class="line">                                                 // 在webView中加载图片文件  </div><div class="line">                                                 NSURLRequest *showImage_request = [NSURLRequest requestWithURL:fileURL];  </div><div class="line">                                                 [self.webView loadRequest:showImage_request];  </div><div class="line">                                                   </div><div class="line">                                                 [self.spinner stopAnimating];  </div><div class="line">                                             &#125;];  </div><div class="line">     </div><div class="line">   [downloadTask resume];</div></pre></td></tr></table></figure>
-<p><code>4.NSURLConnection</code>在ios9被弃用,<code>NSURLSessionDataTask断电续传+NSMutbaleURLRequest</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">  NSString *params = @&quot;xqsort=5&amp;jcsort=3&amp;chaxun=查询空闲教室&quot;;</div><div class="line">    </div><div class="line">    NSData *bodyData = [params dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    NSMutableURLRequest *mutURlRequest = [[NSMutableURLRequest alloc]init];</div><div class="line">//    [mutURlRequest setValue:cookie forHTTPHeaderField:@&quot;Cookie&quot;];</div><div class="line">    [mutURlRequest setURL:[NSURL URLWithString:@&quot;http://192.168.10.220:18080/data/1.jsp&quot;]];</div><div class="line">    [mutURlRequest setHTTPMethod:@&quot;POST&quot;];</div><div class="line">    [mutURlRequest setValue:@&quot;application/x-www-form-urlencoded&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</div><div class="line">    [mutURlRequest setHTTPBody:bodyData];</div><div class="line"></div><div class="line">    NSURLSession *session = [NSURLSession sharedSession];</div><div class="line">    </div><div class="line">//    断点续传用</div><div class="line">//    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@&quot;任意写&quot;];</div><div class="line">//    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]];</div><div class="line">//    继续下载</div><div class="line">//    [session downloadTaskWithResumeData:&lt;#(nonnull NSData *)#&gt;];</div><div class="line">    </div><div class="line">    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:mutURlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</div><div class="line">        </div><div class="line">    &#125;];</div><div class="line">//    开始下载</div><div class="line">    [dataTask resume];</div><div class="line">//    暂停下载</div><div class="line">//    [dataTask suspend];</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/02/iOS9网络请求之NSURLSession/">展开全文 >></a>
         </p>
       
 

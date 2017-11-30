@@ -183,6 +183,207 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-git操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/23/git操作/">git操作</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/23/git操作/" class="archive-article-date">
+  	<time datetime="2017-03-23T03:18:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Git操作-By-亚超"><a href="#Git操作-By-亚超" class="headerlink" title="Git操作    - By 亚超"></a>Git操作    - By 亚超</h1><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ol>
+<li><p>初始化仓库</p>
+<ul>
+<li>git init</li>
+</ul>
+</li>
+<li><p>配置作者信息</p>
+<ul>
+<li>git config –global user.email “youremail@corp.com”</li>
+<li>git config –global user.name “yourname”</li>
+</ul>
+</li>
+<li><p>添加文件到暂存区</p>
+<ul>
+<li>git add \<filename\> </filename\></li>
+<li>git add * (添加所有文件到暂存区)</li>
+</ul>
+</li>
+<li>移除文件<ul>
+<li>git rm \<filename\></filename\></li>
+</ul>
+</li>
+<li>重命名一个文件<ul>
+<li>git mv \<oldfilename\> \<newfilename\></newfilename\></oldfilename\></li>
+</ul>
+</li>
+<li><p>提交暂存区</p>
+<p> <code>git commit只会提交暂存区（staged）里面的文件</code></p>
+<ul>
+<li>git commit -m “message”    </li>
+</ul>
+</li>
+<li>查看工作目录的状态<ul>
+<li>git status</li>
+</ul>
+</li>
+<li>查看提交历史记录<ul>
+<li>git log</li>
+</ul>
+</li>
+<li>查看文件改变<ul>
+<li>git diff</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>##撤销操作</p>
+<ol>
+<li>撤销加入暂存区的操作<ul>
+<li>git reset HEAD \<file\></file\></li>
+</ul>
+</li>
+<li>撤销修改的操作 <ul>
+<li>git checkout – \<file\></file\></li>
+</ul>
+</li>
+<li>将本地的修改放进回收站<ul>
+<li>git stash</li>
+</ul>
+</li>
+<li>从回收站中恢复本地的修改<ul>
+<li>git stash apply</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="Tag操作"><a href="#Tag操作" class="headerlink" title="Tag操作"></a>Tag操作</h2><ol>
+<li>查看tag<ul>
+<li>git tag</li>
+</ul>
+</li>
+<li>创建tag<ul>
+<li>git tag -a v1.0 -m “my version 1.0”</li>
+</ul>
+</li>
+<li>显示tag信息<ul>
+<li>git show v1.0</li>
+</ul>
+</li>
+<li>对之前的提交打tag<ul>
+<li>git tag -a v0.1 -m “version 0.1”</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><ol>
+<li>查看分支<ul>
+<li>git branch</li>
+</ul>
+</li>
+<li>创建分支<ul>
+<li>git branch \<branchname\></branchname\></li>
+</ul>
+</li>
+<li>删除分支<ul>
+<li>git branch -d \<branchname\></branchname\></li>
+</ul>
+</li>
+<li>切换分支<ul>
+<li>git checkout \<branchname\></branchname\></li>
+</ul>
+</li>
+<li>合并分支<ul>
+<li>git merge \<branchname\></branchname\></li>
+</ul>
+</li>
+<li>rebase操作<ul>
+<li>git rebase \<basebranch\> \<newbranch\></newbranch\></basebranch\></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="远端仓库操作"><a href="#远端仓库操作" class="headerlink" title="远端仓库操作"></a>远端仓库操作</h2><ol>
+<li>克隆一个远端仓库<ul>
+<li>git clone <em>URL</em></li>
+</ul>
+</li>
+<li>添加远端仓库<ul>
+<li>git remote add \<name\> \<url\></url\></name\></li>
+</ul>
+</li>
+<li>更新远端仓库的分支和数据<ul>
+<li>git fetch \<name\> </name\></li>
+</ul>
+</li>
+<li>获取并合并远端仓库的分支到当前分支<ul>
+<li>git pull \<reponame\> \<branchname\></branchname\></reponame\></li>
+<li>eg: <code>git pull origin master</code></li>
+</ul>
+</li>
+<li>上传本地分支和数据到远端仓库<ul>
+<li>git push \<reponame\> \<branchname\></branchname\></reponame\></li>
+<li>eg: <code>git push origin master</code> </li>
+</ul>
+</li>
+<li>跟踪远端仓库上的分支<ul>
+<li>git checkout –track origin/testbranch</li>
+<li>git checkout -b test origin/testbranch</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/23/git操作/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-init和initialize区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -811,75 +1012,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/09/23/addChildViewController属性介绍/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-获取崩溃日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/获取崩溃日志/">获取崩溃日志</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/22/获取崩溃日志/" class="archive-article-date">
-  	<time datetime="2016-09-22T06:07:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="获取崩溃日志"><a href="#获取崩溃日志" class="headerlink" title="获取崩溃日志"></a>获取崩溃日志</h1><p><strong>实现原理：</strong></p>
-<p>主要借助产生异常时捕获异常的回调，在<code>NSException</code>的头文件中有如下定义：</p>
-<p><code>FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler * __nullable);</code><br><strong>步骤：</strong><br>1.在程序启动时赋予异常回调地址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSSetUncaughtExceptionHandler (&amp;UncaughtExceptionHandler);</div></pre></td></tr></table></figure>
-<p>2.实现异常回调函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> void UncaughtExceptionHandler(NSException *exception) &#123;</div><div class="line">    NSArray *arr = [exception callStackSymbols];//得到当前调用栈信息</div><div class="line">    NSString *reason = [exception reason];//非常重要，就是崩溃的原因</div><div class="line">    NSString *name = [exception name];//异常类型</div><div class="line">    </div><div class="line">    NSLog(@&quot;exception type : %@ \n crash reason : %@ \n call stack info : %@&quot;, name, reason, arr);</div><div class="line">//    NSThread *currentThread = [NSThread currentThread];</div><div class="line">    NSArray *symbolsArray = [NSThread callStackSymbols];</div><div class="line">    NSLog(@&quot;%@&quot;,symbolsArray);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>测试</strong></p>
-<p>1.测试代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSArray *array = @[@&quot;2&quot;,@&quot;1&quot;];</div><div class="line">        NSString *str = array[3];</div><div class="line">        NSLog(@&quot;%@&quot;,str);</div></pre></td></tr></table></figure>
-<p>2.控制台打印：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">2016-09-06 10:47:14.828 ViewControllerDemo[876:317539] exception type : NSRangeException </div><div class="line"> crash reason : *** -[__NSArrayI objectAtIndex:]: index 3 beyond bounds [0 .. 1] </div><div class="line"> call stack info : (</div><div class="line">	0   CoreFoundation                      0x0000000182666dc8 &lt;redacted&gt; + 148</div><div class="line">	1   libobjc.A.dylib                     0x0000000181ccbf80 objc_exception_throw + 56</div><div class="line">	2   CoreFoundation                      0x0000000182547098 CFRunLoopRemoveTimer + 0</div><div class="line">	3   ViewControllerDemo                  0x0000000100071804 __29-[ViewController viewDidLoad]_block_invoke + 156</div><div class="line">	4   libdispatch.dylib                   0x00000001000c5a7c _dispatch_call_block_and_release + 24</div><div class="line">	5   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	6   libdispatch.dylib                   0x00000001000d1cc8 _dispatch_after_timer_callback + 148</div><div class="line">	7   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	8   libdispatch.dylib                   0x00000001000ddde0 _dispatch_source_latch_and_call + 2848</div><div class="line">	9   libdispatch.dylib                   0x00000001000c7fe0 _dispatch_source_invoke + 808</div><div class="line">	10  libdispatch.dylib                   0x00000001000caec0 _dispatch_main_queue_callback_4CF + 524</div><div class="line">	11  CoreFoundation                      0x000000018261cd50 &lt;redacted&gt; + 12</div><div class="line">	12  CoreFoundation                      0x000000018261abb8 &lt;redacted&gt; + 1628</div><div class="line">	13  CoreFoundation                      0x0000000182544c50 CFRunLoopRunSpecific + 384</div><div class="line">	14  GraphicsServices                    0x0000000183e2c088 GSEventRunModal + 180</div><div class="line">	15  UIKit                               0x000000018782a088 UIApplicationMain + 204</div><div class="line">	16  ViewControllerDemo                  0x00000001000722c8 main + 124</div><div class="line">	17  libdyld.dylib                       0x00000001820e28b8 &lt;redacted&gt; + 4</div><div class="line">)</div><div class="line">2016-09-06 10:47:14.830 ViewControllerDemo[876:317539] (</div><div class="line">	0   ViewControllerDemo                  0x0000000100071eec UncaughtExceptionHandler + 220</div><div class="line">	1   CoreFoundation                      0x0000000182667138 &lt;redacted&gt; + 652</div><div class="line">	2   libobjc.A.dylib                     0x0000000181ccc23c &lt;redacted&gt; + 112</div><div class="line">	3   libc++abi.dylib                     0x0000000181cbef44 &lt;redacted&gt; + 16</div><div class="line">	4   libc++abi.dylib                     0x0000000181cbe85c &lt;redacted&gt; + 0</div><div class="line">	5   libobjc.A.dylib                     0x0000000181ccc094 &lt;redacted&gt; + 0</div><div class="line">	6   CoreFoundation                      0x0000000182547098 CFRunLoopRemoveTimer + 0</div><div class="line">	7   ViewControllerDemo                  0x0000000100071804 __29-[ViewController viewDidLoad]_block_invoke + 156</div><div class="line">	8   libdispatch.dylib                   0x00000001000c5a7c _dispatch_call_block_and_release + 24</div><div class="line">	9   libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	10  libdispatch.dylib                   0x00000001000d1cc8 _dispatch_after_timer_callback + 148</div><div class="line">	11  libdispatch.dylib                   0x00000001000c5a3c _dispatch_client_callout + 16</div><div class="line">	12  libdispatch.dylib                   0x00000001000ddde0 _dispatch_source_latch_and_call + 2848</div><div class="line">	13  libdispatch.dylib                   0x00000001000c7fe0 _dispatch_source_invoke + 808</div><div class="line">	14  libdispatch.dylib                   0x00000001000caec0 _dispatch_main_queue_callback_4CF + 524</div><div class="line">	15  CoreFoundation                      0x000000018261cd50 &lt;redacted&gt; + 12</div><div class="line">	16  CoreFoundation                      0x000000018261abb8 &lt;redacted&gt; + 1628</div><div class="line">	17  CoreFoundation                      0x0000000182544c50 CFRunLoopRunSpecific + 384</div><div class="line">	18  GraphicsServices                    0x0000000183e2c088 GSEventRunModal + 180</div><div class="line">	19  UIKit                               0x000000018782a088 UIApplicationMain + 204</div><div class="line">	20  ViewControllerDemo                  0x00000001000722c8 main + 124</div><div class="line">	21  libdyld.dylib                       0x00000001820e28b8 &lt;redacted&gt; + 4</div><div class="line">)</div><div class="line">2016-09-06 10:47:14.830 ViewControllerDemo[876:317539] *** Terminating app due to uncaught exception &apos;NSRangeException&apos;, reason: &apos;*** -[__NSArrayI objectAtIndex:]: index 3 beyond bounds [0 .. 1]&apos;</div><div class="line">*** First throw call stack:</div><div class="line">(0x182666db0 0x181ccbf80 0x182547098 0x100071804 0x1000c5a7c 0x1000c5a3c 0x1000d1cc8 0x1000c5a3c 0x1000ddde0 0x1000c7fe0 0x1000caec0 0x18261cd50 0x18261abb8 0x182544c50 0x183e2c088 0x18782a088 0x1000722c8 0x1820e28b8)</div><div class="line">libc++abi.dylib: terminating with uncaught exception of type NSException</div></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/09/22/获取崩溃日志/">展开全文 >></a>
         </p>
       
 
