@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://devchao.com">
-  <title>iOS修改系统时间颜色 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
+  <title>iOS-串行并行同步异步 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS 修改系统时间颜色做法 在info-plist 中加入View controller-based status bar appearance键值对  NO: 意思是由系统控制12[UIApplicationsharedApplication].statusBarStyle = **&amp;gt;  &amp;gt;  YES: statusBar的控制权交给了各自的控制器 在控制器中实现preferred">
+  <meta name="description" content="iOS 串行 并行 同步 异步 队列分为串行和并行 任务的执行分为同步和异步  这两两组合就成为了串行队列同步执行，串行队列异步执行，并行队列同步执行，并行队列异步执行 而异步是多线程的代名词，异步在实际引用中会开启新的线程，执行耗时操作。 那我们先来知道一个非常重要的事情： ——-  队列只是负责任务的调度，而不负责任务的执行   ——— ——- 任务是在线程中执行的  ———  队列和任务的特">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS修改系统时间颜色">
-<meta property="og:url" content="https://devchao.com/2017/11/30/iOS修改系统时间颜色/index.html">
+<meta property="og:title" content="iOS-串行并行同步异步">
+<meta property="og:url" content="https://devchao.com/2017/12/05/iOS-串行并行同步异步/index.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="iOS 修改系统时间颜色做法 在info-plist 中加入View controller-based status bar appearance键值对  NO: 意思是由系统控制12[UIApplicationsharedApplication].statusBarStyle = **&amp;gt;  &amp;gt;  YES: statusBar的控制权交给了各自的控制器 在控制器中实现preferred">
-<meta property="og:updated_time" content="2017-11-30T05:40:10.000Z">
+<meta property="og:description" content="iOS 串行 并行 同步 异步 队列分为串行和并行 任务的执行分为同步和异步  这两两组合就成为了串行队列同步执行，串行队列异步执行，并行队列同步执行，并行队列异步执行 而异步是多线程的代名词，异步在实际引用中会开启新的线程，执行耗时操作。 那我们先来知道一个非常重要的事情： ——-  队列只是负责任务的调度，而不负责任务的执行   ——— ——- 任务是在线程中执行的  ———  队列和任务的特">
+<meta property="og:updated_time" content="2017-12-05T03:27:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS修改系统时间颜色">
-<meta name="twitter:description" content="iOS 修改系统时间颜色做法 在info-plist 中加入View controller-based status bar appearance键值对  NO: 意思是由系统控制12[UIApplicationsharedApplication].statusBarStyle = **&amp;gt;  &amp;gt;  YES: statusBar的控制权交给了各自的控制器 在控制器中实现preferred">
+<meta name="twitter:title" content="iOS-串行并行同步异步">
+<meta name="twitter:description" content="iOS 串行 并行 同步 异步 队列分为串行和并行 任务的执行分为同步和异步  这两两组合就成为了串行队列同步执行，串行队列异步执行，并行队列同步执行，并行队列异步执行 而异步是多线程的代名词，异步在实际引用中会开启新的线程，执行耗时操作。 那我们先来知道一个非常重要的事情： ——-  队列只是负责任务的调度，而不负责任务的执行   ——— ——- 任务是在线程中执行的  ———  队列和任务的特">
   
     <link rel="alternative" href="/atom.xml" title="Welcome | 张亚超的技术博客YACHAO&#39;Blog" type="application/atom+xml">
   
@@ -183,39 +183,70 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-iOS修改系统时间颜色" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-iOS-串行并行同步异步" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      iOS修改系统时间颜色
+      iOS-串行并行同步异步
     </h1>
   
 
         
-        <a href="/2017/11/30/iOS修改系统时间颜色/" class="archive-article-date">
-  	<time datetime="2017-11-30T05:39:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+        <a href="/2017/12/05/iOS-串行并行同步异步/" class="archive-article-date">
+  	<time datetime="2017-12-05T03:27:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="iOS-修改系统时间颜色"><a href="#iOS-修改系统时间颜色" class="headerlink" title="iOS 修改系统时间颜色"></a>iOS 修改系统时间颜色</h1><p><strong>做法</strong></p>
-<p>在info-plist 中加入View controller-based status bar appearance键值对</p>
-<blockquote>
-<p>NO: 意思是由系统控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle = **</div><div class="line">&gt;</div></pre></td></tr></table></figure></p>
+        <h1 id="iOS-串行-并行-同步-异步"><a href="#iOS-串行-并行-同步-异步" class="headerlink" title="iOS 串行 并行 同步 异步"></a>iOS 串行 并行 同步 异步</h1><blockquote>
+<p>队列分为串行和并行</p>
+<p>任务的执行分为同步和异步</p>
 </blockquote>
-<p>&gt;</p>
+<p>这两两组合就成为了串行队列同步执行，串行队列异步执行，并行队列同步执行，并行队列异步执行</p>
+<p>而异步是多线程的代名词，异步在实际引用中会开启新的线程，执行耗时操作。</p>
+<p>那我们先来知道一个非常重要的事情：</p>
+<p>——-  队列只是负责任务的调度，而不负责任务的执行   ———</p>
+<p>——- 任务是在线程中执行的  ———</p>
 <blockquote>
-<p>YES: statusBar的控制权交给了各自的控制器</p>
-<p>在控制器中实现preferredStatusBarStyle方法，直接返回需要的状态栏设置</p>
+<p>队列和任务的特点：</p>
 </blockquote>
-<p><strong>代码</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIApplicationsharedApplication].statusBarStyle =UIStatusBarStyleLightContent;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(UIStatusBarStyle)preferredStatusBarStyle&#123;</div><div class="line">    return UIStatusBarStyleLightContent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>队列的特点：先进先出，排在前面的任务最先执行，</p>
+<p>串行队列：任务按照顺序被调度，前一个任务不执行完毕，队列不会调度</p>
+<p>并行队列：只要有空闲的线程，队列就会调度当前任务，交给线程去执行，不需要考虑前面是都有任务在执行，只要有线程可以利用，队列就会调度任务。</p>
+<p>主队列：专门用来在主线程调度任务的队列，所以主队列的任务都要在主线程来执行，主队列会随着程序的启动一起创建，我们只需get即可</p>
+<p>全局队列：是系统为了方便程序员开发提供的，其工作表现与并发队列一致，那么全局队列跟并发队列的区别是什么呢？</p>
+<p>1.全局队列：无论ARC还是MRC都不需要考录释放，因为系统提供的我们只需要get就可以了</p>
+<p>2.并发队列：再MRC下，并发队列创建出来后，需要手动释放dispatch_release()</p>
+<p>同步执行：不会开启新的线程，任务按顺序执行</p>
+<p>异步执行：会开启新的线程，任务可以并发的执行</p>
+<blockquote>
+<p>那么有这么几种组合:</p>
+</blockquote>
+<ul>
+<li>串行队列同步执行：综合上面阐述的串行队列的特点 — 按顺序执行，同步：不会开启新的线程，则串行队列同步执行只是按部就班的one by one执行。</li>
+<li>串行队列异步执行：虽然队列中存放的是异步执行的任务，但是结合串行队列的特点，前一个任务不执行完毕，队列不会调度，所以串行队列异步执行也是one by one的执行</li>
+<li>并行队列同步执行：结合上面阐述的并行队列的特点，和同步执行的特点，可以明确的分析出来，虽然并行队列可以不需等待前一个任务执行完毕就可调度下一个任务，但是任务同步执行不会开启新的线程，所以任务也是one by one的执行</li>
+<li>并行队列异步执行：再上一条中说明了并行队列的特点，而异步执行是任务可以开启新的线程，所以这中组合可以实现任务的并发，再实际开发中也是经常会用到的</li>
+</ul>
+<blockquote>
+<p>GCD实现原理:</p>
+</blockquote>
+<p>GCD有一个底层线程池，这个池中存放的是一个个的线程。之所以称为“池”，很容易理解出这个“池”中的线程是可以重用的，当一段时间后这个线程没有被调用胡话，这个线程就会被销毁。注意：开多少条线程是由底层线程池决、、、、、定的（线程建议控制再3~5条），池是系统自动来维护，不需要我们程序员来维护（看到这句话是不是很开心？）</p>
+<p>而我们程序员需要关心的是什么呢？我们只关心的是向队列中添加任务，队列调度即可。</p>
+<ul>
+<li><p>如果队列中存放的是同步任务，则任务出队后，底层线程池中会提供一条线程供这个任务执行，任务执行完毕后这条线程再回到线程池。这样队列中的任务反复调度，因为是同步的，所以当我们用currentThread打印的时候，就是同一条线程。</p>
+</li>
+<li><p>如果队列中存放的是异步的任务，（注意异步可以开线程），当任务出队后，底层线程池会提供一个线程供任务执行，因为是异步执行，队列中的任务不需等待当前任务执行完毕就可以调度下一个任务，这时底层线程池中会再次提供一个线程供第二个任务执行，执行完毕后再回到底层线程池中。</p>
+</li>
+<li><p>这样就对线程完成一个复用，而不需要每一个任务执行都开启新的线程，也就从而节约的系统的开销，提高了效率。在iOS7.0的时候，使用GCD系统通常只能开5~8条线程，iOS8.0以后，系统可以开启很多条线程，但是实在开发应用中，建议开启线程条数：3~5条最为合理。</p>
+</li>
+</ul>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
 
       
 
@@ -279,18 +310,9 @@ ga('send', 'pageview');
   
 <nav id="article-nav">
   
-    <a href="/2017/12/05/iOS-串行并行同步异步/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          iOS-串行并行同步异步
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/08/启用Mac自带的php/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">启用Mac自带的php</div>
+    <a href="/2017/11/30/iOS修改系统时间颜色/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS修改系统时间颜色</div>
       <i class="icon-circle-right"></i>
     </a>
   

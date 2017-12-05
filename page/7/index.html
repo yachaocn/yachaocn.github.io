@@ -183,6 +183,79 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS-7添加pch全局引用文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/30/iOS-7添加pch全局引用文件/">iOS_7添加pch全局引用文件</a>
+    </h1>
+  
+
+        
+        <a href="/2016/01/30/iOS-7添加pch全局引用文件/" class="archive-article-date">
+  	<time datetime="2016-01-30T01:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##xcode 7 添加pch文件</p>
+<hr>
+<ul>
+<li>1.command+N选择Other》PCH</li>
+</ul>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.15.23.png" alt=""></p>
+<ul>
+<li><p>2.在target》build setting 中搜索 prefix header<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.19.18.png" alt=""></p>
+</li>
+<li><p>3.双击后面空白，把你刚刚创建的pch文件拖进来，会自动填入你的pch文件的本地绝对路径，编译》success<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-01-30%20%E4%B8%8A%E5%8D%889.23.50.png" alt=""></p>
+</li>
+<li><p>4.恭喜你</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/01/30/iOS-7添加pch全局引用文件/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS开发问题解决kcfstreamnetworkservicetypevoip被弃用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -839,73 +912,9 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-iOS9画中画" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/27/iOS9画中画/">ios9画中画</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/27/iOS9画中画/" class="archive-article-date">
-  	<time datetime="2015-11-27T05:51:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="画中画"><a href="#画中画" class="headerlink" title="#画中画"></a>#画中画</h2><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午11.01.07.png" alt="image1"><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午9.42.36.png" alt="image2"></p>
-<p>####如果想要你的视频播放支持画中画，必须确保你的app具有以下配置:<br> 1.设置你的Base SDK 为 “Latest iOS,”</p>
-<p> <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午10.51.08.png" alt=""></p>
-<p> 2.设置你的Capabilities中的 Background Modes 为Audio, AirPlay and Picture in Picture。<br> <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午10.49.15.png" alt=""></p>
-<p> 3.确保你的app视频播放会话（session）采用了合适的类别（category），例如：AVAudioSessionCategoryPlayback.接着app的视频播放必须采用AVKit, AV Foundation, or WebKit class，他决定了你的app视频播放的性质和你给用户的体验度。</p>
-<p> 4.AVKit framework的AVPlayerViewController类能够为用户提供一个进入画中画的按钮；如果你是使用AVKit支持画中画的，如果你想使某个视频的播放不支持画中画，你只需将player viewcontroller的allowsPictureInPicturePlayback属性设置为NO就可以了。</p>
-<p> 5。如果你想提供自己的ViewController和自定义的视频播放用户界面，那个AVKit也提供了AVPictureInPictureController类，它能够和AV Foundation下的AVPlayerLayer类一起使用来实现自定义。<br> <code>假如你使用这种方式支持画中画的，那么如果你想要退出视频的画中画，请不要将AVPlayerLayer和AVPictureInPictureController相关联，只要你实例化AVPictureInPictureController和AVPlayerLayer,令playerlayer符合画中画，那么退出的方法是不执行实例。</code></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">note: Media Player movie playback在ios9正式被弃用，将不能支持视频播放，无论是否支持画中画。</div></pre></td></tr></table></figure>
-<hr>
-<p> <code>important</code>:</p>
-<p> <strong>Picture in Picture is a feature that Apple intends to always be under user control. Invoke Picture in Picture only in response to a user’s explicit request to do so. If an app invokes Picture in Picture in a way that is not under the immediate direction of the user, especially upon the app moving to the background, the app will be rejected by the App Store.</strong></p>
-<hr>
-<p>ios9中对于重在全屏播放的视频，当用户暗下home键或一个通知按钮时，视频将自动进入画中画模式，仅仅对支持画中画视频播放才有效，所以你需要如下配置你的视频播放视图：</p>
-<p> 1.确保你的app像上面描述的方式支持画中画。<br> 2.通过指定你的视频播放view适应整个app窗口大小，来配置你的视频和全屏播放。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tips:用户可以在Settings &gt; General &gt; Multitasking &gt; Persistent Video Overlay中禁用画中画模式，所以在你配置了所有的设置之后还不能支持画中画，请查看此设置。</div></pre></td></tr></table></figure>
-<p> ##最后附上本人画中画代码：<a href="https://github.com/yachaocn/picture-in-picture" target="_blank" rel="external">下载代码</a></p>
-<p> <code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/11/27/iOS9画中画/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-11-30T05:40:10.000Z</updated>
+  <updated>2017-12-05T03:27:36.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS-串行并行同步异步</title>
+    <link href="https://devchao.com/2017/12/05/iOS-%E4%B8%B2%E8%A1%8C%E5%B9%B6%E8%A1%8C%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5/"/>
+    <id>https://devchao.com/2017/12/05/iOS-串行并行同步异步/</id>
+    <published>2017-12-05T03:27:06.000Z</published>
+    <updated>2017-12-05T03:27:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="iOS-串行-并行-同步-异步"><a href="#iOS-串行-并行-同步-异步" class="headerlink" title="iOS 串行 并行 同步 异步"></a>iOS 串行 并行 同步 异步</h1><blockquote>
+<p>队列分为串行和并行</p>
+<p>任务的执行分为同步和异步</p>
+</blockquote>
+<p>这两两组合就成为了串行队列同步执行，串行队列异步执行，并行队列同步执行，并行队列异步执行</p>
+<p>而异步是多线程的代名词，异步在实际引用中会开启新的线程，执行耗时操作。</p>
+<p>那我们先来知道一个非常重要的事情：</p>
+<p>——-  队列只是负责任务的调度，而不负责任务的执行   ———</p>
+<p>——- 任务是在线程中执行的  ———</p>
+<blockquote>
+<p>队列和任务的特点：</p>
+</blockquote>
+<p>队列的特点：先进先出，排在前面的任务最先执行，</p>
+<p>串行队列：任务按照顺序被调度，前一个任务不执行完毕，队列不会调度</p>
+<p>并行队列：只要有空闲的线程，队列就会调度当前任务，交给线程去执行，不需要考虑前面是都有任务在执行，只要有线程可以利用，队列就会调度任务。</p>
+<p>主队列：专门用来在主线程调度任务的队列，所以主队列的任务都要在主线程来执行，主队列会随着程序的启动一起创建，我们只需get即可</p>
+<p>全局队列：是系统为了方便程序员开发提供的，其工作表现与并发队列一致，那么全局队列跟并发队列的区别是什么呢？</p>
+<p>1.全局队列：无论ARC还是MRC都不需要考录释放，因为系统提供的我们只需要get就可以了</p>
+<p>2.并发队列：再MRC下，并发队列创建出来后，需要手动释放dispatch_release()</p>
+<p>同步执行：不会开启新的线程，任务按顺序执行</p>
+<p>异步执行：会开启新的线程，任务可以并发的执行</p>
+<blockquote>
+<p>那么有这么几种组合:</p>
+</blockquote>
+<ul>
+<li>串行队列同步执行：综合上面阐述的串行队列的特点 — 按顺序执行，同步：不会开启新的线程，则串行队列同步执行只是按部就班的one by one执行。</li>
+<li>串行队列异步执行：虽然队列中存放的是异步执行的任务，但是结合串行队列的特点，前一个任务不执行完毕，队列不会调度，所以串行队列异步执行也是one by one的执行</li>
+<li>并行队列同步执行：结合上面阐述的并行队列的特点，和同步执行的特点，可以明确的分析出来，虽然并行队列可以不需等待前一个任务执行完毕就可调度下一个任务，但是任务同步执行不会开启新的线程，所以任务也是one by one的执行</li>
+<li>并行队列异步执行：再上一条中说明了并行队列的特点，而异步执行是任务可以开启新的线程，所以这中组合可以实现任务的并发，再实际开发中也是经常会用到的</li>
+</ul>
+<blockquote>
+<p>GCD实现原理:</p>
+</blockquote>
+<p>GCD有一个底层线程池，这个池中存放的是一个个的线程。之所以称为“池”，很容易理解出这个“池”中的线程是可以重用的，当一段时间后这个线程没有被调用胡话，这个线程就会被销毁。注意：开多少条线程是由底层线程池决、、、、、定的（线程建议控制再3~5条），池是系统自动来维护，不需要我们程序员来维护（看到这句话是不是很开心？）</p>
+<p>而我们程序员需要关心的是什么呢？我们只关心的是向队列中添加任务，队列调度即可。</p>
+<ul>
+<li><p>如果队列中存放的是同步任务，则任务出队后，底层线程池中会提供一条线程供这个任务执行，任务执行完毕后这条线程再回到线程池。这样队列中的任务反复调度，因为是同步的，所以当我们用currentThread打印的时候，就是同一条线程。</p>
+</li>
+<li><p>如果队列中存放的是异步的任务，（注意异步可以开线程），当任务出队后，底层线程池会提供一个线程供任务执行，因为是异步执行，队列中的任务不需等待当前任务执行完毕就可以调度下一个任务，这时底层线程池中会再次提供一个线程供第二个任务执行，执行完毕后再回到底层线程池中。</p>
+</li>
+<li><p>这样就对线程完成一个复用，而不需要每一个任务执行都开启新的线程，也就从而节约的系统的开销，提高了效率。在iOS7.0的时候，使用GCD系统通常只能开5~8条线程，iOS8.0以后，系统可以开启很多条线程，但是实在开发应用中，建议开启线程条数：3~5条最为合理。</p>
+</li>
+</ul>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;iOS-串行-并行-同步-异步&quot;&gt;&lt;a href=&quot;#iOS-串行-并行-同步-异步&quot; class=&quot;headerlink&quot; title=&quot;iOS 串行 并行 同步 异步&quot;&gt;&lt;/a&gt;iOS 串行 并行 同步 异步&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;队列分为串
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS修改系统时间颜色</title>
@@ -972,51 +1037,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="随笔" scheme="https://devchao.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ColorPicker</title>
-    <link href="https://devchao.com/2017/03/23/ColorPicker/"/>
-    <id>https://devchao.com/2017/03/23/ColorPicker/</id>
-    <published>2017-03-23T06:27:32.000Z</published>
-    <updated>2017-03-23T06:53:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="ColorPicker"><a href="#ColorPicker" class="headerlink" title="ColorPicker"></a>ColorPicker</h1><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/colorPicker.gif" alt=""></p>
-<p>##核心代码详解</p>
-<hr>
-<p>###取视图中某点的颜色</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">- (UIColor *) getColorOfPoint:(CGPoint)point InView:(UIView*)view</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    unsigned char pixel[4] = &#123;0&#125;;</div><div class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</div><div class="line">    CGContextRef context = CGBitmapContextCreate(pixel,</div><div class="line">                                                 1, 1, 8, 4, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast);</div><div class="line">    </div><div class="line">    CGContextTranslateCTM(context, -point.x, -point.y);</div><div class="line">    </div><div class="line">    [view.layer renderInContext:context];</div><div class="line">    </div><div class="line">    CGContextRelease(context);</div><div class="line">    CGColorSpaceRelease(colorSpace);</div><div class="line">    </div><div class="line">    NSString *hexColor = [NSString stringWithFormat:@&quot;#%02x%02x%02x&quot;,pixel[0],pixel[1],pixel[2]];</div><div class="line">    </div><div class="line">    UIColor *color = [self getColorInformationWith:hexColor];</div><div class="line">    </div><div class="line">    return color;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UIColor *)getColorInformationWith:(NSString*)hexColor</div><div class="line">&#123;</div><div class="line">    //转换hex值</div><div class="line">    unsigned int red ,green,blue;</div><div class="line">    </div><div class="line">    NSScanner *scanner = [NSScanner scannerWithString:[hexColor substringWithRange:NSMakeRange(1, 2)]];</div><div class="line">    [scanner scanHexInt:&amp;red];</div><div class="line">    </div><div class="line">    scanner = [NSScanner scannerWithString:[hexColor substringWithRange:NSMakeRange(3, 2)]];</div><div class="line">    [scanner scanHexInt:&amp;green];</div><div class="line">    </div><div class="line">    scanner = [NSScanner scannerWithString:[hexColor substringWithRange:NSMakeRange(5, 2)]];</div><div class="line">    [scanner scanHexInt:&amp;blue];</div><div class="line">    return [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>###实现UISlider渐变效果</p>
-<ul>
-<li>1.设置UISlider的MinimumTrackTintColor和MaximumTrackTintColor为[UIColor clearColor]。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[self.brightnessSlider setMinimumTrackTintColor:[UIColor clearColor]];</div><div class="line">    [self.brightnessSlider setMaximumTrackTintColor:[UIColor clearColor]];</div></pre></td></tr></table></figure>
-<ul>
-<li>2.设置UISlider的MaximumTrackImage为渐变的图片</li>
-<li>3.设置UISlider的MinimumTrackImage为透明的图片</li>
-<li>4.设置一个背景ImageView放在Slider的父视图上，位置大小和Slider的一样。并设置image为MaximumTrackImage的图片。</li>
-</ul>
-<p><code>设置图片</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">-(void)changeSliderViewStyleWithColor:(UIColor *)color</div><div class="line">&#123;</div><div class="line">    //创建渐变图片</div><div class="line">    UIImage *GradientImage = [self createGradientImageWithSize:CGSizeMake(self.brightnessSlider.bounds.size.width, 10) startColor:color endColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:1] cornerRadius:5.0f];</div><div class="line">    </div><div class="line">    UIImage *clearImage = [self createImageWithSize:CGSizeMake(self.brightnessSlider.bounds.size.width, 10) Color:[UIColor clearColor] cornerRadius:10.0f];</div><div class="line">    </div><div class="line">    [self.brightnessSlider setMaximumTrackImage:GradientImage forState:UIControlStateNormal];</div><div class="line">    [self.brightnessSlider setMinimumTrackImage:clearImage forState:UIControlStateNormal];</div><div class="line">    self.brightnessSliderBackView.image = GradientImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>创建渐变颜色的图片方法</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)createGradientImageWithSize:(CGSize)size startColor:(UIColor *)startColor endColor:(UIColor *)endColor cornerRadius:(CGFloat)radius</div><div class="line">&#123;</div><div class="line">    CGFloat height = size.height;</div><div class="line">    CGFloat with = size.width;</div><div class="line">    </div><div class="line">    CGFloat startR = 0,startG = 0, startB = 0, startA = 0;</div><div class="line">    BOOL startResult = [startColor getRed:&amp;startR green:&amp;startG blue:&amp;startB alpha:&amp;startA];</div><div class="line">    if (!startResult) return nil;</div><div class="line">    </div><div class="line">    CGFloat endR = 0 , endG = 0, endB = 0, endA = 0;</div><div class="line">    BOOL endResult = [endColor getRed:&amp;endR green:&amp;endG blue:&amp;endB alpha:&amp;endA];</div><div class="line">    if (!endResult) return nil;</div><div class="line">    //创建透明｜2倍图像(清晰，针对视网膜屏幕)上下文</div><div class="line">    UIGraphicsBeginImageContextWithOptions(CGSizeMake(with, height), NO, 2);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    //设置圆角</div><div class="line">    [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, with, height) cornerRadius:radius] addClip];</div><div class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</div><div class="line">    const CGFloat components[] = &#123;</div><div class="line">                                startR, startG, startB, startA,</div><div class="line">                                endR, endG, endB, endA,</div><div class="line">                                &#125;;</div><div class="line">    </div><div class="line">    const CGFloat locations[] = &#123;0,1&#125;;</div><div class="line">    CGGradientRef gradientRf = CGGradientCreateWithColorComponents(colorSpace, components, locations, 2);</div><div class="line">    CGPoint startPoint = CGPointMake(0, height/2);</div><div class="line">    CGPoint endPoint = CGPointMake(with, height/2);</div><div class="line">    CGContextDrawLinearGradient(context, gradientRf, startPoint, endPoint, kCGGradientDrawsBeforeStartLocation);</div><div class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    CGColorSpaceRelease(colorSpace);</div><div class="line">    CGContextRelease(context);</div><div class="line">    return image;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>创建单一颜色的图片</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)createImageWithSize:(CGSize)size Color:(UIColor *)color cornerRadius:(CGFloat)radius</div><div class="line">&#123;</div><div class="line">    UIGraphicsBeginImageContextWithOptions(size, NO, 2);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, size.width, size.height) cornerRadius:radius];</div><div class="line">    [bezierPath addClip];</div><div class="line">    CGContextAddPath(context, bezierPath.CGPath);</div><div class="line">    CGContextSetFillColorWithColor(context, color.CGColor);</div><div class="line">    </div><div class="line">    CGContextFillPath(context);</div><div class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    CGContextRelease(context);</div><div class="line">    return image;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://github.com/yachaocn/ColorPicker/archive/master.zip" target="_blank" rel="external">点击下载代码</a></p>
-<blockquote>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;ColorPicker&quot;&gt;&lt;a href=&quot;#ColorPicker&quot; class=&quot;headerlink&quot; title=&quot;ColorPicker&quot;&gt;&lt;/a&gt;ColorPicker&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;http://7xiwr4.com1.z0.gl
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="https://devchao.com/tags/iOS/"/>
     
   </entry>
   
