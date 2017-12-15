@@ -183,66 +183,6 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-AES对称加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/11/AES对称加密/">AES对称加密</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/11/AES对称加密/" class="archive-article-date">
-  	<time datetime="2015-12-11T02:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#AES对称加密 - by yachaocn</p>
-<hr>
-<p><strong>摘要</strong></p>
-<p>AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。</p>
-<p>####1.创建NSData的一个类别Encryption</p>
-<p><code>.h文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key;   //加密</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key;   //解密 </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>.m文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;NSData+Encryption.h&quot;</div><div class="line">#import &lt;CommonCrypto/CommonCrypto.h&gt;</div><div class="line"></div><div class="line">@implementation NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key   //加密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesEncrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesEncrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key   //解密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesDecrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesDecrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesDecrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>调用测试</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">    NSString *str = @&quot;你好&quot;;</div><div class="line">    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    </div><div class="line">//    加密</div><div class="line">    NSString *key = @&quot;535541213&quot;;</div><div class="line">    NSData *encryptionData = [data AES256ParmEncryptWithKey:key];</div><div class="line">    NSLog(@&quot;%@加密后数据：%@&quot;,data,encryptionData);</div><div class="line">    </div><div class="line">//解密</div><div class="line">   NSData *deData = [encryptionData AES256ParmDecryptWithKey:key];</div><div class="line">    NSString *deStr = [[NSString alloc]initWithData:deData encoding:NSUTF8StringEncoding];</div><div class="line">    NSLog(@&quot;解密后数据：%@&quot;,deStr);</div></pre></td></tr></table></figure>
-<p>本人代码：<a href="https://github.com/yachaocn/AES-Encryption" target="_blank" rel="external">下载代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/11/AES对称加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
     <article id="post-iOS9画中画" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -821,6 +761,61 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/08/26/ipad键盘参数/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-app注册默认打开类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/26/app注册默认打开类型/">iOS注册app所支持的自定义文件类型</a>
+    </h1>
+  
+
+        
+        <a href="/2015/08/26/app注册默认打开类型/" class="archive-article-date">
+  	<time datetime="2015-08-26T02:15:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="iOS注册app所支持的自定义文件类型"><a href="#iOS注册app所支持的自定义文件类型" class="headerlink" title="iOS注册app所支持的自定义文件类型"></a>iOS注册app所支持的自定义文件类型</h2><p>在plist文件中加入以下键值对：</p>
+<ul>
+<li>Document types</li>
+<li>imported type UTIs</li>
+</ul>
+<p><code>对应的plist文件如下</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;CFBundleDocumentTypes&lt;/key&gt;</div><div class="line">&lt;array&gt;</div><div class="line">	&lt;dict&gt;</div><div class="line">	&lt;key&gt;CFBundleTypeName&lt;/key&gt;</div><div class="line">	&lt;string&gt;db3&lt;/string&gt;</div><div class="line">	&lt;key&gt;CFBundleTypeRole&lt;/key&gt;</div><div class="line">	&lt;string&gt;Viewer&lt;/string&gt;</div><div class="line">	&lt;key&gt;LSHandlerRank&lt;/key&gt;</div><div class="line">	&lt;string&gt;Owner&lt;/string&gt;</div><div class="line">	&lt;key&gt;LSItemContentTypes&lt;/key&gt;</div><div class="line">	&lt;array&gt;</div><div class="line">		&lt;string&gt;ZHC.TransationAirFileDemo.db&lt;/string&gt;</div><div class="line">	&lt;/array&gt;</div><div class="line">	&lt;/dict&gt;</div><div class="line">&lt;/array&gt;</div><div class="line">&lt;key&gt;UTExportedTypeDeclarations&lt;/key&gt;</div><div class="line">&lt;array&gt;</div><div class="line">    &lt;dict&gt;</div><div class="line">        &lt;key&gt;UTTypeConformsTo&lt;/key&gt;</div><div class="line">        &lt;array&gt;</div><div class="line">            &lt;string&gt;public.plain-text&lt;/string&gt;</div><div class="line">            &lt;string&gt;public.text&lt;/string&gt;</div><div class="line">        &lt;/array&gt;</div><div class="line">        &lt;key&gt;UTTypeDescription&lt;/key&gt;</div><div class="line">        &lt;string&gt;ZHC db file&lt;/string&gt;</div><div class="line">        &lt;key&gt;UTTypeIdentifier&lt;/key&gt;</div><div class="line">        &lt;string&gt;ZHC.TransationAirFileDemo.db&lt;/string&gt;</div><div class="line">        &lt;key&gt;UTTypeTagSpecification&lt;/key&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">            &lt;key&gt;public.filename-extension&lt;/key&gt;</div><div class="line">            &lt;string&gt;db&lt;/string&gt;</div><div class="line">            &lt;key&gt;public.mime-type&lt;/key&gt;</div><div class="line">            &lt;string&gt;chemical/x-db&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">    &lt;/dict&gt;</div><div class="line">&lt;/array&gt;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/08/26/app注册默认打开类型/">展开全文 >></a>
         </p>
       
 

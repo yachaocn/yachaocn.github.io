@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-12-15T02:12:01.000Z</updated>
+  <updated>2017-12-05T03:27:36.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,26 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>merryMovie</title>
-    <link href="https://devchao.com/2017/12/15/marryMovie/"/>
-    <id>https://devchao.com/2017/12/15/marryMovie/</id>
-    <published>2017-12-15T01:27:19.000Z</published>
-    <updated>2017-12-15T02:12:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<video src="http://7xiwr4.com1.z0.glb.clouddn.com/%E6%9C%AA%E5%91%BD%E5%90%8D.mov" controls="controls" type="video/ogg" autoplay="autoplay" width="device-width" height="device-height"><br>your browser does not support the video tag<br></video>]]></content>
-    
-    <summary type="html">
-    
-      &lt;video src=&quot;http://7xiwr4.com1.z0.glb.clouddn.com/%E6%9C%AA%E5%91%BD%E5%90%8D.mov&quot; controls=&quot;controls&quot; type=&quot;video/ogg&quot; autoplay=&quot;autoplay&quot; 
-    
-    </summary>
-    
-    
-      <category term="Marry" scheme="https://devchao.com/tags/Marry/"/>
-    
-  </entry>
   
   <entry>
     <title>iOS-串行并行同步异步</title>
@@ -1031,6 +1011,32 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="Linux" scheme="https://devchao.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>duoshuo</title>
+    <link href="https://devchao.com/2017/03/23/duoshuo/"/>
+    <id>https://devchao.com/2017/03/23/duoshuo/</id>
+    <published>2017-03-23T06:43:04.000Z</published>
+    <updated>2017-03-23T06:46:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>‘多说’评论界的老大，一路走好，不舍。<br><br><br><br><br>2017-3-21</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;‘多说’评论界的老大，一路走好，不舍。&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;2017-3-21&lt;/p&gt;
+&lt;/blockquote&gt;
+
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="https://devchao.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   

@@ -183,114 +183,6 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-APP之间数据的共享" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/14/APP之间数据的共享/">APP之间数据的共享</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/14/APP之间数据的共享/" class="archive-article-date">
-  	<time datetime="2016-04-14T06:46:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS-APP之间数据的共享"><a href="#iOS-APP之间数据的共享" class="headerlink" title="iOS APP之间数据的共享"></a>iOS APP之间数据的共享</h1><p>iOS APP之间数据的共享在这里我把他分为两大块：</p>
-<ul>
-<li>1.app之间数据的互传</li>
-<li>2.app共用一套数据</li>
-</ul>
-<h2 id="I-app之间数据的互传"><a href="#I-app之间数据的互传" class="headerlink" title="I.app之间数据的互传"></a>I.app之间数据的互传</h2><p><strong>1.通过app内嵌Air drop功能实现</strong></p>
-<p>AirDrop主要通过注册应用程序可支持的文件类型，实现两台设备的两个app之间数据的共享。</p>
-<ul>
-<li>注册应用程序可支持的文件类型参见：<a href="http://yachaocn.com/2015/08/26/app%E6%B3%A8%E5%86%8C%E9%BB%98%E8%AE%A4%E6%89%93%E5%BC%80%E7%B1%BB%E5%9E%8B/" target="_blank" rel="external">http://yachaocn.com/2015/08/26/app%E6%B3%A8%E5%86%8C%E9%BB%98%E8%AE%A4%E6%89%93%E5%BC%80%E7%B1%BB%E5%9E%8B/</a></li>
-<li>UIActivityViewController用法详见<a href="http://www.cocoachina.com/industry/20140425/8233.html" target="_blank" rel="external">http://www.cocoachina.com/industry/20140425/8233.html</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">NSString *string = ...; </div><div class="line">NSURL *URL = ...; </div><div class="line"> </div><div class="line">UIActivityViewController *activityViewController = </div><div class="line">  [[UIActivityViewController alloc] initWithActivityItems:@[string, URL] </div><div class="line">                                    applicationActivities:nil]; </div><div class="line">[navigationController presentViewController:activityViewController </div><div class="line">                                      animated:YES </div><div class="line">                                    completion:^&#123; </div><div class="line">  // ... </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p><strong>2.通过蓝牙实现app之间的数据的共享与交互</strong><br>详细参见<a href="http://yachaocn.com/2016/04/12/BLE%204.0%20%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89core%20bluetooth%20%E6%A6%82%E8%BF%B0/" target="_blank" rel="external">http://yachaocn.com/2016/04/12/BLE%204.0%20%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89core%20bluetooth%20%E6%A6%82%E8%BF%B0/</a></p>
-<p><strong>3.即时通讯</strong></p>
-<p>有许多方法实现这里我只给出自己亲身用过的技术<a href="http://www.cocoachina.com/ios/20141219/10703.html" target="_blank" rel="external">基于xmpp通信协议的即时通信技术</a></p>
-<p>sockets等不再列举</p>
-<h2 id="II-App共用一套数据"><a href="#II-App共用一套数据" class="headerlink" title="II.App共用一套数据"></a>II.App共用一套数据</h2><p><strong>1.UIPasteboard</strong></p>
-<p>剪贴板是应用程序之间传递数据的简单方式，建议不要使用全局的粘贴板，而是自己根据名字创建一个新的粘贴板，防止其它地方全局拷贝的影响。然后把需要共享的内容复制到粘贴板，粘贴板的内容可以是文本、URL、图片和UIColor等，另一个app就可以根据粘贴板的名字去读取相关的信息。</p>
-<p><code>写</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIPasteboard *pasteboard = [UIPasteboard pasteboardWithName:@&quot;myPasteboard&quot; create:YES];</div><div class="line">pasteboard.string = @&quot;myShareData&quot;;</div></pre></td></tr></table></figure>
-<p><code>读</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIPasteboard *pasteboard = [UIPasteboard pasteboardWithName:@&quot;myPasteboard&quot; create:NO];</div><div class="line"> NSString *content = pasteboard.string;</div></pre></td></tr></table></figure>
-<p><strong>2.Custom URL Scheme</strong></p>
-<p>URL Scheme能够让我们通过自定义的协议在应用程序间传递信息，当你想要发送数据给一个实现了自定义URL Scheme的应用时，只需要创建好合适格式的URL，然后调用openURL:方法，系统就会载入注册了该scheme的应用然后将你的URL传递给他.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSURL *myURL = [NSURL URLWithString:@&quot;todolist://newid=20&quot;];</div><div class="line">[[UIApplication sharedApplication] openURL:myURL];</div></pre></td></tr></table></figure>
-<p>当另一个应用被启动时，只需按规则截取相应信息即可。</p>
-<p><strong>3.Shared Keychain Access</strong></p>
-<p>iOS的keychain提供一种安全保存信息的方式，可以保存密码等数据，而且keychain中的数据不会因为你删除app而丢失，你可以在重新安装后继续读取keychain中的数据。通常每个应用程序只允许访问自己在keychain中保存的数据，不过假如你使用同一个证书的话，使用相同的sychain group，不同的app也可以通过keychain来实现应用间的数据共享。</p>
-<ul>
-<li>在target》capabilities里开启Shared Keychain Access，选择相同的Shared Keychain group。</li>
-<li>使用key chain存储数据<br>用法参见<a href="http://yachaocn.com/2016/01/05/%E8%8E%B7%E5%8F%96UUID%E5%B9%B6%E5%AD%98%E5%82%A8%E5%88%B0keychain%E4%B8%AD/" target="_blank" rel="external">http://yachaocn.com/2016/01/05/%E8%8E%B7%E5%8F%96UUID%E5%B9%B6%E5%AD%98%E5%82%A8%E5%88%B0keychain%E4%B8%AD/</a></li>
-</ul>
-<p><strong>4.APP Group</strong></p>
-<ul>
-<li>1.在dev center添加一个app group：这里我创建了group.com.siniswift.WhirlyGlobe<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8B%E5%8D%882.44.09.png" alt=""></li>
-<li>2.创建一个app，在target》capabilities里开启APP Group，并选择group.com.siniswift.WhirlyGlobe </li>
-<li>3.存储数据</li>
-</ul>
-<p>方法一：NSUserDefaults</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSUserDefaults *defaut = [[NSUserDefaults alloc]initWithSuiteName:@&quot;group.com.siniswift.WhirlyGlobe&quot;];</div><div class="line">  [defaut setObject:@&quot;分享的数据&quot; forKey:@&quot;share&quot;];</div><div class="line">  [defaut synchronize];</div></pre></td></tr></table></figure>
-<p>方法二：NSFileManager</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> -(BOOL)saveTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.wangzz&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line"> </div><div class="line">    NSString *value = _textField.text; </div><div class="line">    BOOL result = [value writeToURL:containerURL atomically:YES encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line">    if (!result) &#123; </div><div class="line">        NSLog(@&quot;%@&quot;,err); </div><div class="line">    &#125; else &#123; </div><div class="line">        NSLog(@&quot;save value:%@ success.&quot;,value); </div><div class="line">    &#125; </div><div class="line">    return result;</div></pre></td></tr></table></figure>
-<ul>
-<li>4.另建一个app，重复第2步，然后读去存储的数据：</li>
-</ul>
-<p>读取数据一：NSUserDefaults</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSUserDefaults *defaut = [[NSUserDefaults alloc]initWithSuiteName:@&quot;group.com.siniswift.WhirlyGlobe&quot;];NSString *data = [defaut objectForKey:@&quot;share&quot;];</div></pre></td></tr></table></figure>
-<p>读取数据二：NSFileManager</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSString *)readTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.wangzz&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line">    NSString *value = [NSString stringWithContentsOfURL:containerURL encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line"> </div><div class="line">    return value;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/04/14/APP之间数据的共享/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
     <article id="post-BLE 4.0 技术学习（四）蓝牙后台进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1241,6 +1133,66 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/03/04/以无线方式安装企业内部应用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-UIPopoverPresentationController解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/03/UIPopoverPresentationController解析/">UIPopoverPresentationController解析</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/03/UIPopoverPresentationController解析/" class="archive-article-date">
+  	<time datetime="2016-03-03T09:41:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="iOS8新特性之UIPopoverPresentationController"><a href="#iOS8新特性之UIPopoverPresentationController" class="headerlink" title="iOS8新特性之UIPopoverPresentationController"></a>iOS8新特性之UIPopoverPresentationController</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">if ([[UIDevice currentDevice].systemVersion floatValue] &lt; 8.0f) &#123;</div><div class="line">       UIViewController *contVC = [[UIViewController alloc]init];</div><div class="line">       contVC.view.frame = self.view.frame;</div><div class="line">       UIPopoverController *popVC = [[UIPopoverController alloc]initWithContentViewController:contVC];</div><div class="line">       if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) &#123;</div><div class="line">           [popVC presentPopoverFromRect:_button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];</div><div class="line">       &#125;else&#123;</div><div class="line">           [self presentViewController:contVC animated:YES completion:nil];</div><div class="line">       &#125;</div><div class="line">   &#125;else&#123;</div><div class="line">       </div><div class="line">        UIViewController *VC = [[UIViewController alloc]init];</div><div class="line">        VC.view.frame = self.view.frame;//最大320 X 600</div><div class="line">        VC.modalPresentationStyle = UIModalPresentationPopover;</div><div class="line">        VC.view.backgroundColor = [UIColor yellowColor];</div><div class="line">        UIPopoverPresentationController *popPreVC = VC.popoverPresentationController;</div><div class="line">        popPreVC.sourceRect = _button.frame;</div><div class="line">        popPreVC.sourceView = self.view;</div><div class="line">        popPreVC.barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_button];</div><div class="line">        popPreVC.permittedArrowDirections = UIPopoverArrowDirectionAny;</div><div class="line">        popPreVC.delegate = self;</div><div class="line">        [self presentViewController:VC animated:YES completion:nil];</div><div class="line">        </div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/03/UIPopoverPresentationController解析/">展开全文 >></a>
         </p>
       
 
