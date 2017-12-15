@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-12-05T03:27:36.000Z</updated>
+  <updated>2017-12-15T01:29:37.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>merryMovie</title>
+    <link href="https://devchao.com/2017/12/15/marryMovie/"/>
+    <id>https://devchao.com/2017/12/15/marryMovie/</id>
+    <published>2017-12-15T01:27:19.000Z</published>
+    <updated>2017-12-15T01:29:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>&lt;!DOCTYPE html&gt;</p>
+<html lang="en"><br><head><br>    <meta charset="UTF-8"><br>    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br>    <meta http-equiv="X-UA-Compatible" content="ie=edge"><br>    <title>Document</title><br></head><br><body><br>    <video src="/i/movie.ogg" controls="controls" autoplay="autoplay"><br>        your browser does not support the video tag<br>        </video><br></body><br></html>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/p&gt;
+&lt;html lang=&quot;en&quot;&gt;&lt;br&gt;&lt;head&gt;&lt;br&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;&lt;br&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-wid
+    
+    </summary>
+    
+    
+      <category term="Marry" scheme="https://devchao.com/tags/Marry/"/>
+    
+  </entry>
   
   <entry>
     <title>iOS-串行并行同步异步</title>
@@ -1011,32 +1033,6 @@ scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/
     
     
       <category term="Linux" scheme="https://devchao.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>duoshuo</title>
-    <link href="https://devchao.com/2017/03/23/duoshuo/"/>
-    <id>https://devchao.com/2017/03/23/duoshuo/</id>
-    <published>2017-03-23T06:43:04.000Z</published>
-    <updated>2017-03-23T06:46:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>‘多说’评论界的老大，一路走好，不舍。<br><br><br><br><br>2017-3-21</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;‘多说’评论界的老大，一路走好，不舍。&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;2017-3-21&lt;/p&gt;
-&lt;/blockquote&gt;
-
-    
-    </summary>
-    
-    
-      <category term="随笔" scheme="https://devchao.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
