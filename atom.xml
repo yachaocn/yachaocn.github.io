@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-12-15T01:38:19.000Z</updated>
+  <updated>2017-12-15T01:39:51.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,15 +20,13 @@
     <link href="https://devchao.com/2017/12/15/marryMovie/"/>
     <id>https://devchao.com/2017/12/15/marryMovie/</id>
     <published>2017-12-15T01:27:19.000Z</published>
-    <updated>2017-12-15T01:38:19.000Z</updated>
+    <updated>2017-12-15T01:39:51.000Z</updated>
     
-    <content type="html"><![CDATA[<video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls" autoplay="autoplay"><br>        your browser does not support the video tag </video>
-
-]]></content>
+    <content type="html"><![CDATA[<video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls"><br>your browser does not support the video tag<br></video>]]></content>
     
     <summary type="html">
     
-      &lt;video src=&quot;http://www.w3school.com.cn/i/movie.ogg&quot; controls=&quot;controls&quot; autoplay=&quot;autoplay&quot;&gt;&lt;br&gt;        your browser does not support the vi
+      &lt;video src=&quot;http://www.w3school.com.cn/i/movie.ogg&quot; controls=&quot;controls&quot;&gt;&lt;br&gt;your browser does not support the video tag&lt;br&gt;&lt;/video&gt;
     
     </summary>
     
