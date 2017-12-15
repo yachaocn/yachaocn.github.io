@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://devchao.com/"/>
-  <updated>2017-12-15T01:29:37.000Z</updated>
+  <updated>2017-12-15T01:38:19.000Z</updated>
   <id>https://devchao.com/</id>
   
   <author>
@@ -20,15 +20,15 @@
     <link href="https://devchao.com/2017/12/15/marryMovie/"/>
     <id>https://devchao.com/2017/12/15/marryMovie/</id>
     <published>2017-12-15T01:27:19.000Z</published>
-    <updated>2017-12-15T01:29:37.000Z</updated>
+    <updated>2017-12-15T01:38:19.000Z</updated>
     
-    <content type="html"><![CDATA[<p>&lt;!DOCTYPE html&gt;</p>
-<html lang="en"><br><head><br>    <meta charset="UTF-8"><br>    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br>    <meta http-equiv="X-UA-Compatible" content="ie=edge"><br>    <title>Document</title><br></head><br><body><br>    <video src="/i/movie.ogg" controls="controls" autoplay="autoplay"><br>        your browser does not support the video tag<br>        </video><br></body><br></html>]]></content>
+    <content type="html"><![CDATA[<video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls" autoplay="autoplay"><br>        your browser does not support the video tag </video>
+
+]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/p&gt;
-&lt;html lang=&quot;en&quot;&gt;&lt;br&gt;&lt;head&gt;&lt;br&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;&lt;br&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-wid
+      &lt;video src=&quot;http://www.w3school.com.cn/i/movie.ogg&quot; controls=&quot;controls&quot; autoplay=&quot;autoplay&quot;&gt;&lt;br&gt;        your browser does not support the vi
     
     </summary>
     
