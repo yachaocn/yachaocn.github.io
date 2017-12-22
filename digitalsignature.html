@@ -332,47 +332,7 @@ kbd {
 
 <h1 id="toc_0"></h1>
 
-<h2 id="toc_1">原理</h2>
-
-<h3 id="toc_2">RSA非对称加解密算法</h3>
-
-<p>非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）。公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
-
-<p><a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></p>
-
-<p><a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a></p>
-
-<h3 id="toc_3">数字证书</h3>
-
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnan3wlwij30x8054aaz.jpg" alt="">
-如下图，A有一个公钥和一个私钥，公钥匙公开的谁都可以知道，私钥只有A本人知道，正常情况下A用私钥加密消息，然后B用A的公钥解密消息，两者通讯是安全的，如图：
-<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnal4xxc5j31jk0dwq6o.jpg" alt="">
-但是突然有一天来了一个黑客C,C将B拥有的A公钥换成了自己的公钥，但是B并不知情，B还认为自己拥有的是A的公钥，继续给A发送消息。由于B现在拥有的公钥其实是C的公钥，所以他发送的消息被C截取到后，由于消息是用C的公钥加密的，所以C用自己的私钥就能轻松解密消息，自此C就成功替代A完成了与B的通讯。如下图：</p>
-
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnav5khlkj31ji0s447n.jpg" alt=""></p>
-
-<p>为了解决这个问题B需要一个机构来证明她所拥有的公钥确实是A本人的，而不是C的公钥，就此CA机构应运而生。
-<a href="#CA%E9%A2%81%E5%8F%91%E8%AF%81%E4%B9%A6%E8%BF%87%E7%A8%8B">点击查看CA颁发证书过程</a>
-通过<a href="#%E9%AA%8C%E8%AF%81%E8%AF%81%E4%B9%A6%E6%9C%89%E6%95%88%E6%80%A7">验证证书有效性</a>B就能够确定自己所拥有的证书是不是真正的A的证书。</p>
-
-<h3 id="toc_4">数字签名</h3>
-
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmn9rbez6tj31d80rc7dy.jpg" alt=""></p>
-
-<h3 id="toc_5">CA证书颁发:</h3>
-
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmluqk9ni1j319g10oauj.jpg" alt=""></p>
-
-<p><a name="CA颁发证书过程">CA颁发证书简明过程：</a>
-<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmn8ng2deoj317w0q6wjc.jpg" alt=""></p>
-
-<p><a name="验证证书有效性"></a></p>
-
-<h3 id="toc_6">验证证书有效性</h3>
-
-<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmo5b79pm0j31lm0qck0k.jpg" alt=""></p>
-
-<h2 id="toc_7">针对EFB应用方案</h2>
+<h2 id="toc_1">针对EFB应用方案</h2>
 
 <p>根据中国民用航空局飞行标准司，关于电子签名的咨询通告
 5.9节描述：
@@ -389,7 +349,7 @@ kbd {
 <p>因此个人PDF签名证书必须由符合电子签名法、并且持有中
 华人民共和国工业和信息化部颁发且在有效期内的电子认证服务许可证的机构颁发的证书才有效。</p>
 
-<h3 id="toc_8">获得PDF签名证书</h3>
+<h3 id="toc_2">获得PDF签名证书</h3>
 
 <blockquote>
 <p>CA机构</p>
@@ -403,14 +363,14 @@ kbd {
 
 <p>CFCA提供一个<code>CFCA证书注册审核系统</code>(简称RA)的系统，此系统部署在企业，可用于企业自己操作生成CFCA签名的个人证书，此系统通过安全网络通道连接至CFCA机房，在线通过CFCA根证书颁发个人证书，然后返回RA系统。通过此系统获得的个人证书属于CFCA直接颁发的证书，和个人直接在CFCA申请的证书一样。详细请见<a href="http://www.cfca.com.cn/20150806/101228278.html">http://www.cfca.com.cn/20150806/101228278.html</a></p>
 
-<h3 id="toc_9">分发证书方式：</h3>
+<h3 id="toc_3">分发证书方式：</h3>
 
 <blockquote>
 <p>发送邮件链接形式分发。
 用户接收后，加密后存入EFB，供后续签名使用。</p>
 </blockquote>
 
-<h3 id="toc_10">签名PDF</h3>
+<h3 id="toc_4">签名PDF</h3>
 
 <p>私钥和证书导入EFB后，飞行员点击签名时调用PSPDFKit API为PDF进行签名,PSPDFKit 签名符合<a href="https://www.adobe.com/devnet-docs/acrobatetk/tools/DigSig/Acrobat_DigitalSignatures_in_PDF.pdf">Adobe Digital Signatures in a PDF</a>签名标准。
 了解更多PSPDF电子签名相关信息请移步<a href="https://pspdfkit.com/guides/ios/6.9/features/digital-signatures/?search=digis">PSPDFKit digital-signatures</a></p>
@@ -443,12 +403,7 @@ for (PSPDFX509 *certificate in certificates) {
 
 <p>签名后的PDF含有以下信息：个人的证书、签名字符串、PDF内容</p>
 
-<p><a name="验证PDF是否被篡改过"></a></p>
-
-<h3 id="toc_11">验证签名是否有效方法：</h3>
-
-<p>原理如下：
-<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnci4hsfqj31lw0va7fb.jpg" alt=""></p>
+<p>签名验证网站：</p>
 
 <p><a href="https://www.tsign.cn/static/page/main-page-verify.html">e-qianbao-PDF Verify</a></p>
 
@@ -456,7 +411,7 @@ for (PSPDFX509 *certificate in certificates) {
 
 <p><a href="https://pspdfkit.com/guides/ios/6.9/features/digital-signatures/?search=digis#toc_how-does-adobe-acrobat-validate-a-document-signed-by-pspdfkit">validate-a-document-signed-by-pspdfkit</a></p>
 
-<h3 id="toc_12">电子取证</h3>
+<h3 id="toc_5">电子取证</h3>
 
 <p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmpc4zxjnlj30x40fgdl5.jpg" alt=""></p>
 
@@ -465,6 +420,55 @@ for (PSPDFX509 *certificate in certificates) {
 <p><a href="http://www.miit.gov.cn/n1146285/n1146352/n3054355/n3057254/n3057259/c3868973/content.html">中华人民共和国电子签名法（2015年修正）</a></p>
 
 <p><a href="http://7xiwr4.com1.z0.glb.clouddn.com/%E7%94%B5%E5%AD%90%E7%AD%BE%E5%90%8D%E3%80%81%E7%94%B5%E5%AD%90%E8%AE%B0%E5%BD%95%E5%AD%98%E6%A1%A3%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%94%B5%E5%AD%90%E6%89%8B%E5%86%8C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%8E%A5%E5%8F%97%E4%B8%8E%E4%BD%BF%E7%94%A8.pdf">中国民用航空局飞行标准司-关于电子签名的咨询通告</a></p>
+
+<hr>
+
+<h2 id="toc_6">原理</h2>
+
+<h3 id="toc_7">RSA非对称加解密算法</h3>
+
+<p>非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）。公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。</p>
+
+<p><a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA算法原理(一)</a></p>
+
+<p><a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA算法原理(二)</a></p>
+
+<h3 id="toc_8">数字证书</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnan3wlwij30x8054aaz.jpg" alt="">
+如下图，A有一个公钥和一个私钥，公钥匙公开的谁都可以知道，私钥只有A本人知道，正常情况下A用私钥加密消息，然后B用A的公钥解密消息，两者通讯是安全的，如图：
+<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnal4xxc5j31jk0dwq6o.jpg" alt="">
+但是突然有一天来了一个黑客C,C将B拥有的A公钥换成了自己的公钥，但是B并不知情，B还认为自己拥有的是A的公钥，继续给A发送消息。由于B现在拥有的公钥其实是C的公钥，所以他发送的消息被C截取到后，由于消息是用C的公钥加密的，所以C用自己的私钥就能轻松解密消息，自此C就成功替代A完成了与B的通讯。如下图：</p>
+
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnav5khlkj31ji0s447n.jpg" alt=""></p>
+
+<p>为了解决这个问题B需要一个机构来证明她所拥有的公钥确实是A本人的，而不是C的公钥，就此CA机构应运而生。
+<a href="#CA%E9%A2%81%E5%8F%91%E8%AF%81%E4%B9%A6%E8%BF%87%E7%A8%8B">点击查看CA颁发证书过程</a>
+通过<a href="#%E9%AA%8C%E8%AF%81%E8%AF%81%E4%B9%A6%E6%9C%89%E6%95%88%E6%80%A7">验证证书有效性</a>B就能够确定自己所拥有的证书是不是真正的A的证书。</p>
+
+<h3 id="toc_9">数字签名</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmn9rbez6tj31d80rc7dy.jpg" alt=""></p>
+
+<h3 id="toc_10">CA证书颁发:</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmluqk9ni1j319g10oauj.jpg" alt=""></p>
+
+<p><a name="CA颁发证书过程">CA颁发证书简明过程：</a>
+<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmn8ng2deoj317w0q6wjc.jpg" alt=""></p>
+
+<p><a name="验证证书有效性"></a></p>
+
+<h3 id="toc_11">验证证书有效性</h3>
+
+<p><img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmo5b79pm0j31lm0qck0k.jpg" alt=""></p>
+
+<p><a name="验证PDF是否被篡改过"></a></p>
+
+<h3 id="toc_12">验证PDF是否被篡改过：</h3>
+
+<p>实现原理如下：
+<img src="https://ws1.sinaimg.cn/large/00663vn1ly1fmnci4hsfqj31lw0va7fb.jpg" alt=""></p>
 
 
 
