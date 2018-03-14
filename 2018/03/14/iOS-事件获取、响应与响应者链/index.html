@@ -17,7 +17,8 @@
 <meta property="og:description" content="iOS 事件获取、响应与响应者链 事件分发流程 应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。 图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpc6l3x5w1j312u0ps79j.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpcb21lyxsj30uu0kstbf.jpg">
-<meta property="og:updated_time" content="2018-03-14T06:31:26.000Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpcccwdv5uj30to0eqjrv.jpg">
+<meta property="og:updated_time" content="2018-03-14T06:56:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 事件获取、响应与响应者链">
 <meta name="twitter:description" content="iOS 事件获取、响应与响应者链 事件分发流程 应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。 图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些">
@@ -260,6 +261,11 @@ ga('send', 'pageview');
 <ul>
 <li>下一个responder是app委托，但前提是app委托是UIResponder的一个实例而不是视图，视图控制器，或者app对象本身。</li>
 </ul>
+<p>实例：一个圆形的按钮有一半超出了其父视图的边界，此时点击超出的一半时无法响应button的点击事件，下面我们将运用此知识，来解决超出部分无法响应事件的问题。</p>
+<p><img src="http://ww1.sinaimg.cn/large/00663vn1ly1fpcccwdv5uj30to0eqjrv.jpg" alt=""></p>
+<p>我们知道UIKit使用基于视图的hittest来确定触摸事件发生的位置，通过UIView的<code>hitTest:withEvent:</code> 方法遍历视图层次结构，寻找包含指定触摸的最深子视图，并返回，使这个视图成为触摸事件的第一个响应者。此方法内部通过<code>pointInside:withEvent:</code>来确定点击的点是否在当前区域内，不在直接返回nil，当调用至button父视图的<code>pointInside:withEvent</code>方法时，由于点不在其父视图范围内，则返回NO,如果pointInside:withEvent返回NO，则<code>hitTest:withEvent:</code>就会返回nil，表示此视图和所有子视图没有能够响应此事件。</p>
+<p>因此我们可以重写button父视图的<code>hitTest:withEvent:</code>方法，当点击在蓝色区域时返回当前button,即可解决此问题。</p>
+<p><a href="http://7xiwr4.com1.z0.glb.clouddn.com/Demo.zip" target="_blank" rel="external">完整代码</a></p>
 <p><code>技术交流群:</code><strong>494826724</strong></p>
 
       
