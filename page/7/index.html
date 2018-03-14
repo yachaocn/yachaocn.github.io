@@ -183,6 +183,74 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Missing iOS Distribution signing identity" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/16/Missing iOS Distribution signing identity/">Missing iOS Distribution signing identity</a>
+    </h1>
+  
+
+        
+        <a href="/2016/02/16/Missing iOS Distribution signing identity/" class="archive-article-date">
+  	<time datetime="2016-02-16T09:16:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="此证书的签发者无效Missing-iOS-Distribution-signing-identity问题解决"><a href="#此证书的签发者无效Missing-iOS-Distribution-signing-identity问题解决" class="headerlink" title="此证书的签发者无效Missing iOS Distribution signing identity问题解决"></a>此证书的签发者无效Missing iOS Distribution signing identity问题解决</h2><p>今天准备打包ipa，结果Xcode报以下错误：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-16%20%E4%B8%8B%E5%8D%885.02.17.png" alt=""></p>
+<p>查看证书后发现Develop证书和Distribution证书都提示：<code>此证书的签发者无效</code>。</p>
+<hr>
+<p>问题原因：</p>
+<ul>
+<li><p>Apple Worldwide Developer Relations Certification Authority证书过期了。<br>AppleWWDRCA证书实际上就是对iOS证书（即Develop证书和Distribution证书）的授权认证，其公钥用于解密认证证书的可靠性。</p>
+</li>
+<li><p>iOS以及Mac OS X系统（在安装Xcode时）将自动安装AppleWWDRCA.cer(Apple Worldwide Developer Relations Certification Authority)这个中间证书（Intermediate Certificates）。</p>
+</li>
+</ul>
+<hr>
+<p>解决办法：</p>
+<ul>
+<li>下载最新的AppleWWDRCA证书。 <a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">点击下载</a> </li>
+<li>打开钥匙串，选择登录，然后选择下面的证书</li>
+<li>选择桌面左上角的显示→显示已过期的证书。</li>
+<li>这时候你会发现一个过期的“WWDR Certificate”（Apple Worldwide Developer Relations Certification Authority），删除它。<code>特别注意：有的在系统那一栏也有这个过期的“WWDR Certificate”，也一并删除它，没有就不作处理。</code></li>
+<li>再回头点击Develop证书和Distribution证书，不出意外他们都变成“此证书有效”了。</li>
+</ul>
+<p>摘录自<a href="http://blog.csdn.net/iosHot" target="_blank" rel="external">http://blog.csdn.net/iosHot</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/02/16/Missing iOS Distribution signing identity/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS-7添加pch全局引用文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -852,66 +920,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-AES对称加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/11/AES对称加密/">AES对称加密</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/11/AES对称加密/" class="archive-article-date">
-  	<time datetime="2015-12-11T02:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#AES对称加密 - by yachaocn</p>
-<hr>
-<p><strong>摘要</strong></p>
-<p>AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。</p>
-<p>####1.创建NSData的一个类别Encryption</p>
-<p><code>.h文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key;   //加密</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key;   //解密 </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>.m文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;NSData+Encryption.h&quot;</div><div class="line">#import &lt;CommonCrypto/CommonCrypto.h&gt;</div><div class="line"></div><div class="line">@implementation NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key   //加密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesEncrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesEncrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key   //解密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesDecrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesDecrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesDecrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>调用测试</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">    NSString *str = @&quot;你好&quot;;</div><div class="line">    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    </div><div class="line">//    加密</div><div class="line">    NSString *key = @&quot;535541213&quot;;</div><div class="line">    NSData *encryptionData = [data AES256ParmEncryptWithKey:key];</div><div class="line">    NSLog(@&quot;%@加密后数据：%@&quot;,data,encryptionData);</div><div class="line">    </div><div class="line">//解密</div><div class="line">   NSData *deData = [encryptionData AES256ParmDecryptWithKey:key];</div><div class="line">    NSString *deStr = [[NSString alloc]initWithData:deData encoding:NSUTF8StringEncoding];</div><div class="line">    NSLog(@&quot;解密后数据：%@&quot;,deStr);</div></pre></td></tr></table></figure>
-<p>本人代码：<a href="https://github.com/yachaocn/AES-Encryption" target="_blank" rel="external">下载代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/11/AES对称加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -926,7 +934,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 DevChao
+    		&copy; 2018 DevChao
     	</div>
 <!-- 卜算子 访问统计 -->
 <div class="busuanzi-count">
@@ -1045,10 +1053,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Marry</a>
               </li>
              
               <li class="article-tag-list-item">
