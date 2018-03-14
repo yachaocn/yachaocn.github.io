@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://devchao.com">
-  <title>Archives: 2018 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
+  <title>iOS 事件获取、响应与响应者链 | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每一个不起眼的瞬间都是对生命的辜负！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:url" content="https://devchao.com/archives/2018/index.html">
+  <meta name="description" content="iOS 事件获取、响应与响应者链 事件分发流程 应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。 图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 事件获取、响应与响应者链">
+<meta property="og:url" content="https://devchao.com/2018/03/14/iOS-事件获取、响应与响应者链/index.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta property="og:description" content="iOS 事件获取、响应与响应者链 事件分发流程 应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。 图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpc6l3x5w1j312u0ps79j.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpcb21lyxsj30uu0kstbf.jpg">
+<meta property="og:updated_time" content="2018-03-14T06:31:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta name="twitter:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta name="twitter:title" content="iOS 事件获取、响应与响应者链">
+<meta name="twitter:description" content="iOS 事件获取、响应与响应者链 事件分发流程 应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。 图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/00663vn1ly1fpc6l3x5w1j312u0ps79j.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Welcome | 张亚超的技术博客YACHAO&#39;Blog" type="application/atom+xml">
   
@@ -181,36 +186,120 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-iOS-事件获取、响应与响应者链" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/14/iOS-事件获取、响应与响应者链/" class="archive-article-date">
-  	<time datetime="2018-03-14T06:30:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/14/iOS-事件获取、响应与响应者链/">iOS 事件获取、响应与响应者链</a>
+    <h1 class="article-title" itemprop="name">
+      iOS 事件获取、响应与响应者链
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/03/14/iOS-事件获取、响应与响应者链/" class="archive-article-date">
+  	<time datetime="2018-03-14T06:30:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="iOS-事件获取、响应与响应者链"><a href="#iOS-事件获取、响应与响应者链" class="headerlink" title="iOS 事件获取、响应与响应者链"></a>iOS 事件获取、响应与响应者链</h1><hr>
+<p>事件分发流程</p>
+<p>应用程序的main run loop处理所有与用户相关的事件。UIApplication对象在启动时设置主运行循环，并使用它处理事件和处理基于视图的接口的更新。顾名思义，主运行循环在应用程序的主线程上执行。这种行为确保了用户相关事件按接收顺序依次处理。</p>
+<p>图2 - 2显示了主循环运行的体系结构以及用户事件导致应用程序采取行动。当用户与设备进行交互,这些交互相关事件由系统生成并交付给应用程序通过一个特殊的端口由UIKit设立。事件由应用程序在内部排队，并逐个发送到主运行循环执行。UIApplication对象是接收事件的第一个对象，并决定需要做什么。一个触摸事件通常被发送到主窗口对象，后者又将它发送到触摸发生的视图。其他事件可能会通过不同的应用程序对象略有不同的路径。</p>
+<p><img src="http://ww1.sinaimg.cn/large/00663vn1ly1fpc6l3x5w1j312u0ps79j.jpg" alt=""></p>
+<p>app是通过 UIResponder 的对象接受和处理事件的。 UIResponder的子类包括UIView, UIViewController和 UIApplication，Responder对象接受原始事件数据后必须处理它或者发送到另一个Responder对象，当你的app接收到事件后，UIKit会自动将该事件引导到最合适的responder对象，即firstresponder。UIKit定义了一个默认的传递事件的规则，但是你可以在responder对象中覆盖适当的属性来改变这些规则。图1显示了应用程序中默认的responder chain。</p>
+<p><img src="http://ww1.sinaimg.cn/large/00663vn1ly1fpcb21lyxsj30uu0kstbf.jpg" alt=""></p>
+<h2 id="确定事件的第一个响应者"><a href="#确定事件的第一个响应者" class="headerlink" title="确定事件的第一个响应者"></a>确定事件的第一个响应者</h2><p>对于每种类型的事件，UIKit指定第一个响应器，并首先将事件发送给该对象。第一个响应者根据事件的类型而变化。</p>
+<p>触摸事件</p>
+<ul>
+<li>第一个响应器是触摸发生的视图。</li>
+</ul>
+<p>按压事件</p>
+<ul>
+<li>第一反应者是有焦点的反应者。</li>
+</ul>
+<p>Shake-motion事件</p>
+<ul>
+<li>第一个responder是你(或UIKit)指定为第一个responder的对象。</li>
+</ul>
+<p>远程控制的事件</p>
+<ul>
+<li>第一个responder是你(或UIKit)指定为第一个responder的对象。</li>
+</ul>
+<p>编辑菜单信息</p>
+<ul>
+<li>第一个responder是你(或UIKit)指定为第一个responder的对象。</li>
+</ul>
+<p>`请注意</p>
+<p>与加速度计、陀螺仪和磁力仪相关的运动事件不跟随responder chain。相反，Core Motion将这些事件直接传递给指定的对象。有关更多信息，请参见Core Motion Framework。`</p>
+<h2 id="确定哪个Responder包含触摸事件"><a href="#确定哪个Responder包含触摸事件" class="headerlink" title="确定哪个Responder包含触摸事件"></a>确定哪个Responder包含触摸事件</h2><p>UIKit使用基于视图的hittest来确定触摸事件发生的位置。具体来说，UIKit将触摸位置与视图层级中视图对象的边界进行了比较。<code>hitTest:withEvent:</code> UIView的方法遍历视图层次结构，寻找包含指定触摸的最深子视图。这个视图成为触摸事件的第一个响应器。</p>
+<p>该方法通过调用pointInside:withEvent:每个子视图的方法来确定哪个子视图应该接收一个触摸事件，从而遍历视图层次结构。如果pointInside:withEvent:返回YES，那么子视图的层次结构也同样遍历，直到找到包含指定点的frontmost视图。如果视图不包含该点，则忽略其视图层次结构的分支。您很少需要自己调用这个方法，但是您可以重写它以隐藏来自子视图的触摸事件。</p>
+<p>这个方法忽略了隐藏的视图对象，这些对象有禁用的用户交互，或者有一个小于0.01的alpha级别。此方法在确定命中时不考虑视图的内容。因此，即使指定的点位于该视图内容的透明部分中，仍然可以返回视图。</p>
+<p>即使它们实际上位于接收方的子视图中，也不会报告在接收方边界之外的点。如果当前视图的clipsToBounds属性设置为NO，而受影响的子视图扩展到视图的范围之外，则会出现这种情况。</p>
+<p><code>请注意:如果触摸位置在视图的边界之外，hitTest:withEvent:方法将忽略该视图及其所有子视图。因此，当视图的clipsToBounds属性为NO时，即使它们碰巧包含触摸，也不会返回该视图边界之外的子视图。有关hitTest行为的更多信息，请参见hitTest:withEvent:方法在UIView中的讨论。</code></p>
+<h2 id="改变响应者链"><a href="#改变响应者链" class="headerlink" title="改变响应者链"></a>改变响应者链</h2><p>你可以通过覆盖responder对象的nextResponder属性来改变responder chain。当你这样做时，下一个responder是你返回的对象。</p>
+<p>许多UIKit类已经覆盖了这个属性并返回特定的对象。</p>
+<p>UIView对象</p>
+<ul>
+<li>如果视图是视图控制器的根视图，则下一个响应器是视图控制器;否则，下一个响应器是视图的父视图。</li>
+</ul>
+<p>UIViewController对象</p>
+<ul>
+<li>如果视图控制器的视图是窗口的根视图，则下一个响应器是窗口对象。</li>
+<li>如果视图控制器是由另一个视图控制器提供的，下一个响应器是present视图控制器。</li>
+</ul>
+<p>UIWindow对象</p>
+<ul>
+<li>窗口的下一个responder是UIApplication对象。</li>
+</ul>
+<p>UIApplication对象</p>
+<ul>
+<li>下一个responder是app委托，但前提是app委托是UIResponder的一个实例而不是视图，视图控制器，或者app对象本身。</li>
+</ul>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf2szndhj30gg0gadko.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf3i5lgkj30gu0guwgp.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -222,19 +311,54 @@ ga('send', 'pageview');
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/12/05/iOS-串行并行同步异步/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS-串行并行同步异步</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-    
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
 
 
           </div>
@@ -272,8 +396,8 @@ ga('send', 'pageview');
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
