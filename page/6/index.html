@@ -183,6 +183,128 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-以无线方式安装企业内部应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/04/以无线方式安装企业内部应用/">以无线方式安装企业内部应用</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/04/以无线方式安装企业内部应用/" class="archive-article-date">
+  	<time datetime="2016-03-04T09:43:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="以无线方式安装企业内部应用"><a href="#以无线方式安装企业内部应用" class="headerlink" title="以无线方式安装企业内部应用"></a>以无线方式安装企业内部应用</h1><p><code>参考</code>：</p>
+<ul>
+<li><a href="http://help.apple.com/deployment/ios/#/apda0e3426d7" target="_blank" rel="external">iOS部署参考</a>–若打不开请点击<a href="http://yachaocn.com/2016/03/05/%E4%BB%A5%E6%97%A0%E7%BA%BF%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E5%8F%82%E8%80%83/" target="_blank" rel="external">这里</a></li>
+</ul>
+<h2 id="I-申请企业开发者账号"><a href="#I-申请企业开发者账号" class="headerlink" title="I.申请企业开发者账号"></a>I.申请企业开发者账号</h2><ul>
+<li>提供邓白氏编码和其他资料给苹果申请企业帐号,参见<a href="http://yachaocn.com/2016/03/05/申请iOS企业开发者账号/" target="_blank" rel="external">申请企业开发者账号</a></li>
+</ul>
+<h2 id="II-创建项目-打包app"><a href="#II-创建项目-打包app" class="headerlink" title="II.创建项目-打包app"></a>II.创建项目-打包app</h2><ul>
+<li><p>点击prutuct &gt; Archive,选择Save for Enterprise Deployment</p>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb1.png" alt=""></p>
+</li>
+<li>选择企业账号<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb2.png" alt=""></li>
+<li>选择导出方式<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb3.png" alt=""></li>
+<li>启用自动生成mainifest.plist用于无线安装应用<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb4.png" alt=""></li>
+<li><p>填写.ipa文件所在地址APP URL、imageURL<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb5.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- URL：应用 (.ipa) 文件的完全限定 HTTPS URL</div><div class="line">	- display-image：57 x 57 像素的 PNG 图像，在下载和安装过程中显示。指定图像的完全限定 URL</div><div class="line">	- full-size-image：512 x 512 像素的 PNG 图像，表示 iTunes 中相应的应用</div><div class="line">	- bundle-identifier：应用的包标识符，与 Xcode 项目中指定的完全一样</div><div class="line">	- bundle-version：应用的包版本，在 Xcode 项目中指定</div><div class="line">	- title：下载和安装过程中显示的应用的名称</div></pre></td></tr></table></figure>
+</li>
+<li><p>选择Export，导出ipa，此时你可以看到在打包的文件下多生成一个mainifest.plist，此plist文件用于iOS设备解析，并自动下载应用使用。</p>
+</li>
+</ul>
+<h2 id="III-构建网站"><a href="#III-构建网站" class="headerlink" title="III.构建网站"></a>III.构建网站</h2><p><strong>首先购买SSL证书， 然后再服务器上安装SSL证书</strong></p>
+<p>购买证书就不说了吧，掏钱的东西，一般都很简单，只要点购买-点掏钱就完事儿了。</p>
+<ul>
+<li>安装服务器证书,参见<a href="http://www.itrus.cn/html/fuwuyuzhichi/fuwuqizhengshuanzhuangpeizhizhinan/431.html" target="_blank" rel="external">http://www.itrus.cn/html/fuwuyuzhichi/fuwuqizhengshuanzhuangpeizhizhinan/431.html</a><br>在浏览器上可以使用<a href="https://www.domain.com浏览，" target="_blank" rel="external">https://www.domain.com浏览，</a> 并且https是绿色受信任的才可以。</li>
+</ul>
+<p><strong>将这些项目上传到网站上可供已认证的用户访问的区域:</strong></p>
+<p>(plist文件上传到网络空间，生成http链接（iOS6）或https链接（iOS7 之后），可下载这个plist文件，同时ipa也放到网络空间，并保证plist文件中的下载链接指向这个ipa)</p>
+<ul>
+<li>应用 (.ipa) 文件</li>
+<li>清单 (.plist) 文件</li>
+</ul>
+<p>您的网站可以是链接到清单文件的单个页面。用户轻点 Web 链接后会下载清单文件，并触发下载和安装。<br>以下是示例链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;itms-services://?action=download-manifest&amp;url=https://example.com/manifest.plist&quot;&gt;Install App&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p><a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/yachaocn/APPInstall/master/manifest.plist" target="_blank" rel="external">Install App</a></p>
+<p><code>请勿添加归档应用 (.ipa) 的网站链接。载入清单文件时，设备会下载该 .ipa 文件。虽然 URL 的协议部分是“itms-services”，但 iTunes Store 并不参与此过程。此外，请确定 .ipa 文件可通过 HTTPS 进行访问，并且您的站点已使用 iOS 信任的证书进行了签名。如果自签名证书没有受信任的锚点并且无法由 iOS 设备验证，安装会失败。</code></p>
+<p>当用户下载这个plist文件后，iOS系统会自行解析xml，然后分析ipa证书等，然后安装</p>
+<p><strong>设定服务器 MIME 类型</strong></p>
+<p>参见<a href="http://jingyan.baidu.com/article/a3aad71aa5fbfbb1fb0096b1.html" target="_blank" rel="external">http://jingyan.baidu.com/article/a3aad71aa5fbfbb1fb0096b1.html</a></p>
+<p>您可能需要配置 Web 服务器，让清单文件和应用文件可正确传输。</p>
+<p>对于 OS X Server，请将 MIME 类型添加到 Web 服务的 MIME 类型设置：</p>
+<ul>
+<li>application/octet-stream ipa</li>
+<li>text/xml plist</li>
+</ul>
+<p>对于微软的互联网信息服务器 (IIS)，请使用 IIS Manager 在服务器的“属性”页面中添加 MIME 类型：</p>
+<ul>
+<li>.ipa application/octet-stream</li>
+<li>.plist text/xml</li>
+</ul>
+<p><strong>网络配置要求</strong></p>
+<p>如果设备连接到封闭式内部网络，那么您必须允许它访问以下站点：</p>
+<ul>
+<li>ax.init.itunes.apple.com：使用蜂窝移动网络下载应用时，设备会限制其当前文件大小。如果无法访问此站点，安装可能会失败。</li>
+<li>ocsp.apple.com：设备会联系此网站，检查用来给预置描述文件签名的分发证书状态。</li>
+</ul>
+<p><strong>证书验证</strong></p>
+<p>用户首次打开应用时，系统会通过联系 Apple 的 OCSP 服务器来验证分发证书。如果证书已撤销，应用将不会启动。为了验证状态，设备必须能够访问 ocsp.apple.com。</p>
+<p>OCSP 响应会在设备上缓存一段时间（由 OCSP 服务器指定），当前为 3 到 7 天之间。在重新启动设备和缓存的响应过期之前，将不会再次检查证书的有效性。如果当时收到撤销命令，系统将阻止应用运行。</p>
+<p><code>【警告】撤销分发证书会导致使用该证书签名的所有应用失效。只有万不得已时才应撤销证书，比如确定专用密钥已丢失或确信证书已遭破解。</code></p>
+<p><code>示例 iOS 应用清单文件</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</div><div class="line">&lt;plist version=&quot;1.0&quot;&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">  &lt;!-- array of downloads.--&gt;</div><div class="line">  &lt;key&gt;items&lt;/key&gt;</div><div class="line">  &lt;array&gt;</div><div class="line">   &lt;dict&gt;</div><div class="line">    &lt;!-- an array of assets to download --&gt;</div><div class="line">     &lt;key&gt;assets&lt;/key&gt;</div><div class="line">      &lt;array&gt;</div><div class="line">       &lt;!-- software-package: the ipa to install.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;!-- required. the asset kind.--&gt;</div><div class="line">          &lt;key&gt;kind&lt;/key&gt;</div><div class="line">          &lt;string&gt;software-package&lt;/string&gt;</div><div class="line">          &lt;!-- optional. md5 every n bytes. will restart a chunk if md5 fails.--&gt;</div><div class="line">          &lt;key&gt;md5-size&lt;/key&gt;</div><div class="line">          &lt;integer&gt;10485760&lt;/integer&gt;</div><div class="line">          &lt;!-- optional. array of md5 hashes for each &quot;md5-size&quot; sized chunk.--&gt;</div><div class="line">          &lt;key&gt;md5s&lt;/key&gt;</div><div class="line">          &lt;array&gt;</div><div class="line">            &lt;string&gt;41fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">            &lt;string&gt;51fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">          &lt;/array&gt;</div><div class="line">          &lt;!-- required. the URL of the file to download.--&gt;</div><div class="line">          &lt;key&gt;url&lt;/key&gt;</div><div class="line">          &lt;string&gt;https://www.example.com/apps/foo.ipa&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- display-image: the icon to display during download.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;display-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. indicates if icon needs shine effect applied.--&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;</div><div class="line">         &lt;string&gt;https://www.example.com/image.57x57.png&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- full-size-image: the large 512x512 icon used by iTunes.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;full-size-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. one md5 hash for the entire file.--&gt;</div><div class="line">         &lt;key&gt;md5&lt;/key&gt;</div><div class="line">         &lt;string&gt;61fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;&lt;string&gt;https://www.example.com/image.512x512.jpg&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">      &lt;/array&gt;</div><div class="line">&lt;key&gt;metadata&lt;/key&gt;</div><div class="line">      &lt;dict&gt;</div><div class="line">       &lt;!-- required --&gt;</div><div class="line">       &lt;key&gt;bundle-identifier&lt;/key&gt;</div><div class="line">       &lt;string&gt;com.example.fooapp&lt;/string&gt;</div><div class="line">       &lt;!-- optional (software only) --&gt;</div><div class="line">       &lt;key&gt;bundle-version&lt;/key&gt;</div><div class="line">       &lt;string&gt;1.0&lt;/string&gt;</div><div class="line">       &lt;!-- required. the download kind.--&gt;</div><div class="line">       &lt;key&gt;kind&lt;/key&gt;</div><div class="line">       &lt;string&gt;software&lt;/string&gt;</div><div class="line">       &lt;!-- optional. displayed during download; typically company name --&gt;</div><div class="line">       &lt;key&gt;subtitle&lt;/key&gt;</div><div class="line">       &lt;string&gt;Apple&lt;/string&gt;</div><div class="line">       &lt;!-- required. the title to display during the download.--&gt;</div><div class="line">       &lt;key&gt;title&lt;/key&gt;</div><div class="line">       &lt;string&gt;Example Corporate App&lt;/string&gt;</div><div class="line">      &lt;/dict&gt;</div><div class="line">    &lt;/dict&gt;</div><div class="line">  &lt;/array&gt;</div><div class="line">&lt;/dict&gt;</div><div class="line">&lt;/plist&gt;</div></pre></td></tr></table></figure>
+<hr>
+<p><code>最后实现二维码扫描安装app，无非是把这个plist文件的文件下载地址转成二维码，然后你用手机扫描，然后手机自动下载plist文件，ios系统分析xml文件，获取ipa包地址，然后下载-验证-等等，最后成功安装！</code></p>
+<p> <code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ios部署</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/04/以无线方式安装企业内部应用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-UIPopoverPresentationController解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -988,83 +1110,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/02/19/The dynamic library plug-in/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-framework missing submodule" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/18/framework missing submodule/">framework missing submodule</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/18/framework missing submodule/" class="archive-article-date">
-  	<time datetime="2016-02-18T02:26:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="framework-missing-submodule-xxx-警告"><a href="#framework-missing-submodule-xxx-警告" class="headerlink" title="framework missing submodule xxx 警告"></a>framework missing submodule xxx 警告</h2><p>从xcode6开始，iOS可以直接创建生成framework了</p>
-<p>如：</p>
-<ul>
-<li><p>创建 framework 项目，TFKit.framework</p>
-</li>
-<li><p>则 会自动生成TFKit.h</p>
-</li>
-<li><p>然后我们再添加一些自已的类,并对外提供 TFA.h,TFB.h</p>
-</li>
-<li><p>那么需要先在 TFKit.h 里面</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#import &lt;TFKit/TFA.h&gt;</div><div class="line"></div><div class="line">#import &lt;TFKit/TFB.h&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>最后在build 生成 TFKit.framework使用时，</p>
-</li>
-<li><p>直接使用 </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &lt;TFKit/TFKit.h&gt; 即可</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/02/18/framework missing submodule/">展开全文 >></a>
         </p>
       
 

@@ -183,6 +183,104 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Linux-cp和scp命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/23/Linux-cp和scp命令/">Linux cp和scp命令</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/23/Linux-cp和scp命令/" class="archive-article-date">
+  	<time datetime="2017-03-23T09:31:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux-cp和scp命令"><a href="#Linux-cp和scp命令" class="headerlink" title="Linux cp和scp命令"></a>Linux cp和scp命令</h1><p>Linux为我们提供了两个用于文件copy的命令，一个是cp，一个是scp，但是他们略有不同:</p>
+<ul>
+<li>cp — 主要是用于在同一台电脑上，在不同的目录之间来回copy文件 </li>
+<li>scp — 主要是在不同的Linux系统之间来回copy文件 </li>
+</ul>
+<p>##cp<br></p>
+<p>详细见</p>
+<pre><code>$ man 1 cp
+</code></pre><p>cp [OPTIONS] SOURCE DEST — 从源路径copy文件到目的路径 </p>
+<p>cp [OPTIONS] SOURCE… DIRECTORY — 将多个源文件copy到指定的目录（多个源文件用空格分隔</p>
+<p><code>OPTIONS：</code> </p>
+<p><code>-a</code> same as -dpR 尽可能将源文件状态、权限等资料都照原装予以复制，并且是递归copy；</p>
+<p><code>-r</code> 表示递归copy，若source中含有目录名，则将目录下之档案亦皆依序拷贝至目的地； </p>
+<p><code>-f</code> 表示force，若目的地已经有相同档名的档案存在，则在复制前先予以删除再行复制； </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">范例： </div><div class="line"></div><div class="line">1. 将档案 aaa 复制(已存在)，并命名为 bbb： </div><div class="line">cp aaa bbb </div><div class="line">2. 将所有的C语言程式拷贝至 Finished 子目录中： </div><div class="line">cp *.c Finished/</div></pre></td></tr></table></figure>
+<p>##scp<br><br><br>scp是有Security的文件copy，基于ssh登录。操作起来比较方便，比如要把当前一个文件copy到远程另外一台主机上，可以如下命令：</p>
+<pre><code>$scp /home/daisy/full.tar.gz root@172.19.2.75:/home/root 
+</code></pre><p><code>命令基本格式：</code></p>
+<p>scp [OPTIONS] file_source file_target </p>
+<p><code>从本地复制到远程</code></p>
+<pre><code>$ scp local_file remote_username@remote_ip:remote_folder 
+$ scp local_file remote_ip:remote_file 
+</code></pre><p><code>从远程复制到本地</code></p>
+<pre><code>scp root@www.cumt.edu.cn:/home/root/others/music /home/space/music/1.mp3 
+scp -r www.cumt.edu.cn:/home/root/others/ /home/space/music/ 
+</code></pre><p><code>复制目录</code>: OPTIONS 填入 <code>-r</code>即可</p>
+<p>完整格式：<strong>scp [本地用户名]@[IP地址]:[文件名1] [远程用户名]@[IP地址]:[文件名2] 
+</strong></p>
+<p><code>本地用户名@IP地址:</code>可以不输入,可能需要输入远程用户名所对应的密码.</p>
+<p><code>[OPTIONS]</code></p>
+<p>-v 和大多数 linux 命令中的 -v 意思一样 , 用来显示进度 . 可以用来查看连接 , 认证 , 或是配置错误 . </p>
+<p>-C 使能压缩选项 . </p>
+<p>-P 选择端口 . 注意 -p 已经被 rcp 使用 . </p>
+<p>-4 强行使用 IPV4 地址 . </p>
+<p>-6 强行使用 IPV6 地址 .</p>
+<pre><code>注意两点： 
+1.如果远程服务器防火墙有特殊限制，scp便要走特殊端口，具体用什么端口视情况而定，命令格式如下： 
+#scp -p 4588 remote@www.abc.com:/usr/local/sin.sh /home/administrator 
+2.使用scp要注意所使用的用户是否具有可读取远程服务器相应文件的权限。
+</code></pre><p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/23/Linux-cp和scp命令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-duoshuo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -934,86 +1032,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/12/02/iOS开启GPS精准定位/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-关于CoreLocation定位的方向问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/02/关于CoreLocation定位的方向问题/">关于CoreLocation定位的方向问题</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/02/关于CoreLocation定位的方向问题/" class="archive-article-date">
-  	<time datetime="2016-12-02T01:54:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于CoreLocation定位的方向问题"><a href="#关于CoreLocation定位的方向问题" class="headerlink" title="关于CoreLocation定位的方向问题"></a>关于CoreLocation定位的方向问题</h1><p>Core Location支持两种不同的获取方向相关信息的方式：</p>
-<ul>
-<li>当设备处于某个点时，带有磁力计的设备能能够报告其位置信息；此类被称为设备的<code>朝向</code>。</li>
-<li><p>当设备处于移动过程中时，通过带有GPS硬件的报告的位置位置信息；此类被称为设备的<code>行动方向</code>。</p>
-<p><code>朝向</code>和<code>行动方向</code>表现出设备不同的信息。设备的朝向真实的反映出了设备在一个点时相对于磁北或者真北的朝向。而设备的行动方向则表现了设备在运动过程中的运动方向其并没有考虑设备的方向。你使用一种还是这两种相结合，完全取决于你的APP；例如：一个导航APP是否要在两者之间切换完全取决于用户的速度，在步行速度时，设备的朝向对于在当前环境下的确认用户方向是用户最为关心的事情；而在一辆车里运动时，行动方向则变得尤为重要。</p>
-</li>
-</ul>
-<hr>
-<p> 如果你的app用到了位置相关信息时，为了更好的运行，在Info.plist中加入UIRequiredDeviceCapabilities键，这个键是一个包涵字符串的数组，这个数组描述了你的app具有哪些服务特征。app store使用这些信息对app进行归类，更好的为用户服务。如：用户没有GPS功能，就会选择不包含GPS功能的app去下载。</p>
-<p> UIRequiredDeviceCapabilities中和方向相关的字符串有两个：</p>
-<ul>
-<li>magnetometer 包涵这个字符串时，app会获得设备的朝向</li>
-<li><p>gps              包涵这个字符串时，app会获得设备的行动方向。</p>
-<p><code>PS：加入gps时，也要加入location-services字符串。两者都需要时，再加入location-services字段</code></p>
-<p>总结：</p>
-<ul>
-<li>当只需要GPS或者AGPS加入location-services和gps字段。</li>
-<li>不需要GPS或者AGPS时，加入location-services和magnetometer.</li>
-<li>需要两种时,加入location-services和magnetometer和gps；或者只加入location-services（默认是两种都用）</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/02/关于CoreLocation定位的方向问题/">展开全文 >></a>
         </p>
       
 

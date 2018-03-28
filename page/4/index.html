@@ -183,6 +183,86 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-关于CoreLocation定位的方向问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/02/关于CoreLocation定位的方向问题/">关于CoreLocation定位的方向问题</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/02/关于CoreLocation定位的方向问题/" class="archive-article-date">
+  	<time datetime="2016-12-02T01:54:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于CoreLocation定位的方向问题"><a href="#关于CoreLocation定位的方向问题" class="headerlink" title="关于CoreLocation定位的方向问题"></a>关于CoreLocation定位的方向问题</h1><p>Core Location支持两种不同的获取方向相关信息的方式：</p>
+<ul>
+<li>当设备处于某个点时，带有磁力计的设备能能够报告其位置信息；此类被称为设备的<code>朝向</code>。</li>
+<li><p>当设备处于移动过程中时，通过带有GPS硬件的报告的位置位置信息；此类被称为设备的<code>行动方向</code>。</p>
+<p><code>朝向</code>和<code>行动方向</code>表现出设备不同的信息。设备的朝向真实的反映出了设备在一个点时相对于磁北或者真北的朝向。而设备的行动方向则表现了设备在运动过程中的运动方向其并没有考虑设备的方向。你使用一种还是这两种相结合，完全取决于你的APP；例如：一个导航APP是否要在两者之间切换完全取决于用户的速度，在步行速度时，设备的朝向对于在当前环境下的确认用户方向是用户最为关心的事情；而在一辆车里运动时，行动方向则变得尤为重要。</p>
+</li>
+</ul>
+<hr>
+<p> 如果你的app用到了位置相关信息时，为了更好的运行，在Info.plist中加入UIRequiredDeviceCapabilities键，这个键是一个包涵字符串的数组，这个数组描述了你的app具有哪些服务特征。app store使用这些信息对app进行归类，更好的为用户服务。如：用户没有GPS功能，就会选择不包含GPS功能的app去下载。</p>
+<p> UIRequiredDeviceCapabilities中和方向相关的字符串有两个：</p>
+<ul>
+<li>magnetometer 包涵这个字符串时，app会获得设备的朝向</li>
+<li><p>gps              包涵这个字符串时，app会获得设备的行动方向。</p>
+<p><code>PS：加入gps时，也要加入location-services字符串。两者都需要时，再加入location-services字段</code></p>
+<p>总结：</p>
+<ul>
+<li>当只需要GPS或者AGPS加入location-services和gps字段。</li>
+<li>不需要GPS或者AGPS时，加入location-services和magnetometer.</li>
+<li>需要两种时,加入location-services和magnetometer和gps；或者只加入location-services（默认是两种都用）</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/02/关于CoreLocation定位的方向问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-数据模型排序-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -778,132 +858,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/04/15/上善若水，人淡如菊！/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-APP Extensions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/14/APP Extensions/">APP Extensions</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/14/APP Extensions/" class="archive-article-date">
-  	<time datetime="2016-04-14T06:47:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="App-Extensions"><a href="#App-Extensions" class="headerlink" title="App Extensions"></a>App Extensions</h1><hr>
-<p><code>前言：</code></p>
-<p>extension是iOS8新开放的一种对几个固定系统区域的扩展机制，它可以在一定程度上弥补iOS的沙盒机制对应用间通信的限制。</p>
-<p>extension的出现，为用户提供了在其它应用中使用我们应用提供的服务的便捷方式，比如用户可以在Today的widgets中查看应用展示的简略信息，而不用再进到我们的应用中，这将是一种全新的用户体验；但是，extension的出现可能会减少用户启动应用的次数，同时还会增大开发者的工作量。</p>
-<hr>
-<p><strong>几个关键字</strong></p>
-<p><code>extension point</code></p>
-<p>系统中支持extension的区域，extension的类别也是据此区分的，iOS上共有Today、Share、Action、Photo Editing、Storage Provider、Custom keyboard几种，其中Today中的extension又被称为widget。</p>
-<p>每种extension point的使用方式和适合干的活都不一样，因此不存在通用的extension。</p>
-<p><code>app extension</code></p>
-<p>即为本文所说的extension。extension并不是一个独立的app，它有一个包含在app bundle中的独立bundle，extension的bundle后缀名是.appex。其生命周期也和普通app不同，这些后文将会详述。</p>
-<p>extension不能单独存在，必须有一个包含它的containing app。</p>
-<p>另外，extension需要用户手动激活，不同的extension激活方式也不同，比如： 比如Today中的widget需要在Today中激活和关闭；Custom keyboard需要在设置中进行相关设置；Photo Editing需要在使用照片时在照片管理器中激活或关闭；Storage Provider可以在选择文件时出现；Share和Action可以在任何应用里被激活，但前提是开发者需要设置Activation Rules，以确定extension需要在合适出现。</p>
-<p><code>containing app</code></p>
-<p>尽管苹果开放了extension，但是在iOS中extension并不能单独存在，要想提交到AppStore，必须将extension包含在一个app中提交，并且app的实现部分不能为空,这个包含extension的app就叫containing app。</p>
-<p>extension会随着containing app的安装而安装，同时随着containing app的卸载而卸载。</p>
-<p><code>host app</code></p>
-<p>能够调起extension的app被称为host app，比如widget的host app就是Today。</p>
-<hr>
-<h2 id="extension和containing-app、host-app之间的关系"><a href="#extension和containing-app、host-app之间的关系" class="headerlink" title="extension和containing app、host app之间的关系"></a>extension和containing app、host app之间的关系</h2><hr>
-<p><strong>extension和host app</strong></p>
-<p>extension和host app之间可以通过extensionContext属性直接通信，该属性是新增加的UIViewController类别：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface UIViewController(NSExtensionAdditions) &lt;NSExtensionRequestHandling&gt; </div><div class="line"> </div><div class="line">// Returns the extension context. Also acts as a convenience method for a view controller to check if it participating in an extension request. </div><div class="line">@property (nonatomic,readonly,retain) NSExtensionContext *extensionContext NS_AVAILABLE_IOS(8_0); </div><div class="line"> </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>实际上extension和host app之间是通过IPC（interprocess communication）实现的，只是苹果把调用接口高度抽象了，我们并不需要关注那么底层的东西。</p>
-<p><strong>containing app和host app</strong></p>
-<p>他们之间没有任何直接关系，也从来不需要通信。</p>
-<p><strong>extension和containing app</strong></p>
-<p>这二者之间的关系最复杂，纠纠缠缠扯不清关系。</p>
-<p>尽管extension的bundle是放在containing app的bundle中，但是他们是两个完全独立的进程，之间不能直接通信,不过extension可以通过openURL的方式<em>启动containing app</em>（当然也能启动其它app），不过必须通过extensionContext借助host app来实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//通过openURL的方式启动Containing APP </div><div class="line">- (void)openURLContainingAPP </div><div class="line">&#123; </div><div class="line">    [self.extensionContext openURL:[NSURL URLWithString:@&quot;appextension://123&quot;] </div><div class="line">                 completionHandler:^(BOOL success) &#123; </div><div class="line">                     NSLog(@&quot;open url result:%d&quot;,success); </div><div class="line">                 &#125;]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>extension中是无法直接使用openURL的。</code></p>
-<p><em>可以共享Shared resources</em></p>
-<p>extension和containing app可以共同读写一个被称为Shared resources的存储区域，这是通过App Groups实现的。<br>两者的关系如图：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8A%E5%8D%8811.37.51.png" alt=""></p>
-<p><em>containing app能够控制extension的出现和隐藏</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//让隐藏的插件重新显示 </div><div class="line">- (void)showTodayExtension </div><div class="line">&#123; </div><div class="line">    [[NCWidgetController widgetController] setHasContent:YES forWidgetWithBundleIdentifier:@&quot;com.wangzz.app.extension&quot;]; </div><div class="line">&#125; </div><div class="line"> </div><div class="line">//隐藏插件 </div><div class="line">- (void)hiddeTodayExtension </div><div class="line">&#123; </div><div class="line">    [[NCWidgetController widgetController] setHasContent:NO forWidgetWithBundleIdentifier:@&quot;com.wangzz.app.extension&quot;]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="App-Groups"><a href="#App-Groups" class="headerlink" title="App Groups"></a>App Groups</h2><p>这是iOS8新开放的功能，在OS X上早就可用了。它主要用于同一group下的app共享同一份读写空间，以实现数据共享。</p>
-<p><strong>在app中开启</strong></p>
-<p> App Groups位于：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;AppExtensionDemo--&gt;Capabilities--&gt;App Groups</div></pre></td></tr></table></figure></p>
-<p>找到以后，将App Groups右上角的开关打开，然后选择添加groups，比如我的是group.com.sisniswift.WhirlyGlobe.</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8B%E5%8D%882.10.04.png" alt=""></p>
-<p><strong>在extension中开启</strong></p>
-<p>我创建的是widget，target名称为TodayExtension，对应的App Groups位于：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;TodayExtension--&gt;Capabilities--&gt;App Groups</div></pre></td></tr></table></figure>
-<p>开启方式和app中一样，需要注意的是必须保证这里地App Groups名称和app中的相同，即为group.com.sisniswift.WhirlyGlobe.</p>
-<h2 id="extension和containing-app数据共享"><a href="#extension和containing-app数据共享" class="headerlink" title="extension和containing app数据共享"></a>extension和containing app数据共享</h2><p>App Groups给我们提供了同一group内app可以共同读写的区域，可以通过以下方式实现数据共享</p>
-<p><strong>通过NSUserDefaults共享数据</strong></p>
-<p><code>存数据</code></p>
-<p>通过以下方式向NSUserDefaults中保存数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)saveTextByNSUserDefaults </div><div class="line">&#123; </div><div class="line">    NSUserDefaults *shared = [[NSUserDefaults alloc] initWithSuiteName:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    [shared setObject:_textField.text forKey:@&quot;saveData&quot;]; </div><div class="line">    [shared synchronize]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>需要注意的是：</p>
-<ul>
-<li>保存数据的时候必须指明group id</li>
-<li>而且要注意NSUserDefaults能够处理的数据只能是可plist化的对象，详情见Property List Programming Guide。</li>
-<li>为了防止出现数据同步问题，不要忘记调用[shared synchronize];</li>
-</ul>
-<p><code>读数据</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (NSString *)readDataFromNSUserDefaults </div><div class="line">&#123; </div><div class="line">    NSUserDefaults *shared = [[NSUserDefaults alloc] initWithSuiteName:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    NSString *value = [shared valueForKey:@&quot;wangzz&quot;]; </div><div class="line"> </div><div class="line">    return value; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>通过NSFileManager共享数据</strong></p>
-<p>NSFileManager在iOS7提供了containerURLForSecurityApplicationGroupIdentifier方法，可以用来实现app group共享数据。</p>
-<p><code>保存数据</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (BOOL)saveTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line"> </div><div class="line">    NSString *value = _textField.text; </div><div class="line">    BOOL result = [value writeToURL:containerURL atomically:YES encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line">    if (!result) &#123; </div><div class="line">        NSLog(@&quot;%@&quot;,err); </div><div class="line">    &#125; else &#123; </div><div class="line">        NSLog(@&quot;save value:%@ success.&quot;,value); </div><div class="line">    &#125; </div><div class="line"> </div><div class="line">    return result;</div></pre></td></tr></table></figure>
-<p><code>读数据</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSString *)readTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line">    NSString *value = [NSString stringWithContentsOfURL:containerURL encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line"> </div><div class="line">    return value;</div></pre></td></tr></table></figure>
-<p><strong>数据同步</strong></p>
-<p>两个应用共同读取同一份数据，就会引发数据同步问题。WWDC2014的视频中建议使用NSFileCoordination实现普通文件的读写同步，而数据库可以使用CoreData,Sqlite也支持同步</p>
-<h2 id="extension和containing-app代码共享"><a href="#extension和containing-app代码共享" class="headerlink" title="extension和containing app代码共享"></a>extension和containing app代码共享</h2><p>通过embedded framework 实现带码的共享，我们先建立一个动态库，然后将共用的代码放在这个动态库里，然后在extension和它的containing app的target中连接动态库，这样就能实现代码的共享。</p>
-<p>关于动态库的制作,连接，使用，请参见<a href="http://yachaocn.com/2016/02/19/The%20dynamic%20library%20plug-in/" target="_blank" rel="external">The dynamic library plug-in</a></p>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>extension和普通app的最大区别之一是生命周期。</p>
-<p><code>开始</code></p>
-<p>在用户通过host app点击extension时，系统就会实例化extension应用，这是生命周期的开始。</p>
-<p><code>执行任务</code></p>
-<p>在extension启动以后，开始执行它的使命。</p>
-<p><code>终止</code></p>
-<p>在用户取消任务，或者任务执行结束，或者开启了一个长时后台任务时，系统会将其杀掉。</p>
-<p>由此可见，extension就是为了任务而生！</p>
-<p>官方描述如下图：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8B%E5%8D%882.32.10.png" alt=""></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/04/14/APP Extensions/">展开全文 >></a>
         </p>
       
 

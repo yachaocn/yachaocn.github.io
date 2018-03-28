@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://devchao.com">
-  <title>Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
+  <title>ios-core-location-guide.md | Welcome | 张亚超的技术博客YACHAO&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每一个不起眼的瞬间都是对生命的辜负！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:url" content="https://devchao.com/page/8/index.html">
+  <meta name="description" content="iOS Core location定位指南iOS 定位是通过Core Location framework来获取位置数据的，Core Location提供了三种服务来获取和监听设备当前位置的：  标准位置服务提供了一种高度可配置的方式来获取当前位置和跟踪位置的改变。 区域监听允许您监听定义的地理区域和蓝牙低能量信标区域的边界。(仅在iOS中可使用Beacon区域监控。) 重要位置变更服务提供了一种">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ios-core-location-guide.md">
+<meta property="og:url" content="https://devchao.com/2018/03/28/ios-core-location-guide-md/index.html">
 <meta property="og:site_name" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta property="og:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta property="og:description" content="iOS Core location定位指南iOS 定位是通过Core Location framework来获取位置数据的，Core Location提供了三种服务来获取和监听设备当前位置的：  标准位置服务提供了一种高度可配置的方式来获取当前位置和跟踪位置的改变。 区域监听允许您监听定义的地理区域和蓝牙低能量信标区域的边界。(仅在iOS中可使用Beacon区域监控。) 重要位置变更服务提供了一种">
+<meta property="og:updated_time" content="2018-03-28T03:38:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome | 张亚超的技术博客YACHAO&#39;Blog">
-<meta name="twitter:description" content="每一个不起眼的瞬间都是对生命的辜负！">
+<meta name="twitter:title" content="ios-core-location-guide.md">
+<meta name="twitter:description" content="iOS Core location定位指南iOS 定位是通过Core Location framework来获取位置数据的，Core Location提供了三种服务来获取和监听设备当前位置的：  标准位置服务提供了一种高度可配置的方式来获取当前位置和跟踪位置的改变。 区域监听允许您监听定义的地理区域和蓝牙低能量信标区域的边界。(仅在iOS中可使用Beacon区域监控。) 重要位置变更服务提供了一种">
   
     <link rel="alternative" href="/atom.xml" title="Welcome | 张亚超的技术博客YACHAO&#39;Blog" type="application/atom+xml">
   
@@ -181,389 +183,166 @@ ga('send', 'pageview');
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-RemoteNotifycation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-ios-core-location-guide-md" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/16/RemoteNotifycation/">RemoteNotifycation</a>
+    <h1 class="article-title" itemprop="name">
+      ios-core-location-guide.md
     </h1>
   
 
         
-        <a href="/2015/12/16/RemoteNotifycation/" class="archive-article-date">
-  	<time datetime="2015-12-16T02:37:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-16</time>
+        <a href="/2018/03/28/ios-core-location-guide-md/" class="archive-article-date">
+  	<time datetime="2018-03-28T03:33:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#ios远程通知</p>
-<hr>
-<p><strong>步骤</strong></p>
+        <h2 id="iOS-Core-location定位指南"><a href="#iOS-Core-location定位指南" class="headerlink" title="iOS Core location定位指南"></a>iOS Core location定位指南</h2><p>iOS 定位是通过Core Location framework来获取位置数据的，Core Location提供了三种服务来获取和监听设备当前位置的：</p>
 <ul>
-<li>1.注册通知类型</li>
-<li>2.注册远程通知[[UIApplication sharedApplication] registerForRemoteNotifications];</li>
-<li>3.如果注册成功，APNS返回device Token给设备，iOS操作系统把device Token传递给app 代理，在app代理方法application:didRegisterForRemoteNotificationsWithDeviceToken:中获得device Token，app以二进制格式编码，并把其传递给app的服务提供者，如果获得device Token时 出现问题操作系统就会把错误信息传递给app代理方法application:didFailToRegisterForRemoteNotificationsWithError:<br>error描述了错误产生的原因。<br>注： 如果蜂窝移动网、WiFi 不可用下面两个app代理方法将会调用<br>application:didRegisterForRemoteNotificationsWithDeviceToken: application:didFailToRegisterForRemoteNotificationsWithError:</li>
-<li>4.把device Token提供给app推送提供者。</li>
-<li>5.当app<code>不在前台</code>运行时，传递信息依靠呈现一个弹窗、播放一个声音、标记app一个徽章，或许现实一个很多的按钮给用户点击。当用户点击一个按钮时（ios8以后），iOS会调用application:handleActionWithIdentifier:forRemoteNotification:completionHandler:</li>
-<li>6.如果app<code>正在前台</code>运行接收到通知则会调用application:didReceiveRemoteNotification:fetchCompletionHandler不能实现，则会实现application:didReceiveRemoteNotification:方法,如果你想要你的app在程序前台运行时，获取到远程通知必须实现这个方法：application:didReceiveRemoteNotification:fetchCompletionHandler:此时代理开始安排下载等待的数据、消息、其他的元素；一个字典值在第二个参数中传递过来</li>
+<li>标准位置服务提供了一种高度可配置的方式来获取当前位置和跟踪位置的改变。</li>
+<li>区域监听允许您监听定义的地理区域和蓝牙低能量信标区域的边界。(仅在iOS中可使用Beacon区域监控。)</li>
+<li>重要位置变更服务提供了一种方法来获取当前位置，并在位置发生重大变化时得到通知，正确的使用它可以避免消耗过多的电量。</li>
 </ul>
-<p>####代码示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">//  AppDelegate.m</div><div class="line">//  RemoteNotificationDemo</div><div class="line">//</div><div class="line">//  Created by NavchinaMacBook on 15/8/4.</div><div class="line">//  Copyright (c) 2015年 NavchinaMacBook. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line"></div><div class="line">#import &quot;AppDelegate.h&quot;</div><div class="line"></div><div class="line">@interface AppDelegate ()</div><div class="line"></div><div class="line">@property(nonatomic) BOOL registered;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation AppDelegate</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark - 注册远程通知</div><div class="line">//用户点击默认按钮、app图标时调用此方法。</div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line"></div><div class="line">//注册通知事件</div><div class="line">    // 第一个事件</div><div class="line">    </div><div class="line">    UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc]init];</div><div class="line">    //创建一个identify用于标记action</div><div class="line">    acceptAction.identifier = @&quot;ACCEPT_IDENTIFIER&quot;;</div><div class="line">    acceptAction.title = @&quot;Accept&quot;;</div><div class="line">    //如果activationMode设置为UIUserNotificationActivationModeForeground，则authenticationRequired将被系统强制设置为yes，将忽视后面的设置。</div><div class="line">    //选择在什么情况加激活应用程序。</div><div class="line">    acceptAction.activationMode = UIUserNotificationActivationModeBackground;</div><div class="line">    //提示字体颜色：yes ：红色 no :蓝色</div><div class="line">    acceptAction.destructive = NO;</div><div class="line">    //是否需要密码验证，yes需要，no：不需要</div><div class="line">    acceptAction.authenticationRequired = NO;</div><div class="line">    </div><div class="line">//    第二个事件</div><div class="line">    UIMutableUserNotificationAction *meetingAction = [[UIMutableUserNotificationAction alloc]init];</div><div class="line">    //创建一个identify用于标记action</div><div class="line">    meetingAction.identifier = @&quot;MEETING_IDENTIFIER&quot;;</div><div class="line">    meetingAction.title = @&quot;OK&quot;;</div><div class="line">    //如果activationMode设置为UIUserNotificationActivationModeForeground，则authenticationRequired将被系统强制设置为yes，将忽视后面的设置。</div><div class="line">    //选择在什么情况加激活应用程序。</div><div class="line">    meetingAction.activationMode = UIUserNotificationActivationModeBackground;</div><div class="line">    //提示字体颜色：yes ：红色 no :蓝色</div><div class="line">    meetingAction.destructive = YES;</div><div class="line">    //是否需要密码验证，yes需要，no：不需要</div><div class="line">    meetingAction.authenticationRequired = NO;</div><div class="line">    </div><div class="line">    </div><div class="line">//添加到不同的类别中去</div><div class="line">    UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc]init];</div><div class="line">    inviteCategory.identifier = @&quot;INVITE_CATEGORY&quot;;</div><div class="line">    [inviteCategory setActions:@[acceptAction,meetingAction] forContext:UIUserNotificationActionContextDefault];</div><div class="line">    [inviteCategory setActions:@[acceptAction,meetingAction] forContext:UIUserNotificationActionContextMinimal];</div><div class="line">    </div><div class="line">//注册通知类别</div><div class="line">    NSSet *categories = [NSSet setWithObjects:inviteCategory,/*alarmCategory*/ nil];</div><div class="line">    CGFloat systemVersion = [[UIDevice currentDevice].systemVersion floatValue];</div><div class="line">    if (systemVersion &gt;= 8.0) &#123;</div><div class="line">    //注册通知类型</div><div class="line">        UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;</div><div class="line">        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:categories];</div><div class="line">        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];</div><div class="line">    &#125;else&#123;</div><div class="line">    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];</div><div class="line">    &#125;</div><div class="line">    //向ios操作系统注册远程通知，以获取decice Token.</div><div class="line">    [[UIApplication sharedApplication] registerForRemoteNotifications];</div><div class="line">    return YES;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;%@&quot;,deviceToken);</div><div class="line">    const void *deviceTokenBytes = [deviceToken bytes];</div><div class="line">    //注册成功</div><div class="line">    self.registered = YES;</div><div class="line">    //发送给本地服务器</div><div class="line">//    [self sendProviderDeviceToken:deviceTokenBytes];</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error</div><div class="line">&#123;</div><div class="line">    //注册device Token时失败。</div><div class="line">    NSLog(@&quot;%@&quot;,error);</div><div class="line">&#125;</div><div class="line">#pragma mark - 用户点击按钮后执行方法</div><div class="line">-(void)handleAcceptActionWithNotification:(NSDictionary *)userInfo</div><div class="line">&#123;</div><div class="line">    //设置用户点击按钮后程序需要执行的操作。</div><div class="line">&#125;</div><div class="line">#pragma mark - 收到远程通知</div><div class="line">//收到用户点击事件 （应用程序在后台，用户点击一个按钮时触发）</div><div class="line">-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler</div><div class="line">&#123;</div><div class="line">    //具体实现</div><div class="line">    if ([identifier isEqualToString:@&quot;ACCEPT_IDENTIFIER&quot;]) &#123;</div><div class="line">        [self handleAcceptActionWithNotification:userInfo];</div><div class="line">    &#125;</div><div class="line">    if ([identifier isEqualToString:@&quot;MEETING_IDENTIFIER&quot;]) &#123;</div><div class="line">        //执行具体操作。</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    completionHandler();</div><div class="line">&#125;</div><div class="line">//应用程序在前台收到远程通知时会调用此方法，如果此方法不被实现则会调用application:didReceiveRemoteNotification</div><div class="line">-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler</div><div class="line">&#123;</div><div class="line">    NSString *itemName = [userInfo objectForKey:@&quot;ToDoItemKey&quot;];</div><div class="line">    //具体的实现</div><div class="line">    application.applicationIconBadgeNumber = 3;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo</div><div class="line">&#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>附件》》<a href="https://github.com/yachaocn/RemoteNotification" target="_blank" rel="external">下载源码</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li>在xcode中链接<code>CoreLocation.framework</code>库，在使用的地方引入头文件<code>#import &lt;CoreLocation/CoreLocation.h&gt;</code> </li>
+<li>在info.plist中加入NSLocationAlwaysUsageDescription或者NSLocationWhenInUseUsageDescription</li>
+</ul>
+<h3 id="声明在app的特征类型（可选）"><a href="#声明在app的特征类型（可选）" class="headerlink" title="声明在app的特征类型（可选）"></a>声明在app的特征类型（可选）</h3><p>在app的Info.plist中加入UIRequiredDeviceCapabilities键，值为一个数组，用于在app store中分类应用程序，防止用户下载到不包含数组中列表特征的app。与位置相关的有如下两个值：</p>
+<ul>
+<li><code>location-services</code> : app请求通用的定位服务。</li>
+<li><p><code>gps</code>： app请求GPS硬件进行的精准定位。</p>
+<p><code>重要:如果你的iOS应用程序没有加入此键但是能正确使用定位服务,那就不要加入UIRequiredDeviceCapabilities键对应的字符串。</code></p>
+</li>
+</ul>
+<h3 id="标准位置服务的使用"><a href="#标准位置服务的使用" class="headerlink" title="标准位置服务的使用"></a>标准位置服务的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">- (void)startStandardUpdates</div><div class="line">&#123;</div><div class="line">    // Create the location manager if this object does not</div><div class="line">    // already have one.</div><div class="line">    if (nil == locationManager)</div><div class="line">        locationManager = [[CLLocationManager alloc] init];</div><div class="line">	//设置代理</div><div class="line">    locationManager.delegate = self;</div><div class="line">    //设置精度</div><div class="line">    locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;</div><div class="line">    //请求权限</div><div class="line">    //[locationManager requestAlwaysAuthorization];</div><div class="line">    [locationManager requestWhenInUseAuthorization];</div><div class="line"> </div><div class="line">    // Set a movement threshold for new events.</div><div class="line">    locationManager.distanceFilter = 500; // meters</div><div class="line"> 	//开始定位</div><div class="line">    [locationManager startUpdatingLocation];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//定位代理方法</div><div class="line">- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="重大位置更新服务的使用"><a href="#重大位置更新服务的使用" class="headerlink" title="重大位置更新服务的使用"></a>重大位置更新服务的使用</h3><ol>
+<li>位置权限必须为<code>kCLAuthorizationStatusAuthorizedAlways</code>：（总是）前后台定位授权。</li>
+<li>后台刷新确保开启状态 （关闭时，不管在后台还是前台都无法收到位置更新事件）</li>
+<li>使用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)startSignificantChangeUpdates</div><div class="line">&#123;</div><div class="line">    // Create the location manager if this object does not</div><div class="line">    // already have one.</div><div class="line">    if (nil == locationManager)</div><div class="line">        locationManager = [[CLLocationManager alloc] init];</div><div class="line"> </div><div class="line">    locationManager.delegate = self;</div><div class="line">    [locationManager startMonitoringSignificantLocationChanges];</div><div class="line">    //停止调用[locationManager stopMonitoringSignificantLocationChanges]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="区域监听"><a href="#区域监听" class="headerlink" title="区域监听"></a>区域监听</h3><p>Core Location framework 提供了两种方式获取用户进入和退出某个区域：<br>地理区域监听(iOS 4.0 and later and OS X v10.8 and later)和Beacon区域监听(iOS 7.0 and later)。一个地理区域是指地球表面指定的围绕某个点的特定半径的圆形区域；一个信标区域指设备的蓝牙低能信标覆盖的区域。Beacon本身是一个能够广播信息的一种蓝牙低能耗设备，通过Core Bluetooth framework能够让你的iOS 设备变成Beacon。</p>
+<p><strong>确定区域监听是否可用</strong></p>
+<p>在尝试监视任何区域之前，应用程序应该检查当前设备上是否支持区域监视。以下是区域监测可能无法获得的一些原因:</p>
+<ul>
+<li><p>该设备没有必要的硬件来支持区域监控。</p>
+</li>
+<li><p>用户拒绝应用程序授权使用区域监控。</p>
+</li>
+<li><p>用户在设置app中禁用位置服务。</p>
+</li>
+<li><p>用户禁用背景应用刷新在设置App，无论是为设备还是你的应用。</p>
+</li>
+<li><p>该设备处于飞行模式，无法启动必要的硬件。</p>
+</li>
+</ul>
+<p>在iOS 7.0之后,包括iOS 7.0，在使用区域监听之前，首先调用CLLocationManager 类的<code>isMonitoringAvailableForClass:</code> 和<code>authorizationStatus</code> 方法确定是否可用，在iOS 之前的版本需要调用 <code>regionMonitoringAvailable</code>类方法, isMonitoringAvailableForClass 方法验证硬件是否支持，authorizationStatus方法验证用户是否授权使用，kCLAuthorizationStatusAuthorizedAlways 同意使用，其他不同意。</p>
+<h4 id="监听地理区域"><a href="#监听地理区域" class="headerlink" title="监听地理区域"></a>监听地理区域</h4><p>创建监听区域 ：iOS 7.0 和以后，使用CLCircularRegion创建，之前使用 CLRegion创建。</p>
+<p>基于Map Kit overlay的区域监听创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (void)registerRegionWithCircularOverlay:(MKCircle*)overlay andIdentifier:(NSString*)identifier &#123;</div><div class="line"> </div><div class="line">   // If the overlay&apos;s radius is too large, registration fails automatically,</div><div class="line">   // so clamp the radius to the max value.</div><div class="line">   CLLocationDistance radius = overlay.radius;</div><div class="line">   if (radius &gt; self.locManager.maximumRegionMonitoringDistance) &#123;</div><div class="line">      radius = self.locManager.maximumRegionMonitoringDistance;</div><div class="line">   &#125;</div><div class="line"> </div><div class="line">   // Create the geographic region to be monitored.</div><div class="line">   CLCircularRegion *geoRegion = [[CLCircularRegion alloc]</div><div class="line">      initWithCenter:overlay.coordinate</div><div class="line">              radius:radius</div><div class="line">          identifier:identifier];</div><div class="line">   [self.locManager startMonitoringForRegion:geoRegion];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>CLLocationManager 的requestStateForRegion:方法，可检查当前用户是否在区域之内，返回结果会传入代理方法<code>locationManager:didDetermineState:forRegion:</code></p>
+<p>由于区域监听属于系统共享资源，因此 Core Location限制一个app最多可以同时监听20个区域。因此监听的区域尽可能的在当前位置周围，随着当前位置的移动可以停止监听之前的区域，再监听新的区域。</p>
+<p>如果添加监听的区域不可用，系统将返回错误码<code>kCLErrorRegionMonitoringFailure</code>到代理函数<code>locationManager:monitoringDidFailForRegion:withError:</code></p>
+<h4 id="处理区域监听跨界事件"><a href="#处理区域监听跨界事件" class="headerlink" title="处理区域监听跨界事件"></a>处理区域监听跨界事件</h4><p>如果用户当前的位置穿越了跨界区域，系统就会生成一个合适的区域事件，可以通过下面的代理方法获取跨界事件：</p>
+<ul>
+<li>locationManager:didEnterRegion:</li>
+<li>locationManager:didExitRegion:</li>
+</ul>
+<p>或</p>
+<ul>
+<li><ul>
+<li>(void)locationManager:(CLLocationManager <em>)manager<br>didDetermineState:(CLRegionState)state forRegion:(CLRegion </em>)region （调用requestStateForRegion时也会出发此代理）</li>
+</ul>
+</li>
+</ul>
+<p>可以通过设置CLRegion 实例的 notifyOnEntry 和 notifyOnExit 属性，可以定义什么时候获得事件，默认两个都是YES.</p>
+<p>由于系统会定义一个缓冲距离，进入离开状态频繁时可以防止快速连续地产生大量的输入和退出事件。当应用程序在后台时可以使用本地通知来通知用户，否则可以发布一个警告。</p>
+<h4 id="Beacon区域监听"><a href="#Beacon区域监听" class="headerlink" title="Beacon区域监听"></a>Beacon区域监听</h4><p>Beacon区域监听通过无线电技术确定用户是否在正在广播的蓝牙低耗能设备附近。与地理区域监听一样，当用户进入和退出一个Beacon区域时，可以使用此功能生成警告或提供其他的一些信息。Beacon使用下列值去识别此区域：</p>
+<ul>
+<li><p>一个接近的UUID(通用惟一标识符)，它是一个128位的值，唯一标识一个或多个信标作为特定类型或来自某个组织。</p>
+</li>
+<li><p>一个主要的值，它是一个16位的无符号整数，可以用于与具有相同邻近UUID的相关信标进行分组。（可选）</p>
+</li>
+<li><p>一个较小的值，它是一个16位无符号整数，它将信标与相同的接近UUID和主要值区分开来。（可选）</p>
+</li>
+</ul>
+<p>您还可以在用户打开该设备的显示之前，延迟通知用户进入信标区域。只需将beacon region的 notifyEntryStateOnDisplay设置为YES,notifyOnEntry设置为NO，</p>
+<p><strong>利用测距来确定信标的距离</strong></p>
+<p>当设备处于beacon范围之内时，可使用CLLocationManager的startRangingBeaconsInRegion:来获取一个或多个相对接近的信标设备，并且在相对距离改变时获得通知，（在新标范围内获取距离时，先查看CLLocationManager的isRangingAvailable方法）</p>
+<p>当进入、退出或者他们的距离发生变化，CLLocationManager的delegate方法：<code>locationManager:didRangeBeacons:inRegion:</code>会被调用，其中提供一个通过相对距离排序的数组beacons ，距离最近的排在数组的最前面.</p>
+<p><code>重要：信标测距依赖于探测蓝牙低能量无线电信号的强度，而这些信号的准确度通过墙壁、门和其他物理对象衰减(或减少)。信号也会受到水的影响，这说明人体本身也会影响信号。在规划iBeacon部署时，务必了解这些因素，因为它们将影响到每个beacon报告的接近值。如果需要，使用每个CLBeacon对象报告的精度和rssi值来调整在部署过程中信标的位置。此外,如果你正在等一个iOS设备已配置为灯塔,可能会有短暂的locationManager:didRangeBeacons:inRegion:方法报告两个设备距离相同的UUID,主要和次要的值而不是一个。这种行为发生是因为iOS设备的蓝牙标识符会周期性地出于隐私考虑而改变。基于原始蓝牙标识符的邻近属性在标识符更改的2秒内报告了一个未知的值。在10秒内，标识符解析并且只报告一个信标区域。</code></p>
+<p>确定信标与设备之间的相对距离:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void)locationManager:(CLLocationManager *)manager</div><div class="line">        didRangeBeacons:(NSArray *)beacons</div><div class="line">               inRegion:(CLBeaconRegion *)region &#123;</div><div class="line"> </div><div class="line">   if ([beacons count] &gt; 0) &#123;</div><div class="line">      CLBeacon *nearestExhibit = [beacons firstObject];</div><div class="line"> </div><div class="line">      // Present the exhibit-specific UI only when</div><div class="line">      // the user is relatively close to the exhibit.</div><div class="line">      if (CLProximityNear == nearestExhibit.proximity) &#123;</div><div class="line">         [self presentExhibitInfoWithMajorValue:nearestExhibit.major.integerValue];</div><div class="line">      &#125; else &#123;</div><div class="line">         [self dismissExhibitInfo];</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="将iOS-设备转换为beacon设备"><a href="#将iOS-设备转换为beacon设备" class="headerlink" title="将iOS 设备转换为beacon设备"></a>将iOS 设备转换为beacon设备</h4><p><strong>创建信标区域并广播数据</strong></p>
+<ul>
+<li>1.引入oreBluetooth.framework，导入头文件#import <corebluetooth corebluetooth.h=""></corebluetooth></li>
+<li><p>2.创建CBPeripheralManager 实例，并调用<code>startAdvertising:</code>开始广播数据.参见<a href="https://developer.apple.com/documentation/corebluetooth/cbperipheralmanagerdelegate" target="_blank" rel="external">CBPeripheralManagerDelegate Protocol Reference.</a>和<a href="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/AboutCoreBluetooth/Introduction.html#//apple_ref/doc/uid/TP40013257" target="_blank" rel="external">Core Bluetooth Programming Guide.</a></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Create the peripheral manager.</div><div class="line"> CBPeripheralManager *peripheralManager = [[CBPeripheralManager alloc]</div><div class="line">    initWithDelegate:selfqueue:nil options:nil];</div><div class="line"> </div><div class="line"> // Start advertising your beacon&apos;s data.</div><div class="line"> [peripheralManager startAdvertising:beaconPeripheralData];</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.创建一个beacon区域</p>
+<ul>
+<li><p>生成UUID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ uuidgen</div><div class="line"> 39ED98FF-2900-441A-802F-9C398FC199D2</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSUUID *proximityUUID = [[NSUUID alloc]</div><div class="line">     initWithUUIDString:@&quot;39ED98FF-2900-441A-802F-9C398FC199D2&quot;];</div><div class="line"></div><div class="line">  // Create the beacon region.</div><div class="line">  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]</div><div class="line">     initWithProximityUUID:proximityUUID</div><div class="line">                identifier:@&quot;com.mycompany.myregion&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>接收数据</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSDictionary *beaconPeripheralData =</div><div class="line">     [beaconRegion peripheralDataWithMeasuredPower:nil];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="支持后台定位"><a href="#支持后台定位" class="headerlink" title="支持后台定位"></a>支持后台定位</h3><p>1.确保info.plist中加入NSLocationAlwaysUsageDescription或者NSLocationWhenInUseUsageDescription（根据自己的实际使用情况加入）</p>
+<p>2.确保info.plist加入如下键。（也可以在xcode &gt;Capabilitles&gt; Background Mode中勾选Location updates）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;UIBackgroundModes&lt;/key&gt;</div><div class="line">&lt;array&gt;</div><div class="line">	&lt;string&gt;location&lt;/string&gt;</div><div class="line">&lt;/array&gt;</div></pre></td></tr></table></figure>
+<p>3.设置locationManager的allowsBackgroundLocationUpdates属性为YES.</p>
+<p>4.创建CLLocationManager实例，启动定位。</p>
+<h4 id="启动终止的app，并获取位置信息"><a href="#启动终止的app，并获取位置信息" class="headerlink" title="启动终止的app，并获取位置信息"></a>启动终止的app，并获取位置信息</h4><p>仅当使用重大位置更新服务或者区域监听服务时，一个位置更新事件到来后，系统才会自动启动你的app到后台，并给很短的事件（大约10秒钟）去手动启动位置服务和获取位置数据，（在此事件内必须完成启动定位服务和获取位置数据，否则app将再次终止），如果APP需要获得更多的时间获取位置信息，可以使用UIApplication 类的beginBackgroundTaskWithName:expirationHandler:方法。</p>
+<p><code>重要：当用户禁用全局设置或者app设置中的后台刷新时，重大位置更新服务不会重启app。当后台刷新关闭时app将不会收到重大位置更新服务和区域监听事件事件,你可以使用UIApplication 的backgroundRefreshStatus 方法去获取后台更新是否开启。</code></p>
 <p><code>技术交流群:</code><strong>494826724</strong></p>
 
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/16/RemoteNotifycation/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-AES对称加密" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/11/AES对称加密/">AES对称加密</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/11/AES对称加密/" class="archive-article-date">
-  	<time datetime="2015-12-11T02:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#AES对称加密 - by yachaocn</p>
-<hr>
-<p><strong>摘要</strong></p>
-<p>AES 是一个迭代的、对称密钥分组的密码,它可以使用128、192 和 256 位密钥,并且用 128 位(16字节)分组加密和解密数据。此处采用256位进行加密。</p>
-<p>####1.创建NSData的一个类别Encryption</p>
-<p><code>.h文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key;   //加密</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key;   //解密 </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>.m文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#import &quot;NSData+Encryption.h&quot;</div><div class="line">#import &lt;CommonCrypto/CommonCrypto.h&gt;</div><div class="line"></div><div class="line">@implementation NSData (Encryption)</div><div class="line">- (NSData *)AES256ParmEncryptWithKey:(NSString *)key   //加密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesEncrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesEncrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (NSData *)AES256ParmDecryptWithKey:(NSString *)key   //解密</div><div class="line">&#123;</div><div class="line">    char keyPtr[kCCKeySizeAES256+1];</div><div class="line">    bzero(keyPtr, sizeof(keyPtr));</div><div class="line">    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];</div><div class="line">    NSUInteger dataLength = [self length];</div><div class="line">    size_t bufferSize = dataLength + kCCBlockSizeAES128;</div><div class="line">    void *buffer = malloc(bufferSize);</div><div class="line">    size_t numBytesDecrypted = 0;</div><div class="line">    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128,</div><div class="line">                                          kCCOptionPKCS7Padding | kCCOptionECBMode,</div><div class="line">                                          keyPtr, kCCBlockSizeAES128,</div><div class="line">                                          NULL,</div><div class="line">                                          [self bytes], dataLength,</div><div class="line">                                          buffer, bufferSize,</div><div class="line">                                          &amp;numBytesDecrypted);</div><div class="line">    if (cryptStatus == kCCSuccess) &#123;</div><div class="line">        return [NSData dataWithBytesNoCopy:buffer length:numBytesDecrypted];</div><div class="line">    &#125;</div><div class="line">    free(buffer);</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>调用测试</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">    NSString *str = @&quot;你好&quot;;</div><div class="line">    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line">    </div><div class="line">//    加密</div><div class="line">    NSString *key = @&quot;535541213&quot;;</div><div class="line">    NSData *encryptionData = [data AES256ParmEncryptWithKey:key];</div><div class="line">    NSLog(@&quot;%@加密后数据：%@&quot;,data,encryptionData);</div><div class="line">    </div><div class="line">//解密</div><div class="line">   NSData *deData = [encryptionData AES256ParmDecryptWithKey:key];</div><div class="line">    NSString *deStr = [[NSString alloc]initWithData:deData encoding:NSUTF8StringEncoding];</div><div class="line">    NSLog(@&quot;解密后数据：%@&quot;,deStr);</div></pre></td></tr></table></figure>
-<p>本人代码：<a href="https://github.com/yachaocn/AES-Encryption" target="_blank" rel="external">下载代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/11/AES对称加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS9画中画" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/27/iOS9画中画/">ios9画中画</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/27/iOS9画中画/" class="archive-article-date">
-  	<time datetime="2015-11-27T05:51:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="画中画"><a href="#画中画" class="headerlink" title="#画中画"></a>#画中画</h2><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午11.01.07.png" alt="image1"><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午9.42.36.png" alt="image2"></p>
-<p>####如果想要你的视频播放支持画中画，必须确保你的app具有以下配置:<br> 1.设置你的Base SDK 为 “Latest iOS,”</p>
-<p> <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午10.51.08.png" alt=""></p>
-<p> 2.设置你的Capabilities中的 Background Modes 为Audio, AirPlay and Picture in Picture。<br> <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-27%20上午10.49.15.png" alt=""></p>
-<p> 3.确保你的app视频播放会话（session）采用了合适的类别（category），例如：AVAudioSessionCategoryPlayback.接着app的视频播放必须采用AVKit, AV Foundation, or WebKit class，他决定了你的app视频播放的性质和你给用户的体验度。</p>
-<p> 4.AVKit framework的AVPlayerViewController类能够为用户提供一个进入画中画的按钮；如果你是使用AVKit支持画中画的，如果你想使某个视频的播放不支持画中画，你只需将player viewcontroller的allowsPictureInPicturePlayback属性设置为NO就可以了。</p>
-<p> 5。如果你想提供自己的ViewController和自定义的视频播放用户界面，那个AVKit也提供了AVPictureInPictureController类，它能够和AV Foundation下的AVPlayerLayer类一起使用来实现自定义。<br> <code>假如你使用这种方式支持画中画的，那么如果你想要退出视频的画中画，请不要将AVPlayerLayer和AVPictureInPictureController相关联，只要你实例化AVPictureInPictureController和AVPlayerLayer,令playerlayer符合画中画，那么退出的方法是不执行实例。</code></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">note: Media Player movie playback在ios9正式被弃用，将不能支持视频播放，无论是否支持画中画。</div></pre></td></tr></table></figure>
-<hr>
-<p> <code>important</code>:</p>
-<p> <strong>Picture in Picture is a feature that Apple intends to always be under user control. Invoke Picture in Picture only in response to a user’s explicit request to do so. If an app invokes Picture in Picture in a way that is not under the immediate direction of the user, especially upon the app moving to the background, the app will be rejected by the App Store.</strong></p>
-<hr>
-<p>ios9中对于重在全屏播放的视频，当用户暗下home键或一个通知按钮时，视频将自动进入画中画模式，仅仅对支持画中画视频播放才有效，所以你需要如下配置你的视频播放视图：</p>
-<p> 1.确保你的app像上面描述的方式支持画中画。<br> 2.通过指定你的视频播放view适应整个app窗口大小，来配置你的视频和全屏播放。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tips:用户可以在Settings &gt; General &gt; Multitasking &gt; Persistent Video Overlay中禁用画中画模式，所以在你配置了所有的设置之后还不能支持画中画，请查看此设置。</div></pre></td></tr></table></figure>
-<p> ##最后附上本人画中画代码：<a href="https://github.com/yachaocn/picture-in-picture" target="_blank" rel="external">下载代码</a></p>
-<p> <code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/11/27/iOS9画中画/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-未受信的企业级开发者" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/26/未受信的企业级开发者/">未受信的企业级开发者</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/26/未受信的企业级开发者/" class="archive-article-date">
-  	<time datetime="2015-11-26T07:27:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##安装企业分发应用程序报错：未受信的企业级开发者</p>
-<hr>
-<p>#####前言：介于飞行员下载程序后无法打开程序的问题，特制作安装说明。</p>
-<p><strong>问题描述:</strong>下载程序并安装后，出现如下情形：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/11.png" alt="image"></p>
-<p><strong>解决办法：</strong></p>
-<ul>
-<li><p>1、打开<code>设置</code>&gt;<code>通用</code>&gt;<code>描述文件</code></p>
-<p>如图：<img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午11.26.47.png" alt="image1"></p>
-</li>
-</ul>
-<ul>
-<li><p>2、打开后点击图中标注文件。</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午11.26.59.png" alt=""></p>
-</li>
-<li><p>3、出现如下界面</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午11.27.04.png" alt=""></p>
-<p>4.点击图中红色圈中选项<code>信任CHINA AVIATION NAVIGATION DATA CO.,LTD</code>弹出如下界面：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午11.27.12.png" alt=""></p>
-<p>5.点击信任按钮,跳转到如下图中</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/66.png" alt=""></p>
-<p>6.返回pad主界面，重新点击西藏航空，出现如下界面：</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/77.png" alt=""></p>
-</li>
-</ul>
-<hr>
-<p>###最后恭喜你已成功解决此问题，是不是觉得自己很棒呢？偷偷笑一笑吧！</p>
-<hr>
-<p>##maded by yachaocn</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/11/26/未受信的企业级开发者/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS指纹验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/26/iOS指纹验证/">ios指纹验证</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/26/iOS指纹验证/" class="archive-article-date">
-  	<time datetime="2015-11-26T07:22:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="ios指纹验证"><a href="#ios指纹验证" class="headerlink" title="##ios指纹验证"></a>##ios指纹验证</h2><p>####前言<br>  突然想研究一下苹果的指纹验证，想装逼一下，正好今天没事儿，于是心血来潮，捣鼓了一下，本来想找个指纹验证的算法的，找了半天无果，所以就乖乖的用苹果自带的吧。</p>
-<hr>
-<p>  <img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-11-26%20上午10.16.57.png" alt="image"></p>
-<p>#####废话少说开始了：<br>1.在link Binary with libraries中添加LocalAuthentication.framework.库</p>
-<p>2.在你的工程文件中导入头文件#import <localauthentication localauthentication.h=""></localauthentication></p>
-<p>3.验证方法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">-(void)authenticateUser</div><div class="line">&#123;</div><div class="line">    LAContext *context = [[LAContext alloc]init];</div><div class="line">    context.localizedFallbackTitle = @&quot;输入密码&quot;;</div><div class="line">//    context.maxBiometryFailures = @(4);</div><div class="line">    NSString *localizedReason = @&quot;Authentication is needed to access your note!&quot;;</div><div class="line">    NSError *error;</div><div class="line">    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&amp;error]) &#123;</div><div class="line">        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:localizedReason reply:^(BOOL success, NSError *error) &#123;</div><div class="line">            if (success) &#123;</div><div class="line">                NSLog(@&quot;指纹验证成功！&quot;);</div><div class="line">                </div><div class="line">            &#125;else&#123;</div><div class="line">                </div><div class="line">                NSLog(@&quot;%@&quot;,error.localizedDescription);</div><div class="line">                switch (error.code) &#123;</div><div class="line">                    case LAErrorSystemCancel:</div><div class="line">                        NSLog(@&quot;Authentication was canceled by system&quot;);</div><div class="line">                        break;</div><div class="line">                    case LAErrorAuthenticationFailed:</div><div class="line">                        NSLog(@&quot;Authentication was not successful, because user failed to provide valid credentials.&quot;);</div><div class="line"></div><div class="line">                        break;</div><div class="line">                      </div><div class="line">                    case LAErrorUserCancel:</div><div class="line">                    &#123;</div><div class="line">                        NSLog(@&quot;Authentication was canceled by user&quot;);</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                        break;</div><div class="line">                    case LAErrorUserFallback:</div><div class="line">                    &#123;</div><div class="line">                        NSLog(@&quot;Authentication was canceled, because the user tapped the fallback button (Enter Password&quot;);</div><div class="line"></div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                        break;</div><div class="line">                    default:</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">           </div><div class="line">        &#125;];</div><div class="line">        </div><div class="line">    &#125;else&#123;</div><div class="line">        if (error) &#123;</div><div class="line">            [self authenticateUser];</div><div class="line">            NSLog(@&quot;%@&quot;,error.localizedDescription);</div><div class="line">            switch (error.code) &#123;</div><div class="line">                case LAErrorTouchIDNotEnrolled:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because Touch ID has no enrolled fingers.&quot;);</div><div class="line">                    break;</div><div class="line">                case LAErrorPasscodeNotSet:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because passcode is not set on the device&quot;);</div><div class="line">                case LAErrorTouchIDNotAvailable:</div><div class="line">                    NSLog(@&quot;Authentication could not start, because Touch ID is not available on the device&quot;);</div><div class="line">                default:</div><div class="line">                    NSLog(@&quot;TouchID not available&quot;);</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####注释：</p>
-<ul>
-<li><p>AuthenticationFailed: 在用户没有提供正确验证的情况下返回该错误类型，例如使用一个错误的手指。</p>
-</li>
-<li><p>UserCancel:在用户有意终止验证的时候返回该类型。</p>
-</li>
-<li><p>UserFallback：在用户有意不使用TouchID验证并且回到自定义的输入验证方式时返回。</p>
-</li>
-<li><p>SystemCancel：在这种情况下，系统终止验证处理，因为另一个应用被激活了。</p>
-</li>
-<li><p>PasscodeNotSet：当用户没有在设备Settings中设定密码时返回。</p>
-</li>
-<li><p>TouchIDNotAvailable：设备不支持TouchID。</p>
-</li>
-<li><p>TouchIDNotEnrolled：在设备支持TouchID但没有录入指纹的时候返回。<br>其他的就不多介绍了，不懂的直接翻译nslog打印的字符串吧！钦此。</p>
-</li>
-</ul>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/11/26/iOS指纹验证/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS-app分屏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/26/iOS-app分屏/">iOS_app分屏</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/26/iOS-app分屏/" class="archive-article-date">
-  	<time datetime="2015-11-26T07:15:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#Slide Over and Split View Quick Start</p>
-<hr>
-<p>####前言<br>当你用xcode7新建工程时，默认是支持Slide Over and Split View的，如果你用老的工程在xocde7上面运行时是不支持分屏的，你需要做以下配置：</p>
-<h5 id="设置Base-SDK-为-“Latest-iOS”。"><a href="#设置Base-SDK-为-“Latest-iOS”。" class="headerlink" title="- 设置Base SDK 为 “Latest iOS”。"></a>- 设置Base SDK 为 “Latest iOS”。</h5><h5 id="提供一个LaunchScreen-storyboard文件（-Creating-a-Launch-Screen-File-in-App-Distribution-Guide-）"><a href="#提供一个LaunchScreen-storyboard文件（-Creating-a-Launch-Screen-File-in-App-Distribution-Guide-）" class="headerlink" title="- 提供一个LaunchScreen.storyboard文件（ Creating a Launch Screen File in App Distribution Guide.）"></a>- 提供一个LaunchScreen.storyboard文件（ <a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/ConfiguringYourApp/ConfiguringYourApp.html#//apple_ref/doc/uid/TP40012582-CH28-SW4" target="_blank" rel="external">Creating a Launch Screen File</a> in <a href="https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40012582" target="_blank" rel="external">App Distribution Guide</a>.）</h5><h5 id="在工程的Info-plist文件中Supported-interface-orientations-iPad-键数组中加入支持四个方向的旋转"><a href="#在工程的Info-plist文件中Supported-interface-orientations-iPad-键数组中加入支持四个方向的旋转" class="headerlink" title="- 在工程的Info.plist文件中Supported interface orientations (iPad)键数组中加入支持四个方向的旋转"></a>- 在工程的Info.plist文件中Supported interface orientations (iPad)键数组中加入支持四个方向的旋转</h5><p>如图：<img src="http://7xiwr4.com1.z0.glb.clouddn.com/ipad屏幕旋转.png" alt="image"></p>
-<hr>
-<p>######<code>note:</code>如果你不需要Slide Over and Split View 则在Info.plist中把UIRequiresFullScreen键设置为yes</p>
-<p>#####<code>提示:</code>如果你所有的都设置正确了，还是不能Slide Over and Split View，你学要去设置&gt;通用&gt;多任务中查看设置</p>
-<hr>
-<p>以下是在分屏过程中可能遇到的屏幕类别如图：<img src="http://7xiwr4.com1.z0.glb.clouddn.com/R_C.png" alt="screen"></p>
-<p>####前提</p>
-<ul>
-<li>你必须使用autolayout和sizeclass类布局你的app。</li>
-<li>LaunchScreen.storyboard文件必须使用autolayout布局，用xcode7创建的app模板都会自动生成一个LaunchScreen.storyboard文件。</li>
-<li>实现UITraitEnvironment 和 UIContentContainer 协议，用来实现屏幕特质和大小变化时，需要实现的自定义方法。</li>
-<li>响应应用程序状态转换的委托方法（）。</li>
-</ul>
-<p>####下面介绍一些分屏过程中的状态</p>
-<ul>
-<li>当用户移动分割器时，应用程序会调用applicationWillResignActive: 方法；当用户放开分割器时，系统会重新设定你app的大小，并获得一个快照，用来提供一个平滑的用户体验的过度。这是因为在用户放开分割器时你的app大小使不可知的，复杂的是用户可能在移动分割器的时候旋转屏幕。</li>
-<li>用户一直移动分割器知道你的app消失，系统将会调用applicationDidEnterBackground: 方法。</li>
-</ul>
-<p>##最后提供给大家我的一个分屏代码示例<a href="https://github.com/yachaocn/ios_split_view" target="_blank" rel="external">点击获取代码</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf2szndhj30gg0gadko.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://ws1.sinaimg.cn/large/00663vn1ly1ffqf3i5lgkj30gu0guwgp.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -583,10 +362,6 @@ ga('send', 'pageview');
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/11/26/iOS-app分屏/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
@@ -594,253 +369,16 @@ ga('send', 'pageview');
   </div>
 </article>
 
-
-
-
-
   
-    <article id="post-PSPDFKIT-PDF上画线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/28/PSPDFKIT-PDF上画线/">PSPDFKIT-PDF上画线</a>
-    </h1>
   
-
-        
-        <a href="/2015/09/28/PSPDFKIT-PDF上画线/" class="archive-article-date">
-  	<time datetime="2015-09-28T01:11:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-09-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.PDF添加polayLine</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[subclassingSection addContent:[PSContent contentWithTitle:@&quot;Programmatically add a PolyLine annotation&quot; block:^UIViewController *&#123;</div><div class="line">        PSPDFDocument *document = [PSPDFDocument documentWithURL:hackerMagURL];</div><div class="line">        document.annotationSaveMode = PSPDFAnnotationSaveModeDisabled; // don&apos;t confuse other examples</div><div class="line">        // add shape annotation if there isn&apos;t one already.</div><div class="line">        NSUInteger targetPage = 0;</div><div class="line">        if ([document annotationsForPage:targetPage type:PSPDFAnnotationTypePolyLine].count == 0) &#123;</div><div class="line">            PSPDFPolyLineAnnotation *polyline = [PSPDFPolyLineAnnotation new];</div><div class="line">            polyline.points = @[[NSValue valueWithCGPoint:CGPointMake(52, 633)], [NSValue valueWithCGPoint:CGPointMake(67, 672)], [NSValue valueWithCGPoint:CGPointMake(131, 685)], [NSValue valueWithCGPoint:CGPointMake(178, 654)], [NSValue valueWithCGPoint:CGPointMake(115, 622)]];</div><div class="line">            polyline.color = [UIColor colorWithRed:0.0 green:1.f blue:0.f alpha:1.f];</div><div class="line">            polyline.fillColor = UIColor.yellowColor;</div><div class="line">            polyline.lineEnd2 = PSPDFLineEndTypeClosedArrow;</div><div class="line">            polyline.lineWidth = 5.f;</div><div class="line">            polyline.page = targetPage;</div><div class="line">            [document addAnnotations:@[polyline]];</div><div class="line">        &#125;</div><div class="line">        PSPDFViewController *controller = [[PSPDFViewController alloc] initWithDocument:document];</div><div class="line">        controller.rightBarButtonItems = @[controller.searchButtonItem, controller.openInButtonItem, controller.viewModeButtonItem];</div><div class="line">        return controller;</div><div class="line">    &#125;]];</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/09/28/PSPDFKIT-PDF上画线/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
+    <a href="/2018/03/14/iOS-事件获取、响应与响应者链/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS 事件获取、响应与响应者链</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
-    <article id="post-UISearchViewController总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/01/UISearchViewController总结/">UISearchViewController总结</a>
-    </h1>
-  
-
-        
-        <a href="/2015/09/01/UISearchViewController总结/" class="archive-article-date">
-  	<time datetime="2015-09-01T07:20:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-09-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>注：UISearchDisPlayController已被UISearchViewConreoller代替</code><br></p>
-<p>应用效果：apple官方封装的搜索控件，实现了搜索时动态隐藏NavagationBar.</p>
-<p>1.初始化UISearchViewConreoller</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UISearchController *searchController = [[UISearchController alloc]initWithSearchResultsController:nil];</div></pre></td></tr></table></figure>
-<p>2.设置显示搜索结果的控制器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">searchController.searchResultsUpdater = self;</div></pre></td></tr></table></figure>
-<p>3.dimsBackgroundDuringPresentation 设置开始搜索时背景显示与否</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">searchController.dimsBackgroundDuringPresentation = YES;</div></pre></td></tr></table></figure>
-<p>4.这是tableView的HeaderView为searchController的searchBar</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.tablView.tableHeaderView = searchController.searchBar;</div></pre></td></tr></table></figure>
-<p>5.设置 searchController的searchBar大小自适应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[searchController.searchBar sizeToFit];</div></pre></td></tr></table></figure>
-<p><strong>其他:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">searchController.searchBar.placeholder = @&quot;请输入地名：&quot;;</div><div class="line">   searchController.searchBar.prompt = @&quot;输入要查找的人：&quot;;</div></pre></td></tr></table></figure>
-<p>代码示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">#import &quot;ViewController.h&quot;</div><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line">@interface ViewController ()&lt;UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating&gt;</div><div class="line">//@property(nonatomic,strong) NSArray *items;</div><div class="line">//@property(nonatomic,strong) NSArray *searchResult;</div><div class="line">@property(nonatomic,strong) UITableView *tablView;</div><div class="line">@property(nonatomic,strong) NSArray *visableArray;</div><div class="line">@property(nonatomic,strong) NSArray *dataSourceArray;</div><div class="line">@property(nonatomic,strong) UISearchController *searVC;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    self.title = @&quot;LOL科普：地名大全&quot;;</div><div class="line">    </div><div class="line">    self.dataSourceArray = @[@&quot;国服第一臭豆腐 No.1 Stinky Tofu CN.&quot;,</div><div class="line">                   @&quot;瓦洛兰 Valoran&quot;,</div><div class="line">                   @&quot;德玛西亚 Demacia&quot;,</div><div class="line">                   @&quot;诺克萨斯 Noxus&quot;,</div><div class="line">                   @&quot;艾欧尼亚 Ionia&quot;,</div><div class="line">                   @&quot;皮尔特沃夫 Piltover&quot;,</div><div class="line">                   @&quot;弗雷尔卓德 Freijord&quot;,</div><div class="line">                   @&quot;班德尔城 Bandle City&quot;,</div><div class="line">                   @&quot;战争学院 The Institute of War&quot;,</div><div class="line">                   @&quot;祖安 Zaun&quot;,</div><div class="line">                   @&quot;卡拉曼达 Kalamanda&quot;,</div><div class="line">                   @&quot;蓝焰岛 Blue Flame Island&quot;,</div><div class="line">                   @&quot;哀嚎沼泽 Howling Marsh&quot;,</div><div class="line">                   @&quot;艾卡西亚 Icathia&quot;,</div><div class="line">                   @&quot;铁脊山脉 Ironspike Mountains&quot;,</div><div class="line">                   @&quot;库莽古丛林 Kumungu&quot;,</div><div class="line">                   @&quot;洛克法 Lokfar&quot;,</div><div class="line">                   @&quot;摩根小道 Morgon Pass&quot;,</div><div class="line">                   @&quot;塔尔贡山脉 Mountain Targon&quot;,</div><div class="line">                   @&quot;瘟疫丛林 Plague Jungles&quot;,</div><div class="line">                   @&quot;盘蛇河 Serpentine River&quot;,</div><div class="line">                   @&quot;恕瑞玛沙漠 Shurima Desert&quot;,</div><div class="line">                   @&quot;厄尔提斯坦 Urtistan&quot;,</div><div class="line">                   @&quot;巫毒之地 Voodoo Lands&quot;,</div><div class="line">                   @&quot;水晶之痕 Crystal Scar&quot;,</div><div class="line">                   @&quot;咆哮深渊 Howling Abyss&quot;,</div><div class="line">                   @&quot;熔岩洞窟 Magma Chambers&quot;,</div><div class="line">                   @&quot;试炼之地 Proving Grounds&quot;,</div><div class="line">                   @&quot;召唤师峡谷 Summoner&apos;s Rift&quot;,</div><div class="line">                   @&quot;扭曲丛林 Twisted Treeline&quot;];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line"></div><div class="line">    self.tablView = [[UITableView alloc]initWithFrame:self.view.frame];</div><div class="line">    self.tablView.delegate = self;</div><div class="line">    self.tablView.dataSource = self;</div><div class="line">    UISearchController *searchController = [[UISearchController alloc]initWithSearchResultsController:nil];</div><div class="line">    self.searVC = searchController;</div><div class="line">//    searchController.delegate = self;</div><div class="line">    searchController.searchResultsUpdater = self;</div><div class="line">    searchController.searchBar.placeholder = @&quot;请输入地名：&quot;;</div><div class="line">//    searchController.searchBar.prompt = @&quot;输入要查找的人：&quot;;</div><div class="line">    searchController.dimsBackgroundDuringPresentation = YES;</div><div class="line">    [self.view addSubview:self.tablView];</div><div class="line">    [searchController.searchBar sizeToFit];</div><div class="line">    self.tablView.tableHeaderView = searchController.searchBar;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - UISearchResultsUpdating 代理</div><div class="line">// Called when the search bar&apos;s text or scope has changed or when the search bar becomes first responder.</div><div class="line">- (void)updateSearchResultsForSearchController:(UISearchController *)searchController</div><div class="line">&#123;</div><div class="line">    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@&quot;SELF contains[cd] %@&quot;, searchController.searchBar.text];</div><div class="line">    </div><div class="line">    self.visableArray = [self.dataSourceArray filteredArrayUsingPredicate:resultPredicate];</div><div class="line">    [self.tablView reloadData];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section</div><div class="line">&#123;</div><div class="line">    if (_visableArray == nil || _visableArray.count == 0 ) &#123;</div><div class="line">        _visableArray = self.dataSourceArray;</div><div class="line">    &#125;</div><div class="line">    return _visableArray.count;</div><div class="line">&#125;</div><div class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">    static NSString *ID = @&quot;cell&quot;;</div><div class="line">    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];</div><div class="line">    if (!cell) &#123;</div><div class="line">        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];</div><div class="line">    &#125;</div><div class="line">    cell.textLabel.text = _visableArray[indexPath.row];</div><div class="line">    return cell;</div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">    // Dispose of any resources that can be recreated.</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/09/01/UISearchViewController总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="ios-3D绘图" class="article article-type-ios  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/26/3D绘图/">ios3D绘图</a>
-    </h1>
-  
-
-        
-        <a href="/2015/08/26/3D绘图/" class="archive-article-date">
-  	<time datetime="2015-08-26T02:28:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.创建上下文</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];</div><div class="line">   if (context == nil) &#123;</div><div class="line">      context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line">   &#125;</div><div class="line">   return context;</div><div class="line">2.设置上下文</div><div class="line">[EAGLContext setCurrentContext: myContext];</div><div class="line"></div><div class="line">3.用共有的shareGroup创建多个context</div><div class="line">EAGLContext* firstContext = CreateBestEAGLContext();</div><div class="line">EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API] sharegroup: [firstContext sharegroup]];</div></pre></td></tr></table></figure>
-<p>4.创建并配置一个GLKit view<br>Multisampling是一种抗锯齿,锯齿边缘光滑,改善图像质量在大多数3 d应用程序使用更多的内存和分段处理的成本如果你启用Multisampling,总是测试您的应用程序的性能,以确保它仍然是可以接受的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// Create an OpenGL ES context and assign it to the view loaded from storyboard</div><div class="line">    GLKView *view = (GLKView *)self.view;</div><div class="line">    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line"> </div><div class="line">    // Configure renderbuffers created by the view</div><div class="line">    view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;</div><div class="line">    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;</div><div class="line">    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;</div><div class="line"> </div><div class="line">    // Enable multisampling</div><div class="line">    view.drawableMultisample = GLKViewDrawableMultisample4X;</div></pre></td></tr></table></figure>
-<p>5.绘制图像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> - (void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    // Clear the framebuffer</div><div class="line">    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</div><div class="line"> </div><div class="line">    // Draw using previously configured texture, shader, uniforms, and vertex array</div><div class="line">    </div><div class="line">    glBindTexture(GL_TEXTURE_2D, _planetTexture);</div><div class="line">    glUseProgram(_diffuseShading);</div><div class="line">    glUniformMatrix4fv(_uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);</div><div class="line">    glBindVertexArrayOES(_planetMesh);</div><div class="line">    glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/08/26/3D绘图/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-iOS中晃动事件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/26/iOS中晃动事件/">ios晃动事件</a>
-    </h1>
-  
-
-        
-        <a href="/2015/08/26/iOS中晃动事件/" class="archive-article-date">
-  	<time datetime="2015-08-26T02:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="晃动事件"><a href="#晃动事件" class="headerlink" title="晃动事件"></a>晃动事件</h2><p>#####ios中晃动事件：</p>
-<p><code>声明：在ios中事件的相应者链中指出：1.对于触摸事件响应者传给host View，远程控制事件（耳机线控等）、晃动事件则传递给第一响应者。</code></p>
-<p>1.实现[UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;告诉ios系统支持晃动事件。</p>
-<p>2.重载<br>-(BOOL)canBecomeFirstResponder<br>{<br>    return YES;<br>}//指明控制器可以成为第一响应者。</p>
-<p>3.分别在控制器中书写以下方法</p>
-<pre><code>-(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-
-                [self becomeFirstResponder];
-
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self resignFirstResponder];
-}
-</code></pre><p>4、viewController 方法</p>
-<p>-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event<br>{<br>    if (motion == UIEventSubtypeMotionShake) {<br>        NSLog(@”%s”,<strong>func</strong>);<br>    }</p>
-<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/08/26/iOS中晃动事件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
+</nav>
 
 
 
@@ -848,9 +386,26 @@ ga('send', 'pageview');
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'true'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
   
 
 
@@ -888,8 +443,8 @@ ga('send', 'pageview');
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

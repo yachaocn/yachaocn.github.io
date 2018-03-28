@@ -183,6 +183,132 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-APP Extensions" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/14/APP Extensions/">APP Extensions</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/14/APP Extensions/" class="archive-article-date">
+  	<time datetime="2016-04-14T06:47:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="App-Extensions"><a href="#App-Extensions" class="headerlink" title="App Extensions"></a>App Extensions</h1><hr>
+<p><code>前言：</code></p>
+<p>extension是iOS8新开放的一种对几个固定系统区域的扩展机制，它可以在一定程度上弥补iOS的沙盒机制对应用间通信的限制。</p>
+<p>extension的出现，为用户提供了在其它应用中使用我们应用提供的服务的便捷方式，比如用户可以在Today的widgets中查看应用展示的简略信息，而不用再进到我们的应用中，这将是一种全新的用户体验；但是，extension的出现可能会减少用户启动应用的次数，同时还会增大开发者的工作量。</p>
+<hr>
+<p><strong>几个关键字</strong></p>
+<p><code>extension point</code></p>
+<p>系统中支持extension的区域，extension的类别也是据此区分的，iOS上共有Today、Share、Action、Photo Editing、Storage Provider、Custom keyboard几种，其中Today中的extension又被称为widget。</p>
+<p>每种extension point的使用方式和适合干的活都不一样，因此不存在通用的extension。</p>
+<p><code>app extension</code></p>
+<p>即为本文所说的extension。extension并不是一个独立的app，它有一个包含在app bundle中的独立bundle，extension的bundle后缀名是.appex。其生命周期也和普通app不同，这些后文将会详述。</p>
+<p>extension不能单独存在，必须有一个包含它的containing app。</p>
+<p>另外，extension需要用户手动激活，不同的extension激活方式也不同，比如： 比如Today中的widget需要在Today中激活和关闭；Custom keyboard需要在设置中进行相关设置；Photo Editing需要在使用照片时在照片管理器中激活或关闭；Storage Provider可以在选择文件时出现；Share和Action可以在任何应用里被激活，但前提是开发者需要设置Activation Rules，以确定extension需要在合适出现。</p>
+<p><code>containing app</code></p>
+<p>尽管苹果开放了extension，但是在iOS中extension并不能单独存在，要想提交到AppStore，必须将extension包含在一个app中提交，并且app的实现部分不能为空,这个包含extension的app就叫containing app。</p>
+<p>extension会随着containing app的安装而安装，同时随着containing app的卸载而卸载。</p>
+<p><code>host app</code></p>
+<p>能够调起extension的app被称为host app，比如widget的host app就是Today。</p>
+<hr>
+<h2 id="extension和containing-app、host-app之间的关系"><a href="#extension和containing-app、host-app之间的关系" class="headerlink" title="extension和containing app、host app之间的关系"></a>extension和containing app、host app之间的关系</h2><hr>
+<p><strong>extension和host app</strong></p>
+<p>extension和host app之间可以通过extensionContext属性直接通信，该属性是新增加的UIViewController类别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface UIViewController(NSExtensionAdditions) &lt;NSExtensionRequestHandling&gt; </div><div class="line"> </div><div class="line">// Returns the extension context. Also acts as a convenience method for a view controller to check if it participating in an extension request. </div><div class="line">@property (nonatomic,readonly,retain) NSExtensionContext *extensionContext NS_AVAILABLE_IOS(8_0); </div><div class="line"> </div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>实际上extension和host app之间是通过IPC（interprocess communication）实现的，只是苹果把调用接口高度抽象了，我们并不需要关注那么底层的东西。</p>
+<p><strong>containing app和host app</strong></p>
+<p>他们之间没有任何直接关系，也从来不需要通信。</p>
+<p><strong>extension和containing app</strong></p>
+<p>这二者之间的关系最复杂，纠纠缠缠扯不清关系。</p>
+<p>尽管extension的bundle是放在containing app的bundle中，但是他们是两个完全独立的进程，之间不能直接通信,不过extension可以通过openURL的方式<em>启动containing app</em>（当然也能启动其它app），不过必须通过extensionContext借助host app来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//通过openURL的方式启动Containing APP </div><div class="line">- (void)openURLContainingAPP </div><div class="line">&#123; </div><div class="line">    [self.extensionContext openURL:[NSURL URLWithString:@&quot;appextension://123&quot;] </div><div class="line">                 completionHandler:^(BOOL success) &#123; </div><div class="line">                     NSLog(@&quot;open url result:%d&quot;,success); </div><div class="line">                 &#125;]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>extension中是无法直接使用openURL的。</code></p>
+<p><em>可以共享Shared resources</em></p>
+<p>extension和containing app可以共同读写一个被称为Shared resources的存储区域，这是通过App Groups实现的。<br>两者的关系如图：</p>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8A%E5%8D%8811.37.51.png" alt=""></p>
+<p><em>containing app能够控制extension的出现和隐藏</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//让隐藏的插件重新显示 </div><div class="line">- (void)showTodayExtension </div><div class="line">&#123; </div><div class="line">    [[NCWidgetController widgetController] setHasContent:YES forWidgetWithBundleIdentifier:@&quot;com.wangzz.app.extension&quot;]; </div><div class="line">&#125; </div><div class="line"> </div><div class="line">//隐藏插件 </div><div class="line">- (void)hiddeTodayExtension </div><div class="line">&#123; </div><div class="line">    [[NCWidgetController widgetController] setHasContent:NO forWidgetWithBundleIdentifier:@&quot;com.wangzz.app.extension&quot;]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="App-Groups"><a href="#App-Groups" class="headerlink" title="App Groups"></a>App Groups</h2><p>这是iOS8新开放的功能，在OS X上早就可用了。它主要用于同一group下的app共享同一份读写空间，以实现数据共享。</p>
+<p><strong>在app中开启</strong></p>
+<p> App Groups位于：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;AppExtensionDemo--&gt;Capabilities--&gt;App Groups</div></pre></td></tr></table></figure></p>
+<p>找到以后，将App Groups右上角的开关打开，然后选择添加groups，比如我的是group.com.sisniswift.WhirlyGlobe.</p>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8B%E5%8D%882.10.04.png" alt=""></p>
+<p><strong>在extension中开启</strong></p>
+<p>我创建的是widget，target名称为TodayExtension，对应的App Groups位于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;TodayExtension--&gt;Capabilities--&gt;App Groups</div></pre></td></tr></table></figure>
+<p>开启方式和app中一样，需要注意的是必须保证这里地App Groups名称和app中的相同，即为group.com.sisniswift.WhirlyGlobe.</p>
+<h2 id="extension和containing-app数据共享"><a href="#extension和containing-app数据共享" class="headerlink" title="extension和containing app数据共享"></a>extension和containing app数据共享</h2><p>App Groups给我们提供了同一group内app可以共同读写的区域，可以通过以下方式实现数据共享</p>
+<p><strong>通过NSUserDefaults共享数据</strong></p>
+<p><code>存数据</code></p>
+<p>通过以下方式向NSUserDefaults中保存数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)saveTextByNSUserDefaults </div><div class="line">&#123; </div><div class="line">    NSUserDefaults *shared = [[NSUserDefaults alloc] initWithSuiteName:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    [shared setObject:_textField.text forKey:@&quot;saveData&quot;]; </div><div class="line">    [shared synchronize]; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要注意的是：</p>
+<ul>
+<li>保存数据的时候必须指明group id</li>
+<li>而且要注意NSUserDefaults能够处理的数据只能是可plist化的对象，详情见Property List Programming Guide。</li>
+<li>为了防止出现数据同步问题，不要忘记调用[shared synchronize];</li>
+</ul>
+<p><code>读数据</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (NSString *)readDataFromNSUserDefaults </div><div class="line">&#123; </div><div class="line">    NSUserDefaults *shared = [[NSUserDefaults alloc] initWithSuiteName:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    NSString *value = [shared valueForKey:@&quot;wangzz&quot;]; </div><div class="line"> </div><div class="line">    return value; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>通过NSFileManager共享数据</strong></p>
+<p>NSFileManager在iOS7提供了containerURLForSecurityApplicationGroupIdentifier方法，可以用来实现app group共享数据。</p>
+<p><code>保存数据</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (BOOL)saveTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line"> </div><div class="line">    NSString *value = _textField.text; </div><div class="line">    BOOL result = [value writeToURL:containerURL atomically:YES encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line">    if (!result) &#123; </div><div class="line">        NSLog(@&quot;%@&quot;,err); </div><div class="line">    &#125; else &#123; </div><div class="line">        NSLog(@&quot;save value:%@ success.&quot;,value); </div><div class="line">    &#125; </div><div class="line"> </div><div class="line">    return result;</div></pre></td></tr></table></figure>
+<p><code>读数据</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSString *)readTextByNSFileManager </div><div class="line">&#123; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@&quot;group.com.sisniswift.WhirlyGlobe&quot;]; </div><div class="line">    containerURL = [containerURL URLByAppendingPathComponent:@&quot;Library/Caches/good&quot;]; </div><div class="line">    NSString *value = [NSString stringWithContentsOfURL:containerURL encoding:NSUTF8StringEncoding error:&amp;err]; </div><div class="line"> </div><div class="line">    return value;</div></pre></td></tr></table></figure>
+<p><strong>数据同步</strong></p>
+<p>两个应用共同读取同一份数据，就会引发数据同步问题。WWDC2014的视频中建议使用NSFileCoordination实现普通文件的读写同步，而数据库可以使用CoreData,Sqlite也支持同步</p>
+<h2 id="extension和containing-app代码共享"><a href="#extension和containing-app代码共享" class="headerlink" title="extension和containing app代码共享"></a>extension和containing app代码共享</h2><p>通过embedded framework 实现带码的共享，我们先建立一个动态库，然后将共用的代码放在这个动态库里，然后在extension和它的containing app的target中连接动态库，这样就能实现代码的共享。</p>
+<p>关于动态库的制作,连接，使用，请参见<a href="http://yachaocn.com/2016/02/19/The%20dynamic%20library%20plug-in/" target="_blank" rel="external">The dynamic library plug-in</a></p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>extension和普通app的最大区别之一是生命周期。</p>
+<p><code>开始</code></p>
+<p>在用户通过host app点击extension时，系统就会实例化extension应用，这是生命周期的开始。</p>
+<p><code>执行任务</code></p>
+<p>在extension启动以后，开始执行它的使命。</p>
+<p><code>终止</code></p>
+<p>在用户取消任务，或者任务执行结束，或者开启了一个长时后台任务时，系统会将其杀掉。</p>
+<p>由此可见，extension就是为了任务而生！</p>
+<p>官方描述如下图：</p>
+<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-14%20%E4%B8%8B%E5%8D%882.32.10.png" alt=""></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/04/14/APP Extensions/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-APP之间数据的共享" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1119,128 +1245,6 @@ ga('send', 'pageview');
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2016/03/05/以无线方式安装企业内部应用部署参考/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-以无线方式安装企业内部应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/04/以无线方式安装企业内部应用/">以无线方式安装企业内部应用</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/04/以无线方式安装企业内部应用/" class="archive-article-date">
-  	<time datetime="2016-03-04T09:43:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="以无线方式安装企业内部应用"><a href="#以无线方式安装企业内部应用" class="headerlink" title="以无线方式安装企业内部应用"></a>以无线方式安装企业内部应用</h1><p><code>参考</code>：</p>
-<ul>
-<li><a href="http://help.apple.com/deployment/ios/#/apda0e3426d7" target="_blank" rel="external">iOS部署参考</a>–若打不开请点击<a href="http://yachaocn.com/2016/03/05/%E4%BB%A5%E6%97%A0%E7%BA%BF%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E5%8F%82%E8%80%83/" target="_blank" rel="external">这里</a></li>
-</ul>
-<h2 id="I-申请企业开发者账号"><a href="#I-申请企业开发者账号" class="headerlink" title="I.申请企业开发者账号"></a>I.申请企业开发者账号</h2><ul>
-<li>提供邓白氏编码和其他资料给苹果申请企业帐号,参见<a href="http://yachaocn.com/2016/03/05/申请iOS企业开发者账号/" target="_blank" rel="external">申请企业开发者账号</a></li>
-</ul>
-<h2 id="II-创建项目-打包app"><a href="#II-创建项目-打包app" class="headerlink" title="II.创建项目-打包app"></a>II.创建项目-打包app</h2><ul>
-<li><p>点击prutuct &gt; Archive,选择Save for Enterprise Deployment</p>
-<p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb1.png" alt=""></p>
-</li>
-<li>选择企业账号<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb2.png" alt=""></li>
-<li>选择导出方式<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb3.png" alt=""></li>
-<li>启用自动生成mainifest.plist用于无线安装应用<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb4.png" alt=""></li>
-<li><p>填写.ipa文件所在地址APP URL、imageURL<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/efb5.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- URL：应用 (.ipa) 文件的完全限定 HTTPS URL</div><div class="line">	- display-image：57 x 57 像素的 PNG 图像，在下载和安装过程中显示。指定图像的完全限定 URL</div><div class="line">	- full-size-image：512 x 512 像素的 PNG 图像，表示 iTunes 中相应的应用</div><div class="line">	- bundle-identifier：应用的包标识符，与 Xcode 项目中指定的完全一样</div><div class="line">	- bundle-version：应用的包版本，在 Xcode 项目中指定</div><div class="line">	- title：下载和安装过程中显示的应用的名称</div></pre></td></tr></table></figure>
-</li>
-<li><p>选择Export，导出ipa，此时你可以看到在打包的文件下多生成一个mainifest.plist，此plist文件用于iOS设备解析，并自动下载应用使用。</p>
-</li>
-</ul>
-<h2 id="III-构建网站"><a href="#III-构建网站" class="headerlink" title="III.构建网站"></a>III.构建网站</h2><p><strong>首先购买SSL证书， 然后再服务器上安装SSL证书</strong></p>
-<p>购买证书就不说了吧，掏钱的东西，一般都很简单，只要点购买-点掏钱就完事儿了。</p>
-<ul>
-<li>安装服务器证书,参见<a href="http://www.itrus.cn/html/fuwuyuzhichi/fuwuqizhengshuanzhuangpeizhizhinan/431.html" target="_blank" rel="external">http://www.itrus.cn/html/fuwuyuzhichi/fuwuqizhengshuanzhuangpeizhizhinan/431.html</a><br>在浏览器上可以使用<a href="https://www.domain.com浏览，" target="_blank" rel="external">https://www.domain.com浏览，</a> 并且https是绿色受信任的才可以。</li>
-</ul>
-<p><strong>将这些项目上传到网站上可供已认证的用户访问的区域:</strong></p>
-<p>(plist文件上传到网络空间，生成http链接（iOS6）或https链接（iOS7 之后），可下载这个plist文件，同时ipa也放到网络空间，并保证plist文件中的下载链接指向这个ipa)</p>
-<ul>
-<li>应用 (.ipa) 文件</li>
-<li>清单 (.plist) 文件</li>
-</ul>
-<p>您的网站可以是链接到清单文件的单个页面。用户轻点 Web 链接后会下载清单文件，并触发下载和安装。<br>以下是示例链接：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;itms-services://?action=download-manifest&amp;url=https://example.com/manifest.plist&quot;&gt;Install App&lt;/a&gt;</div></pre></td></tr></table></figure>
-<p><a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/yachaocn/APPInstall/master/manifest.plist" target="_blank" rel="external">Install App</a></p>
-<p><code>请勿添加归档应用 (.ipa) 的网站链接。载入清单文件时，设备会下载该 .ipa 文件。虽然 URL 的协议部分是“itms-services”，但 iTunes Store 并不参与此过程。此外，请确定 .ipa 文件可通过 HTTPS 进行访问，并且您的站点已使用 iOS 信任的证书进行了签名。如果自签名证书没有受信任的锚点并且无法由 iOS 设备验证，安装会失败。</code></p>
-<p>当用户下载这个plist文件后，iOS系统会自行解析xml，然后分析ipa证书等，然后安装</p>
-<p><strong>设定服务器 MIME 类型</strong></p>
-<p>参见<a href="http://jingyan.baidu.com/article/a3aad71aa5fbfbb1fb0096b1.html" target="_blank" rel="external">http://jingyan.baidu.com/article/a3aad71aa5fbfbb1fb0096b1.html</a></p>
-<p>您可能需要配置 Web 服务器，让清单文件和应用文件可正确传输。</p>
-<p>对于 OS X Server，请将 MIME 类型添加到 Web 服务的 MIME 类型设置：</p>
-<ul>
-<li>application/octet-stream ipa</li>
-<li>text/xml plist</li>
-</ul>
-<p>对于微软的互联网信息服务器 (IIS)，请使用 IIS Manager 在服务器的“属性”页面中添加 MIME 类型：</p>
-<ul>
-<li>.ipa application/octet-stream</li>
-<li>.plist text/xml</li>
-</ul>
-<p><strong>网络配置要求</strong></p>
-<p>如果设备连接到封闭式内部网络，那么您必须允许它访问以下站点：</p>
-<ul>
-<li>ax.init.itunes.apple.com：使用蜂窝移动网络下载应用时，设备会限制其当前文件大小。如果无法访问此站点，安装可能会失败。</li>
-<li>ocsp.apple.com：设备会联系此网站，检查用来给预置描述文件签名的分发证书状态。</li>
-</ul>
-<p><strong>证书验证</strong></p>
-<p>用户首次打开应用时，系统会通过联系 Apple 的 OCSP 服务器来验证分发证书。如果证书已撤销，应用将不会启动。为了验证状态，设备必须能够访问 ocsp.apple.com。</p>
-<p>OCSP 响应会在设备上缓存一段时间（由 OCSP 服务器指定），当前为 3 到 7 天之间。在重新启动设备和缓存的响应过期之前，将不会再次检查证书的有效性。如果当时收到撤销命令，系统将阻止应用运行。</p>
-<p><code>【警告】撤销分发证书会导致使用该证书签名的所有应用失效。只有万不得已时才应撤销证书，比如确定专用密钥已丢失或确信证书已遭破解。</code></p>
-<p><code>示例 iOS 应用清单文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</div><div class="line">&lt;plist version=&quot;1.0&quot;&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">  &lt;!-- array of downloads.--&gt;</div><div class="line">  &lt;key&gt;items&lt;/key&gt;</div><div class="line">  &lt;array&gt;</div><div class="line">   &lt;dict&gt;</div><div class="line">    &lt;!-- an array of assets to download --&gt;</div><div class="line">     &lt;key&gt;assets&lt;/key&gt;</div><div class="line">      &lt;array&gt;</div><div class="line">       &lt;!-- software-package: the ipa to install.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;!-- required. the asset kind.--&gt;</div><div class="line">          &lt;key&gt;kind&lt;/key&gt;</div><div class="line">          &lt;string&gt;software-package&lt;/string&gt;</div><div class="line">          &lt;!-- optional. md5 every n bytes. will restart a chunk if md5 fails.--&gt;</div><div class="line">          &lt;key&gt;md5-size&lt;/key&gt;</div><div class="line">          &lt;integer&gt;10485760&lt;/integer&gt;</div><div class="line">          &lt;!-- optional. array of md5 hashes for each &quot;md5-size&quot; sized chunk.--&gt;</div><div class="line">          &lt;key&gt;md5s&lt;/key&gt;</div><div class="line">          &lt;array&gt;</div><div class="line">            &lt;string&gt;41fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">            &lt;string&gt;51fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">          &lt;/array&gt;</div><div class="line">          &lt;!-- required. the URL of the file to download.--&gt;</div><div class="line">          &lt;key&gt;url&lt;/key&gt;</div><div class="line">          &lt;string&gt;https://www.example.com/apps/foo.ipa&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- display-image: the icon to display during download.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;display-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. indicates if icon needs shine effect applied.--&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;</div><div class="line">         &lt;string&gt;https://www.example.com/image.57x57.png&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- full-size-image: the large 512x512 icon used by iTunes.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;full-size-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. one md5 hash for the entire file.--&gt;</div><div class="line">         &lt;key&gt;md5&lt;/key&gt;</div><div class="line">         &lt;string&gt;61fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;&lt;string&gt;https://www.example.com/image.512x512.jpg&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">      &lt;/array&gt;</div><div class="line">&lt;key&gt;metadata&lt;/key&gt;</div><div class="line">      &lt;dict&gt;</div><div class="line">       &lt;!-- required --&gt;</div><div class="line">       &lt;key&gt;bundle-identifier&lt;/key&gt;</div><div class="line">       &lt;string&gt;com.example.fooapp&lt;/string&gt;</div><div class="line">       &lt;!-- optional (software only) --&gt;</div><div class="line">       &lt;key&gt;bundle-version&lt;/key&gt;</div><div class="line">       &lt;string&gt;1.0&lt;/string&gt;</div><div class="line">       &lt;!-- required. the download kind.--&gt;</div><div class="line">       &lt;key&gt;kind&lt;/key&gt;</div><div class="line">       &lt;string&gt;software&lt;/string&gt;</div><div class="line">       &lt;!-- optional. displayed during download; typically company name --&gt;</div><div class="line">       &lt;key&gt;subtitle&lt;/key&gt;</div><div class="line">       &lt;string&gt;Apple&lt;/string&gt;</div><div class="line">       &lt;!-- required. the title to display during the download.--&gt;</div><div class="line">       &lt;key&gt;title&lt;/key&gt;</div><div class="line">       &lt;string&gt;Example Corporate App&lt;/string&gt;</div><div class="line">      &lt;/dict&gt;</div><div class="line">    &lt;/dict&gt;</div><div class="line">  &lt;/array&gt;</div><div class="line">&lt;/dict&gt;</div><div class="line">&lt;/plist&gt;</div></pre></td></tr></table></figure>
-<hr>
-<p><code>最后实现二维码扫描安装app，无非是把这个plist文件的文件下载地址转成二维码，然后你用手机扫描，然后手机自动下载plist文件，ios系统分析xml文件，获取ipa包地址，然后下载-验证-等等，最后成功安装！</code></p>
-<p> <code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ios部署</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/03/04/以无线方式安装企业内部应用/">展开全文 >></a>
         </p>
       
 
