@@ -183,6 +183,59 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LocalNotifycation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/16/LocalNotifycation/">LocalNotifycation</a>
+    </h1>
+  
+
+        
+        <a href="/2015/12/16/LocalNotifycation/" class="archive-article-date">
+  	<time datetime="2015-12-16T02:39:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#IOS本地通知</p>
+<hr>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">#import &quot;AppDelegate.h&quot;</div><div class="line">@interface AppDelegate ()</div><div class="line"></div><div class="line">@property(nonatomic,strong) NSDateComponents *dateComponets;</div><div class="line">@property(nonatomic,strong) UILocalNotification *localNoti;</div><div class="line">@property(nonatomic) NSInteger i;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation AppDelegate</div><div class="line"></div><div class="line">-(void)addMinute:(NSTimer *)sender</div><div class="line">&#123;</div><div class="line">    self.localNoti.fireDate = [self.localNoti.fireDate dateByAddingTimeInterval:100];</div><div class="line">    self.localNoti.timeZone = [NSTimeZone defaultTimeZone];</div><div class="line">    </div><div class="line">    [[UIApplication sharedApplication] scheduleLocalNotification:self.localNoti];</div><div class="line">    NSLog(@&quot;%@&quot;,self.localNoti.fireDate);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line">    // Override point for customization after application launch.</div><div class="line">    CGFloat systemVersion = [[UIDevice currentDevice].systemVersion floatValue];</div><div class="line">    if (systemVersion &gt;= 8.0) &#123;</div><div class="line">        UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;</div><div class="line">        UIUserNotificationSettings *setting = [UIUserNotificationSettings settingsForTypes:types categories:nil];</div><div class="line">        [[UIApplication sharedApplication]registerUserNotificationSettings:setting];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UILocalNotification *localNoti = [[UILocalNotification alloc]init];</div><div class="line">    self.localNoti = localNoti;</div><div class="line">    if (nil != localNoti) &#123;</div><div class="line">        NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];</div><div class="line">        NSDateComponents *dateComponets = [[NSDateComponents alloc]init];</div><div class="line">        </div><div class="line">        dateComponets.year = 2015;</div><div class="line">        dateComponets.month = 12;</div><div class="line">        dateComponets.day = 11;</div><div class="line">        dateComponets.hour = 12;</div><div class="line">        dateComponets.minute = 30;</div><div class="line">        self.dateComponets = dateComponets;</div><div class="line">        NSDate *date = [calendar dateFromComponents:dateComponets];</div><div class="line">        </div><div class="line">      NSTimer *timer = [NSTimer timerWithTimeInterval:3*60 target:self selector:@selector(addMinute:) userInfo:nil repeats:YES];</div><div class="line">        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];</div><div class="line">        </div><div class="line">        localNoti.fireDate = date;</div><div class="line">        localNoti.timeZone = [NSTimeZone defaultTimeZone];</div><div class="line">        localNoti.alertTitle = @&quot;提示！&quot;;</div><div class="line">        localNoti.alertBody = @&quot;该吃饭了！&quot;;</div><div class="line">        localNoti.alertAction = @&quot;查看！&quot;;</div><div class="line">        localNoti.soundName = UILocalNotificationDefaultSoundName;</div><div class="line">        localNoti.applicationIconBadgeNumber = 1;</div><div class="line">        NSDictionary *userinfo = [NSDictionary dictionaryWithObject:@&quot;你好！&quot; forKey:@&quot;nihao&quot;];</div><div class="line">        localNoti.userInfo = userinfo;</div><div class="line">        </div><div class="line">        [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];</div><div class="line">        </div><div class="line">        //收到通知</div><div class="line">        UILocalNotification *not = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];</div><div class="line">        if (not) &#123;</div><div class="line">            NSDictionary *dic = not.userInfo;</div><div class="line">            NSString *str = dic[@&quot;nihao&quot;];</div><div class="line">            NSLog(@&quot;%@&quot;,str);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div><div class="line">-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification</div><div class="line">&#123;</div><div class="line">        //收到通知</div><div class="line">        if (notification) &#123;</div><div class="line">            NSDictionary *dic = notification.userInfo;</div><div class="line">            NSString *str = dic[@&quot;nihao&quot;];</div><div class="line">            NSLog(@&quot;%@&quot;,str);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p><code>下载代码》》</code><a href="https://github.com/yachaocn/LocalNotificationDemo" target="_blank" rel="external">下载代码</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/12/16/LocalNotifycation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-RemoteNotifycation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -778,75 +831,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-iOS中晃动事件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/26/iOS中晃动事件/">ios晃动事件</a>
-    </h1>
-  
-
-        
-        <a href="/2015/08/26/iOS中晃动事件/" class="archive-article-date">
-  	<time datetime="2015-08-26T02:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="晃动事件"><a href="#晃动事件" class="headerlink" title="晃动事件"></a>晃动事件</h2><p>#####ios中晃动事件：</p>
-<p><code>声明：在ios中事件的相应者链中指出：1.对于触摸事件响应者传给host View，远程控制事件（耳机线控等）、晃动事件则传递给第一响应者。</code></p>
-<p>1.实现[UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;告诉ios系统支持晃动事件。</p>
-<p>2.重载<br>-(BOOL)canBecomeFirstResponder<br>{<br>    return YES;<br>}//指明控制器可以成为第一响应者。</p>
-<p>3.分别在控制器中书写以下方法</p>
-<pre><code>-(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-
-                [self becomeFirstResponder];
-
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self resignFirstResponder];
-}
-</code></pre><p>4、viewController 方法</p>
-<p>-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event<br>{<br>    if (motion == UIEventSubtypeMotionShake) {<br>        NSLog(@”%s”,<strong>func</strong>);<br>    }</p>
-<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div><div class="line">-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event</div><div class="line">&#123;</div><div class="line">    if (motion == UIEventSubtypeMotionShake) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;,__func__);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/08/26/iOS中晃动事件/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -987,11 +971,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
             
             <div class="clearfix"></div>

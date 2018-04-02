@@ -183,6 +183,146 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-以无线方式安装企业内部应用部署参考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/05/以无线方式安装企业内部应用部署参考/">以无线方式安装企业内部应用部署参考</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/05/以无线方式安装企业内部应用部署参考/" class="archive-article-date">
+  	<time datetime="2016-03-05T01:49:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="以无线方式安装企业内部应用部署参考"><a href="#以无线方式安装企业内部应用部署参考" class="headerlink" title="以无线方式安装企业内部应用部署参考"></a>以无线方式安装企业内部应用部署参考</h1><p>原文在apple官网<a href="http://help.apple.com/deployment/ios/#/apda0e3426d7" target="_blank" rel="external">iOS部署参考</a></p>
+<p>iOS 支持以无线方式安装自定的企业内部应用，而无需使用 iTunes 或 App Store。应用的格式必须为 .ipa，并且使用企业内部预置描述文件进行构建。无线安装要求：</p>
+<ul>
+<li><p>XML 清单文件（本节已有描述）</p>
+</li>
+<li><p>可让设备访问 Apple iTunes 服务器的网络配置</p>
+</li>
+<li><p>对于 iOS 7.1 或更高版本，使用 HTTPS</p>
+</li>
+</ul>
+<p>为了安装应用，用户使用特殊的 URL 前缀从您的网站上下载清单文件。您可以通过短信或电子邮件分发用于下载清单文件的 URL，或将其嵌入创建的另一企业应用中。</p>
+<p>您负责设计和托管用于分发应用的网站。请确定用户已通过认证（可能是使用基本认证或基于目录的认证），并确定网站可通过内联网或互联网进行访问。您可以将应用和清单文件放入隐藏目录或任何可使用 HTTPS 读取的位置。</p>
+<p><code>【注】创建自助服务门户时，请考虑在用户的主屏幕中添加一个 Web Clip，以便他们可以轻松返回门户以获取更多信息，如新的配置描述文件、推荐的 App Store 应用以及允许他们在 MDM 解决方案中进行注册。</code></p>
+<p><strong>准备以无线方式分发的企业内部应用</strong></p>
+<p>为准备以无线方式分发的企业内部应用，请构建归档版本（.ipa 文件）和用于启用无线分发和应用安装的清单文件。</p>
+<p>使用 Xcode 来创建应用归档。使用分发证书给应用签名，并在归档中包括企业内部预置描述文件。有关构建和归档应用的更多信息，请访问 iOS Dev Center 网站（iOS 开发者中心），或参阅 Xcode“Help”（帮助）菜单中可用的《Xcode User Guide》（Xcode 使用手册）。</p>
+<p><strong>关于无线清单文件</strong></p>
+<p>清单文件是一个 XML plist 文件，可供 Apple 设备用来从您的 Web 服务器上查找、下载和安装应用。清单文件由 Xcode 创建，使用的是您在共享用于企业分发的归档应用时所提供的信息。</p>
+<p>以下栏是必填项：</p>
+<ul>
+<li><p>URL：应用 (.ipa) 文件的完全限定 HTTPS URL</p>
+</li>
+<li><p>display-image：57 x 57 像素的 PNG 图像，在下载和安装过程中显示。指定图像的完全限定 URL</p>
+</li>
+<li><p>full-size-image：512 x 512 像素的 PNG 图像，表示 iTunes 中相应的应用</p>
+</li>
+<li><p>bundle-identifier：应用的包标识符，与 Xcode 项目中指定的完全一样</p>
+</li>
+<li><p>bundle-version：应用的包版本，在 Xcode 项目中指定</p>
+</li>
+<li><p>title：下载和安装过程中显示的应用的名称</p>
+</li>
+</ul>
+<p>样本清单文件还包含可选键。例如，如果应用文件太大，并且想要在执行错误检验（TCP 通信通常会执行该检验）的基础上确保下载的完整性，可以使用 MD5 键。</p>
+<p>通过指定项目数组的附加成员，您可以使用一个清单文件安装多个应用。</p>
+<p><strong>构建网站</strong></p>
+<p>将这些项目上传到网站上可供已认证的用户访问的区域：</p>
+<ul>
+<li><p>应用 (.ipa) 文件</p>
+</li>
+<li><p>清单 (.plist) 文件</p>
+</li>
+</ul>
+<p>您的网站可以是链接到清单文件的单个页面。用户轻点 Web 链接后会下载清单文件，并触发下载和安装。</p>
+<p>以下是示例链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;itms-services://?action=download-manifest&amp;url=https://example.com/manifest.plist&quot;&gt;Install App&lt;/a&gt;</div></pre></td></tr></table></figure>
+<p><a href="itms-services://?action=download-manifest&url=https://pan.baidu.com/disk/home#list/path=%2Fmanifest.plist" target="_blank" rel="external">Install my App</a></p>
+<p>请勿添加归档应用 (.ipa) 的网站链接。载入清单文件时，设备会下载该 .ipa 文件。虽然 URL 的协议部分是“itms-services”，但 iTunes Store 并不参与此过程。</p>
+<p>此外，请确定 .ipa 文件可通过 HTTPS 进行访问，并且您的站点已使用 iOS 信任的证书进行了签名。如果自签名证书没有受信任的锚点并且无法由 iOS 设备验证，安装会失败。</p>
+<p><strong>设定服务器 MIME 类型</strong></p>
+<p>您可能需要配置 Web 服务器，让清单文件和应用文件可正确传输。</p>
+<p>对于 OS X Server，请将 MIME 类型添加到 Web 服务的 MIME 类型设置：</p>
+<p>application/octet-stream ipa</p>
+<p>text/xml plist</p>
+<p>对于微软的互联网信息服务器 (IIS)，请使用 IIS Manager 在服务器的“属性”页面中添加 MIME 类型：</p>
+<p>.ipa application/octet-stream</p>
+<p>.plist text/xml</p>
+<p><strong>无线 iOS 应用分发故障诊断</strong></p>
+<p>如果无线应用分发失败，并显示“无法下载”信息：</p>
+<p>请确定应用已正确进行签名。测试方法是使用 Apple Configurator 2 将它安装到设备上，然后查看是否发生错误。</p>
+<p>请确定清单文件的链接是否正确，清单文件是否可供网络用户访问。</p>
+<p>请确定 .ipa 文件（在清单文件中）的 URL 是否正确，并且该 .ipa 文件是否可供网络用户通过 HTTPS 访问。</p>
+<p><strong>网络配置要求</strong></p>
+<p>如果设备连接到封闭式内部网络，那么您必须允许它访问以下站点：</p>
+<p>ax.init.itunes.apple.com：使用蜂窝移动网络下载应用时，设备会限制其当前文件大小。如果无法访问此站点，安装可能会失败。</p>
+<p>ocsp.apple.com：设备会联系此网站，检查用来给预置描述文件签名的分发证书状态。</p>
+<p><strong>提供更新的应用</strong></p>
+<p>您自己分发的应用不会自动更新。有新版本时，应通知用户进行更新并指导他们安装应用。请考虑让应用检查更新，并在打开应用时通知用户。请确保通知中提供了 itms-services 链接。您还可以使用应用内部的 openURL 来安装更新。</p>
+<p>如果想要用户保留他们设备上储存的应用数据，请确保新版本与要替换的版本使用的捆绑标识符相同，并告知用户在安装新版本之前不要删除旧版本。</p>
+<p>预置描述文件过期之前，请访问 iOS for Developers 网站（面向开发者的 iOS）为应用创建新描述文件。对于首次安装应用的用户，请使用新预置描述文件创建新应用归档 (.ipa)。</p>
+<p>如果用户已有该应用，您不妨设定发布下一个版本的时间，并在该版本中包括新预置描述文件，这样用户在使用应用工作时不会被打断。如果不想这样做，您可以仅分发新的 .mobileprovision 文件，这样用户便不必再次安装该应用。新的预置描述文件会覆盖应用归档中已有的描述文件。</p>
+<p>分发预置描述文件自签发之日起 12 个月后过期。过期后，系统会删除描述文件，应用将不会启动。</p>
+<p>您可以使用 MDM 安装和管理预置描述文件，然后用户通过应用更新或使用 MDM 进行下载并安装。</p>
+<p>如果您的分发证书过期，应用将不会启动，而您需要使用新的分发证书来重新构建应用。分发证书自签发之日起三年内有效，或者在您的 Apple Developer Enterprise Program（Apple 开发者企业级计划）成员资格过期之前一直有效，二者以先到者为准。若要防止证书过期，请确保在成员资格过期之前先进行续订。</p>
+<p>您可以拥有同时处于活跃状态的两个证书，并且它们彼此独立。第二个证书提供了一个重叠期，让您能够在第一个证书过期前更新应用。从 iOS Dev Center 请求第二个分发证书时，请确保不要撤销第一个证书。</p>
+<p><strong>证书验证</strong></p>
+<p>用户首次打开应用时，系统会通过联系 Apple 的 OCSP 服务器来验证分发证书。如果证书已撤销，应用将不会启动。为了验证状态，设备必须能够访问 ocsp.apple.com。</p>
+<p>OCSP 响应会在设备上缓存一段时间（由 OCSP 服务器指定），当前为 3 到 7 天之间。在重新启动设备和缓存的响应过期之前，将不会再次检查证书的有效性。如果当时收到撤销命令，系统将阻止应用运行。</p>
+<p><code>【警告】撤销分发证书会导致使用该证书签名的所有应用失效。只有万不得已时才应撤销证书，比如确定专用密钥已丢失或确信证书已遭破解。</code></p>
+<p>示例 iOS 应用清单文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</div><div class="line">&lt;plist version=&quot;1.0&quot;&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">  &lt;!-- array of downloads.--&gt;</div><div class="line">  &lt;key&gt;items&lt;/key&gt;</div><div class="line">  &lt;array&gt;</div><div class="line">   &lt;dict&gt;</div><div class="line">    &lt;!-- an array of assets to download --&gt;</div><div class="line">     &lt;key&gt;assets&lt;/key&gt;</div><div class="line">      &lt;array&gt;</div><div class="line">       &lt;!-- software-package: the ipa to install.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;!-- required. the asset kind.--&gt;</div><div class="line">          &lt;key&gt;kind&lt;/key&gt;</div><div class="line">          &lt;string&gt;software-package&lt;/string&gt;</div><div class="line">          &lt;!-- optional. md5 every n bytes. will restart a chunk if md5 fails.--&gt;</div><div class="line">          &lt;key&gt;md5-size&lt;/key&gt;</div><div class="line">          &lt;integer&gt;10485760&lt;/integer&gt;</div><div class="line">          &lt;!-- optional. array of md5 hashes for each &quot;md5-size&quot; sized chunk.--&gt;</div><div class="line">          &lt;key&gt;md5s&lt;/key&gt;</div><div class="line">          &lt;array&gt;</div><div class="line">            &lt;string&gt;41fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">            &lt;string&gt;51fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">          &lt;/array&gt;</div><div class="line">          &lt;!-- required. the URL of the file to download.--&gt;</div><div class="line">          &lt;key&gt;url&lt;/key&gt;</div><div class="line">          &lt;string&gt;https://www.example.com/apps/foo.ipa&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- display-image: the icon to display during download.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;display-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. indicates if icon needs shine effect applied.--&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;</div><div class="line">         &lt;string&gt;https://www.example.com/image.57x57.png&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">        &lt;!-- full-size-image: the large 512x512 icon used by iTunes.--&gt;</div><div class="line">        &lt;dict&gt;</div><div class="line">         &lt;key&gt;kind&lt;/key&gt;</div><div class="line">         &lt;string&gt;full-size-image&lt;/string&gt;</div><div class="line">         &lt;!-- optional. one md5 hash for the entire file.--&gt;</div><div class="line">         &lt;key&gt;md5&lt;/key&gt;</div><div class="line">         &lt;string&gt;61fa64bb7a7cae5a46bfb45821ac8bba&lt;/string&gt;</div><div class="line">         &lt;key&gt;needs-shine&lt;/key&gt;</div><div class="line">         &lt;true/&gt;</div><div class="line">         &lt;key&gt;url&lt;/key&gt;&lt;string&gt;https://www.example.com/image.512x512.jpg&lt;/string&gt;</div><div class="line">        &lt;/dict&gt;</div><div class="line">      &lt;/array&gt;</div><div class="line">&lt;key&gt;metadata&lt;/key&gt;</div><div class="line">      &lt;dict&gt;</div><div class="line">       &lt;!-- required --&gt;</div><div class="line">       &lt;key&gt;bundle-identifier&lt;/key&gt;</div><div class="line">       &lt;string&gt;com.example.fooapp&lt;/string&gt;</div><div class="line">       &lt;!-- optional (software only) --&gt;</div><div class="line">       &lt;key&gt;bundle-version&lt;/key&gt;</div><div class="line">       &lt;string&gt;1.0&lt;/string&gt;</div><div class="line">       &lt;!-- required. the download kind.--&gt;</div><div class="line">       &lt;key&gt;kind&lt;/key&gt;</div><div class="line">       &lt;string&gt;software&lt;/string&gt;</div><div class="line">       &lt;!-- optional. displayed during download; typically company name --&gt;</div><div class="line">       &lt;key&gt;subtitle&lt;/key&gt;</div><div class="line">       &lt;string&gt;Apple&lt;/string&gt;</div><div class="line">       &lt;!-- required. the title to display during the download.--&gt;</div><div class="line">       &lt;key&gt;title&lt;/key&gt;</div><div class="line">       &lt;string&gt;Example Corporate App&lt;/string&gt;</div><div class="line">      &lt;/dict&gt;</div><div class="line">    &lt;/dict&gt;</div><div class="line">  &lt;/array&gt;</div><div class="line">&lt;/dict&gt;</div><div class="line">&lt;/plist&gt;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ios部署</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/03/05/以无线方式安装企业内部应用部署参考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-以无线方式安装企业内部应用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -924,206 +1064,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-The dynamic library plug-in" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/19/The dynamic library plug-in/">The dynamic library plug-in</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/19/The dynamic library plug-in/" class="archive-article-date">
-  	<time datetime="2016-02-19T07:06:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="iOS动态库的构建之应用程序的插件化"><a href="#iOS动态库的构建之应用程序的插件化" class="headerlink" title="iOS动态库的构建之应用程序的插件化"></a>iOS动态库的构建之应用程序的插件化</h1><p><code>前言：</code></p>
-<p>你有没有非常厌烦apple漫长的审核机制，有没有想要直接跳过苹果的审核，而能过更新我们的程序？那么动态库就能实现这样的功能。那么什么是库？什么是动态库呢？相反什么是动态库呢？我们如何去构建一个动态库呢？接下来如何去使用库呢？如何运用动态库实现应用程序的插件化呢？</p>
-<hr>
-<h2 id="什么是库？"><a href="#什么是库？" class="headerlink" title="什么是库？"></a>什么是库？</h2><ul>
-<li><p>库是共享程序代码的方式，一般分为静态库和动态库。</p>
-</li>
-<li><p>静态库：链接时完整地拷贝至可执行文件中，被多次使用就有多份冗余拷贝。</p>
-</li>
-<li><p>动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</p>
-</li>
-</ul>
-<p><strong>库的形式：</strong></p>
-<pre><code>- 静态库的形式：.a和.framework
-- 动态库的形式：.dylib和.framework
-</code></pre><p><strong>a与.framework有什么区别:</strong></p>
-<pre><code>- .a是一个纯二进制文件，.framework中除了有二进制文件之外还有资源文件。
-- .a文件不能直接使用，至少要有.h文件配合，.framework文件可以直接使用。
-- .a + .h + sourceFile = .framework。
-- 建议用.framework.
-</code></pre><p><strong>为什么要使用静态库？</strong></p>
-<pre><code>- 方便共享代码，便于合理使用。
-- 实现iOS程序的模块化。可以把固定的业务模块化成静态库。
-- 和别人分享你的代码库，但不想让别人看到你代码的实现。
-</code></pre><p><strong>制作静态库时的几点注意:</strong></p>
-<pre><code>- 1 注意理解：无论是.a静态库还.framework静态库，我们需要的都是二进制文件+.h+其它资源文件的形式，不同的是，.a本身就是二进制文件，需要我们自己配上.h和其它文件才能使用，而.framework本身已经包含了.h和其它文件，可以直接使用。
-
-- 2 图片资源的处理：两种静态库，一般都是把图片文件单独的放在一个.bundle文件中，一般.bundle的名字和.a或.framework的名字相同。.bundle文件很好弄，新建一个文件夹，把它改名为.bundle就可以了，右键，显示包内容可以向其中添加图片资源。
-
-- 3 category是我们实际开发项目中经常用到的，把category打成静态库是没有问题的，但是在用这个静态库的工程中，调用category中的方法时会有找不到该方法的运行时错误（selector not recognized），解决办法是：在使用静态库的工程中配置other linker flags的值为-ObjC。
-
-- 4 如果一个静态库很复杂，需要暴露的.h比较多的话，就可以在静态库的内部创建一个.h文件（一般这个.h文件的名字和静态库的名字相同），然后把所有需要暴露出来的.h文件都集中放在这个.h文件中，而那些原本需要暴露的.h都不需要再暴露了，只需要把.h暴露出来就可以了。
-</code></pre><hr>
-<p><code>在本章我们只介绍动态库，静态库放在以后章节，敬请关注</code></p>
-<h2 id="apple-开放动态库"><a href="#apple-开放动态库" class="headerlink" title="apple 开放动态库"></a>apple 开放动态库</h2><p>WWDC2014上发布的Xcode6 beta版有了不少更新，其中令我惊讶的一个是苹果在iOS上开放了动态库，在Xcode6 Beta版的更新文档中是这样描述的：详见官方文档<a href="https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/WhatsNewXcode/Articles/xcode_6_0.html" target="_blank" rel="external">https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/WhatsNewXcode/Articles/xcode_6_0.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">“Frameworks for iOS. iOS developers can now create dynamic frameworks. Frameworks are a collection of code and resources to encapsulate functionality that is valuable across multiple projects. Frameworks work perfectly with extensions, sharing logic that can be used by both the main application, and the bundled extensions.”</div></pre></td></tr></table></figure>
-<p>framework是Cocoa/Cocoa Touch程序中使用的一种资源打包方式，可以将将代码文件、头文件、资源文件、说明文档等集中在一起，方便开发者使用，作为一名Cocoa/Cocoa Touch程序员每天都要跟各种各样的Framework打交道。Cocoa/Cocoa Touch开发框架本身提供了大量的Framework，比如Foundation.framework/UIKit.framework/AppKit.framework等。需要注意的是，这些framework无一例外都是动态库。</p>
-<p>但残忍的是，Cocoa Touch上并不允许我们使用自己创建的framework。不过由于framework是一种优秀的资源打包方式，拥有无穷智慧的程序员们便想出了以framework的形式打包静态库的招数，因此我们平时看到的第三方发布的framework无一例外都是静态库，真正的动态库是上不了AppStore的。</p>
-<p>WWDC2014给我的一个很大感触是苹果对iOS的开放态度：允许使用动态库、允许第三方键盘、App Extension等等，这些在之前是想都不敢想的事。</p>
-<p><code>静态库在编译时和app代码链接并打进同一个二进制包中,而动态库可以在运行时手动加载</code>，这样就可以做很多事情，比如不增大应用程序包文件大小的情况下，实现模块的插件化！支付宝就是这样的：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/IMG_0091.PNG" alt=""></p>
-<p>首页上密密麻麻的功能，而且还在增多，照这个趋势发展下去，软件包的大小将会不可想象。目前常用的解决方案是使用web页面，但用户体验和Native界面是没法比的。</p>
-<p>设想，如果每一个功能点都是一个动态库，在用户想使用某个功能的时候让其从网络下载，然后手动加载动态库，实现功能的的插件化，就再也不用担心功能点的无限增多了，这该是件多么美好的事</p>
-<p><strong>软件版本实时模块升级</strong></p>
-<p>还在忍受苹果动辄一周，甚至更长的审核周期吗？有了动态库妈妈就再也不用担心你的软件升级了！</p>
-<p>如果软件中的某个功能点出现了严重的bug，或者想在其中新增功能，你的这个功能点又是通过动态库实现的，这时候你只需要在适当的时候从服务器上将新版本的动态库文件下载到本地，然后在用户重启应用的时候即可实现新功能的展现。</p>
-<p><strong>共享可执行文件</strong></p>
-<p>在其它大部分平台上，动态库都可以用于不同应用间共享，这就大大节省了内存。从目前来看，iOS仍然不允许进程间共享动态库，即iOS上的动态库只能是私有的，因为我们仍然不能将动态库文件放置在除了自身沙盒以外的其它任何地方。</p>
-<p>不过iOS8上开放了App Extension功能，可以为一个应用创建插件，这样主app和插件之间共享动态库还是可行的</p>
-<p><code>PS： 上述关于动态库在iOS平台的使用，在技术上都是可行的，但本人并没有真正尝试过做出一个上线AppStore的应用，因此并不保证按照上述方式使用动态库一定能通过苹果审核！</code></p>
-<hr>
-<h2 id="创建动态库"><a href="#创建动态库" class="headerlink" title="创建动态库"></a>创建动态库</h2><p><strong>创建工程文件</strong></p>
-<p>在下图找到Cocoa Touch动态库的创建入口：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8A%E5%8D%8811.13.32.png" alt=""><br>跟随指引一步步操作即可创建一个新的动态库工程，我的工程名字叫Dylib，Xcode会同时创建一个和工程target同名的.h文件，比如我的就是Dylib.h。</p>
-<p><strong>向工程中添加文件</strong><br>接下来就可以在工程中随意添加文件了。我在其中新建了一个名为Person的测试类，提供的接口如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface Person : NSObject </div><div class="line"> </div><div class="line">- (void)run; </div><div class="line"> </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>对应的.m文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@implementation Person </div><div class="line"> </div><div class="line">- (void)run </div><div class="line">&#123; </div><div class="line">    NSLog(@&quot;let&apos;s run.&quot;); </div><div class="line"> </div><div class="line">&#125; </div><div class="line"> </div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>注意需要在Dylib.h中加入#import &lt;Dylib/Person.h&gt;头文件引用，否则在别的项目中导入动态库后使用时会报framework missing submodule xxx 警告</code>具体解决方案参见<a href="http://yachaocn.com/2016/02/18/framework%20missing%20submodule/" target="_blank" rel="external">http://yachaocn.com/2016/02/18/framework%20missing%20submodule/</a></p>
-<p><strong>设置开放的头文件</strong></p>
-<p>一个库里面可以后很多的代码，但是我们需要设置能够提供给外界使用的接口，可以通过Target—&gt;Build Phases—&gt;Headers来设置，如下图所示：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8A%E5%8D%8811.21.08.png" alt=""></p>
-<p>我们只需将希望开放的头文件放到Public列表中即可，比如我开放了Dylib.h和Person.h两个头文件，在生成的framework的Header目录下就可以看到这两个头文件, 在xcode菜单栏找到window&gt;project如下图所示：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8A%E5%8D%8811.31.25.png" alt=""><br>点击小箭头之后，进入framework目录，找到Build》Products》Debug-iphoneos》Dylib.framework》Headers就会看到两个开放的头文件。如图：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8A%E5%8D%8811.37.16.png" alt=""></p>
-<p>一切完成，Run以后就能成功生成framework文件了。<code>注意你用真机运行后打的framework只能在真机上用，用模拟器打的framework只能在模拟器上用</code>要想能同时在两个上面用，需要生成通用动态库如下：</p>
-<h2 id="生成通用动态库"><a href="#生成通用动态库" class="headerlink" title="生成通用动态库"></a>生成通用动态库</h2><p>经过第一步我们只是创建了一个动态库文件，但是和静态库类似，该动态库并同时不支持真机和模拟器，可以通过以下步骤创建通用动态库：</p>
-<p><strong>创建Aggregate Target</strong></p>
-<p>按下图所示，在动态库工程中添加一个类型为Aggregate的target:<code>不知道如何添加target的自行搜索不再赘述</code><br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8A%E5%8D%8811.46.19.png" alt=""><br>按提示一步步操作即可，我给Aggregate的Target的命名是CommonDylib。</p>
-<p><strong>设置Target Dependencies</strong></p>
-<p>按以下路径设置CommonDylib对应的Target Dependencies:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;CommonDylib--&gt;Build Phases--&gt;Target Dependencies</div></pre></td></tr></table></figure>
-<p>将真正的动态库Dylib Target添加到其中。</p>
-<p><strong>添加Run Script</strong></p>
-<p>按以下路径为CommonDylib添加Run Script:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TARGETS--&gt;CommonDylib--&gt;Build Phases--&gt;Run Script</div></pre></td></tr></table></figure>
-<p>添加的脚本为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># Sets the target folders and the final framework product. </div><div class="line">FMK_NAME=$&#123;PROJECT_NAME&#125; </div><div class="line"> </div><div class="line"># Install dir will be the final output to the framework. </div><div class="line"># The following line create it in the root folder of the current project. </div><div class="line">INSTALL_DIR=$&#123;SRCROOT&#125;/Products/$&#123;FMK_NAME&#125;.framework </div><div class="line"> </div><div class="line"># Working dir will be deleted after the framework creation. </div><div class="line">WRK_DIR=build </div><div class="line">DEVICE_DIR=$&#123;WRK_DIR&#125;/Release-iphoneos/$&#123;FMK_NAME&#125;.framework </div><div class="line">SIMULATOR_DIR=$&#123;WRK_DIR&#125;/Release-iphonesimulator/$&#123;FMK_NAME&#125;.framework </div><div class="line"> </div><div class="line"># -configuration $&#123;CONFIGURATION&#125;  </div><div class="line"># Clean and Building both architectures. </div><div class="line">xcodebuild -configuration &quot;Release&quot; -target &quot;$&#123;FMK_NAME&#125;&quot; -sdk iphoneos clean build </div><div class="line">xcodebuild -configuration &quot;Release&quot; -target &quot;$&#123;FMK_NAME&#125;&quot; -sdk iphonesimulator clean build </div><div class="line"> </div><div class="line"># Cleaning the oldest. </div><div class="line">if [ -d &quot;$&#123;INSTALL_DIR&#125;&quot; ] </div><div class="line">then </div><div class="line">rm -rf &quot;$&#123;INSTALL_DIR&#125;&quot; </div><div class="line">fi </div><div class="line"> </div><div class="line">mkdir -p &quot;$&#123;INSTALL_DIR&#125;&quot; </div><div class="line"> </div><div class="line">cp -R &quot;$&#123;DEVICE_DIR&#125;/&quot; &quot;$&#123;INSTALL_DIR&#125;/&quot; </div><div class="line"> </div><div class="line"># Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product. </div><div class="line">lipo -create &quot;$&#123;DEVICE_DIR&#125;/$&#123;FMK_NAME&#125;&quot; &quot;$&#123;SIMULATOR_DIR&#125;/$&#123;FMK_NAME&#125;&quot; -output &quot;$&#123;INSTALL_DIR&#125;/$&#123;FMK_NAME&#125;&quot; </div><div class="line"> </div><div class="line">rm -r &quot;$&#123;WRK_DIR&#125;&quot;</div></pre></td></tr></table></figure>
-<p>添加以后的效果如图所示:<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8B%E5%8D%881.45.47.png" alt=""></p>
-<p>该脚本是我根据一篇文章中介绍的脚本改写的，感谢<a href="http://blog.sina.com.cn/s/blog_407fb5bc01013v6s.html" target="_blank" rel="external">原文作者</a>。</p>
-<p>脚本的主要功能是：</p>
-<ul>
-<li>1.分别编译生成真机和模拟器使用的framework；</li>
-<li>2.使用lipo命令将其合并成一个通用framework；</li>
-<li>3.最后将生成的通用framework放置在工程根目录下新建的Products目录下。</li>
-</ul>
-<p>如果你第一次用真机run跑出的Dylib.framework，那么这次用模拟器对CommonDylib target执行run操作，然后就在你项目根目录下&gt;Products文件下生成一个如图所示的通用framework文件了。<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8B%E5%8D%881.50.36.png" alt=""></p>
-<h2 id="使用动态库"><a href="#使用动态库" class="headerlink" title="使用动态库"></a>使用动态库</h2><p>添加动态库到工程文件</p>
-<p>经过以上步骤的努力，生成了最终需要的framework文件，为了演示动态库的使用，新建了一个名为FrameworkDemo的工程。通过以下方式将刚生成的framework添加到工程中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Targets--&gt;Build Phases--&gt;Link Binary With Libraries</div></pre></td></tr></table></figure>
-<p>同时设置将framework作为资源文件拷贝到Bundle中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Targets--&gt;Build Phases--&gt;Copy Bundle Resources</div></pre></td></tr></table></figure>
-<p>如图所示：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8B%E5%8D%881.55.10.png" alt=""></p>
-<p>仅仅这样做是不够的，还需要为动态库添加链接依赖。</p>
-<p><strong>自动链接动态库</strong></p>
-<p>添加完动态库后，如果希望动态库在软件启动时自动链接，可以通过以下方式设置动态库依赖路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Targets--&gt;Build Setting--&gt;Linking--&gt;Runpath Search Paths</div></pre></td></tr></table></figure>
-<p>由于向工程中添加动态库时，将动态库设置了Copy Bundle Resources，因此就可以将Runpath Search Paths路径依赖设置为main bundle，即沙盒中的FrameworkDemo.app目录，向Runpath Search Paths中添加下述内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@executable_path/</div></pre></td></tr></table></figure>
-<p>如图所示：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-02-19%20%E4%B8%8B%E5%8D%881.58.19.png" alt=""><br><code>其中的@executable_path/表示可执行文件所在路径，即沙盒中的.app目录，注意不要漏掉最后的/。</code></p>
-<p><em>如果你将动态库放到了沙盒中的其他目录，只需要添加对应路径的依赖就可以了。</em></p>
-<p><strong>需要的时候链接动态库</strong></p>
-<p>动态库的另一个重要特性就是即插即用性，我们可以选择在需要的时候再加载动态库。</p>
-<p><code>更改设置</code></p>
-<p>如果不希望在软件一启动就加载动态库，需要将</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Targets--&gt;Build Phases--&gt;Link Binary With Libraries</div></pre></td></tr></table></figure>
-<p>中Dylib.framework对应的Status由默认的Required改成Optional；或者更干脆的，将Dylib.framework从Link Binary With Libraries列表中删除即可。</p>
-<hr>
-<h2 id="使用动态库-1"><a href="#使用动态库-1" class="headerlink" title="使用动态库"></a>使用动态库</h2><p><strong>使用dlopen加载动态库</strong></p>
-<p>以Dylib.framework为例，动态库中真正的可执行代码为Dylib.framework/Dylib文件，因此使用dlopen时如果仅仅指定加载动态库的路径为Dylib.framework是没法成功加载的。<br><code>dlopen用到了c库需要引入#include &lt;dlfcn.h&gt;</code></p>
-<p>示例代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">#import &quot;ViewController.h&quot;</div><div class="line">#import &lt;Dylib/Dylib.h&gt;</div><div class="line">#import &lt;Dylib/Person.h&gt;</div><div class="line">#include &lt;dlfcn.h&gt;</div><div class="line"></div><div class="line"></div><div class="line">static void *libHandle = NULL;</div><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view, typically from a nib.</div><div class="line">    </div><div class="line">    NSString *documentsPath = [NSString stringWithFormat:@&quot;%@/Documents/Dylib.framework/Dylib&quot;,NSHomeDirectory()];</div><div class="line">    [self dlopenLoadDylibWithPath:documentsPath];</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)dlopenLoadDylibWithPath:(NSString *)path</div><div class="line">&#123;</div><div class="line">    libHandle = NULL;</div><div class="line">    libHandle = dlopen([path cStringUsingEncoding:NSUTF8StringEncoding], RTLD_NOW);</div><div class="line">    if (libHandle == NULL) &#123;</div><div class="line">        char *error = dlerror();</div><div class="line">        NSLog(@&quot;dlopen error: %s&quot;, error);</div><div class="line">    &#125; else &#123;</div><div class="line">        NSLog(@&quot;dlopen load framework success.&quot;);</div><div class="line">        Class rootClass = NSClassFromString(@&quot;Person&quot;);</div><div class="line">        if (rootClass) &#123;</div><div class="line">            id object = [[rootClass alloc] init];</div><div class="line">            [(Person *)object run];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>以dlopen方式使用动态库不知道是否能通过苹果审核。</code></p>
-<p><strong>使用NSBundle加载动态库</strong></p>
-<p>也可以使用NSBundle来加载动态库，实现代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (IBAction)onBundleLoadAtPathAction1:(id)sender </div><div class="line">&#123; </div><div class="line">    NSString *documentsPath = [NSString stringWithFormat:@&quot;%@/Documents/Dylib.framework&quot;,NSHomeDirectory()]; </div><div class="line">    [self bundleLoadDylibWithPath:documentsPath]; </div><div class="line">&#125; </div><div class="line"> </div><div class="line">- (void)bundleLoadDylibWithPath:(NSString *)path </div><div class="line">&#123; </div><div class="line">    _libPath = path; </div><div class="line">    NSError *err = nil; </div><div class="line">    NSBundle *bundle = [NSBundle bundleWithPath:path]; </div><div class="line">    if ([bundle loadAndReturnError:&amp;err]) &#123; </div><div class="line">        NSLog(@&quot;bundle load framework success.&quot;); </div><div class="line">    &#125; else &#123; </div><div class="line">        NSLog(@&quot;bundle load framework err:%@&quot;,err); </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>使用动态库中代码</strong></p>
-<p>通过上述任一一种方式加载的动态库后，就可以使用动态库中的代码文件了，以Dylib.framework中的Person类的使用为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Class rootClass = NSClassFromString(@&quot;Person&quot;); </div><div class="line">   if (rootClass) &#123; </div><div class="line">       id object = [[rootClass alloc] init]; </div><div class="line">       [(Person *)object run]; </div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>注意，如果直接通过下属方式初始化Person类是不成功的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person *object = [[Person alloc] init]; </div><div class="line">    if (object) &#123; </div><div class="line">       [object run]; </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>监测动态库的加载和移除</p>
-<p>我们可以通过下述方式，为动态库的加载和移除添加监听回调</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (void)load </div><div class="line">&#123; </div><div class="line">  _dyld_register_func_for_add_image(&amp;image_added); </div><div class="line">  _dyld_register_func_for_remove_image(&amp;image_removed); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>github上有一个完整的<a href="https://github.com/yachaocn/plug-in-dynamic-library" target="_blank" rel="external">示例代码</a>。</p>
-<p>从这里看出，原来就算空白工程软件启动的时候也会加载多达一百二十多个动态库，如果这些都是静态库，那该有多可怕！！</p>
-<p><code>为了证明动态库的插件化，我做了一个例子：在程序启动后连接Document目录下的动态库Dylib.framework</code></p>
-<p>把基础框架的动态库（只有Person.h和.m文件，和其中的run接口的Dylib.framework）加入到项目中，然后重新打包一个动态库放在沙河下的Document目录下，其中新建了一个，Desk.h和.m文件</p>
-<p><code>.h</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@interface Desk : NSObject</div><div class="line">-(void)sayName;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><code>.m</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(void)sayName</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;my name is desk... over&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后在Person.m文件中的run接口中加入如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)run</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;let&apos;s run.&quot;);</div><div class="line">    Desk *desk = [[Desk alloc]init];</div><div class="line">    desk.deskName = @&quot;desk&quot;;</div><div class="line">    [desk sayName];</div><div class="line">   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后用dlopen方法加载沙河下的Document目录里的动态库Dylib.framework.</p>
-<p>运行后结果为如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">2016-02-19 14:20:40.582 FrameworkDemo[1382:42391] let&apos;s run.</div><div class="line">2016-02-19 14:20:40.582 FrameworkDemo[1382:42391] my name is desk... over</div></pre></td></tr></table></figure>
-<p>由此可见</p>
-<ul>
-<li>我们添加到项目中的Dylib.framework并没有被连接到项目中，也没有被执行，而是加载了Document目录下的Dylib.framework</li>
-<li>我们添加到项目中的Dylib.framework只是个框架，提供了一个对外的接口，在预编译时不至于我们的程序报错。</li>
-<li>真正运行时连接的动态库并不是我们项目中添加的，而是Documnet目录下的Dylib.framework动态库</li>
-<li>我们可以单独把Dylib.framework摘出来，在其基础上扩展，添加各式各样的功能。</li>
-<li>然后我们就可以写一个加载动态库的基础框架app然后提交app审核通过后，我们就可以在程序运行的时候从服务器检查动态库是否有更新（新的功能、界面等），如果有更新直接从服务其上面下载framework替换本地的Document目录下的动态库，然后重启系统，就能跳过app store的漫长的审核，而使程序快速的更新。</li>
-</ul>
-<p>最后附上本文所用到的代码<a href="https://github.com/yachaocn/plug-in-dynamic-library" target="_blank" rel="external">【下载代码】</a></p>
-<p>本文参考自<a href="http://foggry.com/blog/2014/06/12/wwdc2014zhi-iosshi-yong-dong-tai-ku/" target="_blank" rel="external">王中周的技术博客</a>致谢！</p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ios</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/02/19/The dynamic library plug-in/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1264,11 +1204,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
             
             <div class="clearfix"></div>
