@@ -183,6 +183,101 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-3DTouch-Peek-Pop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/22/3DTouch-Peek-Pop/">3DTouch_Peek_Pop</a>
+    </h1>
+  
+
+        
+        <a href="/2015/12/22/3DTouch-Peek-Pop/" class="archive-article-date">
+  	<time datetime="2015-12-22T00:51:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Getting-Started-with-3D-Touch"><a href="#Getting-Started-with-3D-Touch" class="headerlink" title="Getting Started with 3D Touch"></a>Getting Started with 3D Touch</h1><hr>
+<p>详细信息请在在官方文档中搜索：Getting Started with 3D Touch</p>
+<ul>
+<li>Home screen quick action API:为你的app图标添加shortcuts(快捷方式),加快用户和你app的交互速度</li>
+<li>UIKit peek and pop API:在你的应用程序内提供简单的访问、添加额外的内容，同事保持用户的上下文（context），使用它能够提供一个按压功能替换你应用程序原来的触摸和保持操作</li>
+<li>UITouch force properties：可以提供一个自定义的压力，来响应用户的交互。</li>
+</ul>
+<h2 id="3Dtouch"><a href="#3Dtouch" class="headerlink" title="3Dtouch"></a>3Dtouch</h2><hr>
+<p><code>具体做法如下</code></p>
+<h5 id="1-在appdelegate中的didFinishLaunchingWithOptions-方法中判断是否能够相应3Dtouch"><a href="#1-在appdelegate中的didFinishLaunchingWithOptions-方法中判断是否能够相应3Dtouch" class="headerlink" title="1.在appdelegate中的didFinishLaunchingWithOptions:方法中判断是否能够相应3Dtouch"></a>1.在appdelegate中的didFinishLaunchingWithOptions:方法中判断是否能够相应3Dtouch</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if (launchOptions[UIApplicationLaunchOptionsSourceApplicationKey] != nil) &#123;</div><div class="line">        return NO;//shortcutItem 不为空证明要加载shortcutitem，不启动应用程序。</div><div class="line">    &#125;else&#123;</div><div class="line">        return YES;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="静态quick-action："><a href="#静态quick-action：" class="headerlink" title="静态quick action："></a>静态quick action：</h3><p><code>验证3DTouch 是否可用（self的isa指向viewController实例）</code><strong>仅作检验使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) &#123;</div><div class="line">        NSLog(@&quot;3dtouch availabe&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;3dtouch not availabe&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="2-在plist中添加如下配置创建静态的shortcutItem："><a href="#2-在plist中添加如下配置创建静态的shortcutItem：" class="headerlink" title="2.在plist中添加如下配置创建静态的shortcutItem："></a>2.在plist中添加如下配置创建静态的shortcutItem：</h5><p><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-12-09%20下午3.01.07.png" alt=""><br>source code如下：<br><img src="http://7xiwr4.com1.z0.glb.clouddn.com/屏幕快照%202015-12-09%20下午3.01.33.png" alt=""></p>
+<hr>
+<p>当用户点击了一个快速预览的按钮后：系统会启动（唤醒）你的app，UIKIT会调用app代理的application:performActionForShortcutItem:completionHandler:方法，在他的lanchOption中有UIApplicationLaunchOptionsShortcutItemKey，其中保存了UIApplicationShortcutItem这个对象。根据这些你可以做你自己的事情。</p>
+<hr>
+<h3 id="动态quick-action："><a href="#动态quick-action：" class="headerlink" title="动态quick action："></a>动态quick action：</h3><hr>
+<h5 id="2-在代码中动态创建shortcutItem"><a href="#2-在代码中动态创建shortcutItem" class="headerlink" title="2.在代码中动态创建shortcutItem"></a>2.在代码中动态创建shortcutItem</h5><ul>
+<li>动态的shortcutItem 用UIApplicationShortcutItem, UIMutableApplicationShortcutItem, and UIApplicationShortcutIcon 这些类创建</li>
+<li><p>用UIApplication 对象的shortcutItems属性，为你的app添加动态的quick actions。<br><strong>创建示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> -(void)createDynamicShortcutItem</div><div class="line">&#123;</div><div class="line">    //动态创建UIApplicationShortcutItem</div><div class="line">    </div><div class="line">    //1. 创建一个图标的icon</div><div class="line">    UIApplicationShortcutIcon *icon = [UIApplicationShortcutIcon iconWithTemplateImageName:@&quot;imageName&quot;];</div><div class="line">    //2.创建一个系统类型字符串</div><div class="line">    NSString *itemType = [NSString stringWithFormat:@&quot;%ld&quot;,(long)UIApplicationShortcutIconTypeSearch];</div><div class="line">    //3.创建一个item对象</div><div class="line">    UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc]initWithType:itemType localizedTitle:@&quot;搜索&quot; localizedSubtitle:@&quot;可以自定义搜索哦&quot; icon:icon userInfo:nil];</div><div class="line">    UIApplication *application = [UIApplication sharedApplication];</div><div class="line">    NSArray *array = application.shortcutItems;</div><div class="line">    NSMutableArray *mutShortItems = [NSMutableArray arrayWithArray:array];</div><div class="line">    [mutShortItems addObject:item];</div><div class="line">    application.shortcutItems = mutShortItems;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="3-执行application-performActionForShortcutItem-completionHandler方法"><a href="#3-执行application-performActionForShortcutItem-completionHandler方法" class="headerlink" title="3.执行application:performActionForShortcutItem:completionHandler方法"></a>3.执行application:performActionForShortcutItem:completionHandler方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application performActionForShortcutItem:(nonnull UIApplicationShortcutItem *)shortcutItem completionHandler:(nonnull void (^)(BOOL))completionHandler</div><div class="line">&#123;</div><div class="line">    switch ([shortcutItem.type integerValue]) &#123;</div><div class="line">        case 5:</div><div class="line">            NSLog(@&quot;selected UIApplicationShortcutIconTypeSearch &quot;);</div><div class="line">            break;</div><div class="line">            </div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="UIKit-Peek-and-Pop"><a href="#UIKit-Peek-and-Pop" class="headerlink" title="UIKit Peek and Pop"></a>UIKit Peek and Pop</h3><h5 id="1-注册一个peek-和-pop-控制器使其支持peek-and-pop，并使其遵守UIViewControllerPreviewingDelegate代理协议"><a href="#1-注册一个peek-和-pop-控制器使其支持peek-and-pop，并使其遵守UIViewControllerPreviewingDelegate代理协议" class="headerlink" title="1.注册一个peek 和 pop 控制器使其支持peek and pop，并使其遵守UIViewControllerPreviewingDelegate代理协议"></a>1.注册一个peek 和 pop 控制器使其支持peek and pop，并使其遵守UIViewControllerPreviewingDelegate代理协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self registerForPreviewingWithDelegate:self sourceView:self.view];</div></pre></td></tr></table></figure>
+<h5 id="2-实现UIViewControllerPreviewingDelegate的peek和pop代理方法"><a href="#2-实现UIViewControllerPreviewingDelegate的peek和pop代理方法" class="headerlink" title="2.实现UIViewControllerPreviewingDelegate的peek和pop代理方法"></a>2.实现UIViewControllerPreviewingDelegate的peek和pop代理方法</h5><ul>
+<li>新建一个MYPreviewController继承自UIViewController，用于弹出的视图</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (nullable UIViewController *)previewingContext:(id &lt;UIViewControllerPreviewing&gt;)previewingContext viewControllerForLocation:(CGPoint)location NS_AVAILABLE_IOS(9_0)</div><div class="line">&#123;</div><div class="line">//    peek</div><div class="line">    MYPreviewController *childVC = [[MYPreviewController alloc] init];</div><div class="line">    childVC.preferredContentSize = CGSizeMake(0.0,300);</div><div class="line">    </div><div class="line">    CGRect rect = CGRectMake(10, location.y - 10, self.view.frame.size.width - 20,20);</div><div class="line">    previewingContext.sourceRect = rect;</div><div class="line">    return childVC;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)previewingContext:(id &lt;UIViewControllerPreviewing&gt;)previewingContext commitViewController:(UIViewController *)viewControllerToCommit NS_AVAILABLE_IOS(9_0)</div><div class="line">&#123;</div><div class="line">//    pop</div><div class="line">    [self showViewController:viewControllerToCommit sender:self];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>解释：</strong></p>
+<ul>
+<li>sourceRect是peek触发时的高亮区域。这个区域内的View会高亮显示，其余的会模糊掉。</li>
+</ul>
+<hr>
+<p>效果解释：</p>
+<ul>
+<li>轻按压击屏幕后出现模糊的横条。</li>
+<li>重压屏幕后弹出黄色视图。</li>
+</ul>
+<hr>
+<p><strong>3.实现peek controller 上滑出现快捷按钮-peek quick action</strong></p>
+<ul>
+<li>在MYPreviewController中重写UIViewController的- (NSArray <id <uipreviewactionitem="">&gt; *)previewActionItems方法</id></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> #pragma mark peek quick action</div><div class="line">- (NSArray &lt;id &lt;UIPreviewActionItem&gt;&gt; *)previewActionItems</div><div class="line">&#123;</div><div class="line">    UIPreviewAction *previewAction0 = [UIPreviewAction actionWithTitle:@&quot;回复0&quot; style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了0&quot;);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    UIPreviewAction *previewAction1 = [UIPreviewAction actionWithTitle:@&quot;回复1&quot; style:UIPreviewActionStyleSelected handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了1&quot;);</div><div class="line">    &#125;];</div><div class="line">    UIPreviewAction *previewAction2 = [UIPreviewAction actionWithTitle:@&quot;回复2&quot; style:UIPreviewActionStyleDestructive handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) &#123;</div><div class="line">        NSLog(@&quot;选择了2&quot;);</div><div class="line">    &#125;];</div><div class="line">    NSArray *array = @[previewAction0,previewAction1,previewAction2];</div><div class="line">    return array;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 最后附本人代码：<a href="https://github.com/yachaocn/3DTouch-Peek-Pop" target="_blank" rel="external">下载代码</a></p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/12/22/3DTouch-Peek-Pop/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-LocalNotifycation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -777,60 +872,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="ios-3D绘图" class="article article-type-ios  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/26/3D绘图/">ios3D绘图</a>
-    </h1>
-  
-
-        
-        <a href="/2015/08/26/3D绘图/" class="archive-article-date">
-  	<time datetime="2015-08-26T02:28:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.创建上下文</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];</div><div class="line">   if (context == nil) &#123;</div><div class="line">      context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line">   &#125;</div><div class="line">   return context;</div><div class="line">2.设置上下文</div><div class="line">[EAGLContext setCurrentContext: myContext];</div><div class="line"></div><div class="line">3.用共有的shareGroup创建多个context</div><div class="line">EAGLContext* firstContext = CreateBestEAGLContext();</div><div class="line">EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API] sharegroup: [firstContext sharegroup]];</div></pre></td></tr></table></figure>
-<p>4.创建并配置一个GLKit view<br>Multisampling是一种抗锯齿,锯齿边缘光滑,改善图像质量在大多数3 d应用程序使用更多的内存和分段处理的成本如果你启用Multisampling,总是测试您的应用程序的性能,以确保它仍然是可以接受的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// Create an OpenGL ES context and assign it to the view loaded from storyboard</div><div class="line">    GLKView *view = (GLKView *)self.view;</div><div class="line">    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line"> </div><div class="line">    // Configure renderbuffers created by the view</div><div class="line">    view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;</div><div class="line">    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;</div><div class="line">    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;</div><div class="line"> </div><div class="line">    // Enable multisampling</div><div class="line">    view.drawableMultisample = GLKViewDrawableMultisample4X;</div></pre></td></tr></table></figure>
-<p>5.绘制图像</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> - (void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    // Clear the framebuffer</div><div class="line">    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</div><div class="line"> </div><div class="line">    // Draw using previously configured texture, shader, uniforms, and vertex array</div><div class="line">    </div><div class="line">    glBindTexture(GL_TEXTURE_2D, _planetTexture);</div><div class="line">    glUseProgram(_diffuseShading);</div><div class="line">    glUniformMatrix4fv(_uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);</div><div class="line">    glBindVertexArrayOES(_planetMesh);</div><div class="line">    glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/08/26/3D绘图/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -971,11 +1012,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
               </li>
             
             <div class="clearfix"></div>

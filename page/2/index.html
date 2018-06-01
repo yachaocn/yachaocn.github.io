@@ -183,6 +183,74 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-webview缩放与样式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/20/webview缩放与样式/">webview缩放与样式</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/20/webview缩放与样式/" class="archive-article-date">
+  	<time datetime="2017-07-20T06:45:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Webview添加缩放与外观样式</p>
+<p>1.设置属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pibWebView.scalesPageToFit = YES;</div><div class="line">pibWebView.delegate = self;</div></pre></td></tr></table></figure>
+<p>2.代理方法中添加如下JS代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)webViewDidFinishLoad:(UIWebView *)webView</div><div class="line">&#123;</div><div class="line">    //    yachaocn 2015年12月24日09:08:43</div><div class="line">    //js代码 写入缩放属性</div><div class="line">    NSString *jsMeta = [NSString stringWithFormat:@&quot;var meta = document.createElement(&apos;meta&apos;);meta.content=&apos;width=device-width,initial-scale=1.0,minimum-scale=.5,maximum-scale=3&apos;;meta.name=&apos;viewport&apos;;document.getElementsByTagName(&apos;head&apos;)[0].appendChild(meta);&quot;];</div><div class="line">    [webView stringByEvaluatingJavaScriptFromString:jsMeta];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<p>改变webview样式（也是模式）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//JS改变外观</div><div class="line">   if (isNightView) &#123;</div><div class="line">       //字体大小</div><div class="line">       //[webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.webkitTextSizeAdjust= &apos;330%&apos;&quot;];</div><div class="line">       //字体颜色</div><div class="line">       [webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.webkitTextFillColor= &apos;white&apos;&quot;];</div><div class="line">       //页面背景色 3c3f43</div><div class="line">       [webView stringByEvaluatingJavaScriptFromString:@&quot;document.getElementsByTagName(&apos;body&apos;)[0].style.background=&apos;#000000&apos;&quot;];</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>如发现本文侵犯了您的知识产权请马上通知我:<code>zyachao@163.com</code>，我将在第一时间删除！</p>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/20/webview缩放与样式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-PlistBuddy的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -963,96 +1031,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-MAC-SSH-服务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/MAC-SSH-服务/">MAC SSH 服务</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/28/MAC-SSH-服务/" class="archive-article-date">
-  	<time datetime="2017-03-28T06:23:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MAC-SSH-服务"><a href="#MAC-SSH-服务" class="headerlink" title="MAC SSH 服务"></a>MAC SSH 服务</h1><p>SSH（Secure Shell）是一种通用的、功能强大的、基于软件的网络安全解决方案。计算机每次向网络发送数据时，SSH都会自动对其进行加密。运行 OS X 又或者是 macOS 的较新 Mac 设备都会默认预装 SSH，不过 SSH 守护进程是默认禁用的。</p>
-<blockquote>
-<p>配置</p>
-</blockquote>
-<p><code>Mac Terminal是自带SSH的，可以用whereis来看看：</code></p>
-<pre><code>$ whereis ssh
-</code></pre><p>但是在现有进程中找不到ssh对应的进程：</p>
-<pre><code>$ ps aux | grep ssh
-yachaocn          9043   0.0  0.0  2434840    764 s001  R+    3:52下午   0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn ssh
-</code></pre><p>直接用ssh命令连接本地主机或远程主机时会遇到下列错误提示：</p>
-<pre><code>ssh: connect to host localhost port 22: Connection refused
-</code></pre><p><strong>解决办法:</strong></p>
-<p> 在系统偏好设置》共享》勾选‘远程登陆’或者 终端键入如下命令:</p>
-<p><code>查看SSH服务状态</code></p>
-<pre><code>$ sudo systemsetup -getremotelogin
-</code></pre><p><code>快速开启 SSH 服务器并允许 SSH 连接进入当前 Mac</code></p>
-<pre><code>$ sudo systemsetup -setremotelogin on
-</code></pre><p>输入指令后并没有任何确认信息表明远程登录和 SSH 已经开启，但你可以使用上文提到的方法来检查是否开启成功。</p>
-<p><code>通过终端指令关闭Mac的SSH,并阻止远程连接</code></p>
-<pre><code>$ sudo systemsetup -setremotelogin off
-</code></pre><blockquote>
-<p>使用</p>
-</blockquote>
-<p><code>ssh链接远程电脑</code></p>
-<pre><code>ssh username@192.168.100.100
-</code></pre><p>username ： 登录的主机的用户名</p>
-<p>192.168.100.100 ：要登录的主机的IP地址</p>
-<p><code>scp远程copy文件</code></p>
-<pre><code>scp .zshrc username@192.168.100.100:/Users/username/
-</code></pre><p>将当前路径下的.zshrc文件复制到远程主机的/Users/username目录下。</p>
-<p><strong>具体用法参见</strong><br><a href="http://yachaocn.com/2017/03/23/Linux-cp%E5%92%8Cscp%E5%91%BD%E4%BB%A4/" target="_blank" rel="external">cp和scp用法</a></p>
-<p><code>技术交流群:</code><strong>494826724</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/28/MAC-SSH-服务/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1193,11 +1171,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
               </li>
             
             <div class="clearfix"></div>

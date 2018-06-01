@@ -183,6 +183,60 @@ ga('send', 'pageview');
           <div id="js-content" class="content-ll">
             
   
+    <article id="ios-3D绘图" class="article article-type-ios  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/26/3D绘图/">ios3D绘图</a>
+    </h1>
+  
+
+        
+        <a href="/2015/08/26/3D绘图/" class="archive-article-date">
+  	<time datetime="2015-08-26T02:28:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.创建上下文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];</div><div class="line">   if (context == nil) &#123;</div><div class="line">      context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line">   &#125;</div><div class="line">   return context;</div><div class="line">2.设置上下文</div><div class="line">[EAGLContext setCurrentContext: myContext];</div><div class="line"></div><div class="line">3.用共有的shareGroup创建多个context</div><div class="line">EAGLContext* firstContext = CreateBestEAGLContext();</div><div class="line">EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API] sharegroup: [firstContext sharegroup]];</div></pre></td></tr></table></figure>
+<p>4.创建并配置一个GLKit view<br>Multisampling是一种抗锯齿,锯齿边缘光滑,改善图像质量在大多数3 d应用程序使用更多的内存和分段处理的成本如果你启用Multisampling,总是测试您的应用程序的性能,以确保它仍然是可以接受的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// Create an OpenGL ES context and assign it to the view loaded from storyboard</div><div class="line">    GLKView *view = (GLKView *)self.view;</div><div class="line">    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];</div><div class="line"> </div><div class="line">    // Configure renderbuffers created by the view</div><div class="line">    view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;</div><div class="line">    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;</div><div class="line">    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;</div><div class="line"> </div><div class="line">    // Enable multisampling</div><div class="line">    view.drawableMultisample = GLKViewDrawableMultisample4X;</div></pre></td></tr></table></figure>
+<p>5.绘制图像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> - (void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    // Clear the framebuffer</div><div class="line">    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);</div><div class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</div><div class="line"> </div><div class="line">    // Draw using previously configured texture, shader, uniforms, and vertex array</div><div class="line">    </div><div class="line">    glBindTexture(GL_TEXTURE_2D, _planetTexture);</div><div class="line">    glUseProgram(_diffuseShading);</div><div class="line">    glUniformMatrix4fv(_uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);</div><div class="line">    glBindVertexArrayOES(_planetMesh);</div><div class="line">    glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>技术交流群:</code><strong>494826724</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/08/26/3D绘图/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-iOS中晃动事件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -551,11 +605,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+                <a href="javascript:void(0)" class="js-tag color4">cocopods</a>
               </li>
             
             <div class="clearfix"></div>
